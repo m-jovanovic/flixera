@@ -7,11 +7,8 @@
   />
 
   <mat-card-content>
-    <p class="movie-title">{{ movie.Title }}</p>
+    <p class="movie-title" (click)="onClick(movie.imdbID)">
+        {{ movie.Title }}
+    </p>
   </mat-card-content>
-
-  <!-- <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>DETAILS</button>
-  </mat-card-actions> -->
 </mat-card>

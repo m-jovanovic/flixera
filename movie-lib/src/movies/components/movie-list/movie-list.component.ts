@@ -20,7 +20,7 @@ export class MovieListComponent implements OnInit {
     if (event.keyCode == 13) {
       console.log(`Searching for: ${event.target.value}`);
 
-      this.movieApi.searchMovies(event.target.value)
+      this.movieApi.search(event.target.value)
         .subscribe((movies) => {
           this.movies = [...this.movies, ...movies];
         })

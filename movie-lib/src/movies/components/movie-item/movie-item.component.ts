@@ -1,17 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MovieDto } from 'src/core';
+import { Component, OnInit, Input } from "@angular/core";
+import { Router } from "@angular/router";
+
+import { MovieDto } from "src/core";
 
 @Component({
-  selector: 'ml-movie-item',
-  templateUrl: './movie-item.component.html',
-  styleUrls: ['./movie-item.component.css']
+  selector: "ml-movie-item",
+  templateUrl: "./movie-item.component.html",
+  styleUrls: ["./movie-item.component.css"]
 })
 export class MovieItemComponent implements OnInit {
   @Input() movie: MovieDto;
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onClick(imdbId: string) {
+    this.router.navigate(["/movies", imdbId]);
   }
-
 }

@@ -15,14 +15,18 @@ export class MovieApiService {
 
   apiPath: string = `http://www.omdbapi.com/?apikey=${environment.movieApiKey}`;
 
-  searchMovies(search: string): Observable<MovieDto[]> {
+  search(search: string): Observable<MovieDto[]> {
     const url = `${this.apiPath}&s=${search}&type=movie`;
-
-    console.log(`Sending request: ${url}`);
 
     return this.http.get<ApiResponse>(url)
       .pipe(
         map(response => response.Search)
       );
+  }
+
+  getByImdbId(id: string): Observable<MovieDto> {
+    const url = `${this.apiPath}&i=${id}&type=movie&plot=full`;
+    
+    return this.http.get<MovieDto>(url);
   }
 }
