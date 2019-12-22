@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { CoreModule } from 'src/core/core.module';
+import { MoviesModule } from 'src/movies/movies.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CoreModule } from 'src/core/core.module';
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppRoutingModule,
-    CoreModule
+    CoreModule,
+    MoviesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

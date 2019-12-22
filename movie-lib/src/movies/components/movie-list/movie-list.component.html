@@ -1,0 +1,13 @@
+<mat-form-field class="search-input">
+  <input
+    matInput
+    placeholder="Enter something about the movie"
+    (keydown)="onKeyDown($event)"
+  />
+</mat-form-field>
+
+<mat-grid-list [cols]="cols" rowHeight="470px" (window:resize)="onResize($event)">
+  <mat-grid-tile *ngFor="let movie of movies">
+    <ml-movie-item [movie]="movie"></ml-movie-item>
+  </mat-grid-tile>
+</mat-grid-list>

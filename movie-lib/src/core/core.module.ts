@@ -7,8 +7,9 @@ import {
   MatButtonModule,
   MatListModule,
   MatDividerModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
-import { NavBarComponent, SideNavComponent } from 'src/core';
+import { NavBarComponent, SideNavComponent, MovieApiService } from 'src/core';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NavBarComponent, SideNavComponent } from 'src/core';
     MatIconModule,
     MatButtonModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule
   ],
   exports: [
     NavBarComponent,
@@ -33,6 +35,7 @@ import { NavBarComponent, SideNavComponent } from 'src/core';
     MatButtonModule,
     MatListModule,
     MatDividerModule
-  ]
+  ],
+  providers: [MovieApiService]
 })
 export class CoreModule { }
