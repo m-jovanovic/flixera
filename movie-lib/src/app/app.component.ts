@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { akitaDevtools } from '@datorama/akita';
 
 @Component({
   selector: 'ml-app',
@@ -7,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'movie-lib';
+
+  constructor(private ngZone: NgZone) {
+  
+    if (!environment.production) {
+      akitaDevtools(ngZone);
+    }
+    
+  }
 }

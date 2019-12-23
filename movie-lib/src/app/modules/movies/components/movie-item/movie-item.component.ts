@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { MovieDto } from "src/core";
+import { MovieDto } from "src/app/core";
 
 @Component({
   selector: "ml-movie-item",
