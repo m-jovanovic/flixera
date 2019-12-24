@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { MovieApiService } from 'src/app/core';
 import { ApiResponse } from '../models/api-response.model';
-import { MovieSearchStore } from '../store/movie-search.store';
+import { MovieSearchStore } from '../store/movie-search/movie-search.store';
 
 @Injectable({
 	providedIn: 'root'
@@ -13,16 +13,23 @@ export class MovieSearchService extends MovieApiService {
 		super(http);
 	}
 
-	search(search: string) {
-		const queryString = `s=${search}&type=movie`;
-		
+	search(search: string, page?: number) {
+		if (page == undefined) {
+			page = 1;
+		}
+
+		const queryString = `s=${search}&type=movie&page=${page}`;
+
 		this.get<ApiResponse>(queryString).subscribe(response => {
-			this.movieSearchStore.reset();
+			const currentMovies = this.movieSearchStore.getValue().movies;
+			
+			const movies = page == 1 ? response.Search : currentMovies.concat(response.Search);
 
 			this.movieSearchStore.update({
 				searchTerm: search,
-				movies: response.Search,
-				totalCount: response.totalResults
+				movies: movies,
+				page: page,
+				hasMore: movies.length < response.totalResults
 			});
 		});
 	}

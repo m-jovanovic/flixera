@@ -9,10 +9,10 @@ import {
   MatDividerModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
-import { NavBarComponent, SideNavComponent, MovieApiService } from 'src/app/core';
+import { NavBarComponent, SideNavComponent, } from 'src/app/core';
 import { MovieSearchService } from './services/movie-search.service';
-import { MovieSearchQuery } from './store/movie-search.query';
-import { MovieSearchStore } from './store/movie-search.store';
+import { MovieSearchQuery } from './store/movie-search/movie-search.query';
+import { MovieSearchStore } from './store/movie-search/movie-search.store';
 
 @NgModule({
   declarations: [

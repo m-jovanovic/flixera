@@ -1,16 +1,11 @@
 import { Store, StoreConfig } from '@datorama/akita';
-import { MovieDto } from '../models/movie.model';
-
-export interface MovieSearchState {
-	searchTerm: string;
-	movies: MovieDto[];
-	totalCount: number;
-}
+import { MovieSearchState } from './movie-search.state';
 
 export const initialState: MovieSearchState = {
 	searchTerm: '',
-	movies: null,
-	totalCount: 0
+	movies: [],
+	page: 0,
+	hasMore: false
 };
 
 @StoreConfig({ name: 'auth' })
