@@ -12,6 +12,8 @@ import { MovieItemComponent } from './components/movie-item/movie-item.component
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { CoreModule } from 'src/app/core/core.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MoviesRoutingModule } from './movies-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
 	declarations: [MovieListComponent, MovieItemComponent, MovieDetailsComponent],
@@ -22,7 +24,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 		MatCardModule,
 		MatButtonModule,
 		CoreModule,
-		InfiniteScrollModule
+		InfiniteScrollModule,
+		MoviesRoutingModule
 	]
 })
 export class MoviesModule {}

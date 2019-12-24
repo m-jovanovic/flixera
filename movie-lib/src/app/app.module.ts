@@ -18,8 +18,7 @@ import { MoviesModule } from 'src/app/modules/movies/movies.module';
 			enabled: environment.production
 		}),
 		AppRoutingModule,
-		CoreModule,
-		MoviesModule
+		CoreModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

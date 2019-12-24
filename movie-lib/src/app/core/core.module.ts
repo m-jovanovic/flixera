@@ -1,44 +1,47 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 
-  MatToolbarModule, 
-  MatSidenavModule, 
-  MatIconModule, 
-  MatButtonModule,
-  MatListModule,
-  MatDividerModule } from '@angular/material';
+import {
+	MatToolbarModule,
+	MatSidenavModule,
+	MatIconModule,
+	MatButtonModule,
+	MatListModule,
+	MatDividerModule
+} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
-import { NavBarComponent, SideNavComponent, } from 'src/app/core';
-import { MovieSearchService } from './services/movie-search.service';
-import { MovieSearchQuery } from './store/movie-search/movie-search.query';
-import { MovieSearchStore } from './store/movie-search/movie-search.store';
+import {
+	NavBarComponent,
+	SideNavComponent,
+	SearchService,
+	MovieSearchQuery,
+	MovieSearchStore
+} from 'src/app/core';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    NavBarComponent,
-    SideNavComponent
-  ],
-  imports: [
-    CommonModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
-    MatDividerModule,
-    HttpClientModule
-  ],
-  exports: [
-    NavBarComponent,
-    SideNavComponent,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
-    MatDividerModule
-  ],
-  providers: [MovieSearchService, MovieSearchQuery, MovieSearchStore]
+	declarations: [NavBarComponent, SideNavComponent],
+	imports: [
+		CommonModule,
+		MatSidenavModule,
+		MatToolbarModule,
+		MatIconModule,
+		MatButtonModule,
+		MatListModule,
+		MatDividerModule,
+    HttpClientModule,
+    RouterModule
+	],
+	exports: [
+		NavBarComponent,
+		SideNavComponent,
+		MatToolbarModule,
+		MatSidenavModule,
+		MatIconModule,
+		MatButtonModule,
+		MatListModule,
+		MatDividerModule
+	],
+	providers: [SearchService, MovieSearchQuery, MovieSearchStore]
 })
-export class CoreModule { }
+export class CoreModule {}

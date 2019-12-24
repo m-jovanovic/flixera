@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { MovieDto } from 'src/app/core';
-import { MovieSearchService } from 'src/app/core/services/movie-search.service';
+import { SearchService } from 'src/app/core/services/search.service';
 import { MovieSearchQuery } from 'src/app/core/store/movie-search/movie-search.query';
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class MovieListComponent implements OnInit {
 	cols: number;
 
 	constructor(
-		private movieApi: MovieSearchService,
+		private movieApi: SearchService,
 		private query: MovieSearchQuery
 	) {}
 
@@ -27,7 +27,7 @@ export class MovieListComponent implements OnInit {
 		if (event.keyCode == 13) {
 			console.log(`Searching for: ${event.target.value}`);
 
-			this.movieApi.search(event.target.value, 1);
+			this.movieApi.searchMovies(event.target.value, 1);
 		}
 	}
 
@@ -49,6 +49,6 @@ export class MovieListComponent implements OnInit {
 			return;
 		}
 
-		this.movieApi.search(this.query.getSearchTerm(), this.query.getPage() + 1);
+		this.movieApi.searchMovies(this.query.getSearchTerm(), this.query.getPage() + 1);
 	}
 }
