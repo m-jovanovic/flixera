@@ -15,12 +15,14 @@
 	</mat-form-field>
 
 	<mat-grid-list
-		[cols]="cols"
-		rowHeight="470px"
+		[cols]="numberOfColumns"
+		[rowHeight]="rowHeight"
 		(window:resize)="onResize($event)"
 	>
-		<mat-grid-tile *ngFor="let movie of movies | async">
+		<mat-grid-tile *ngFor="let movie of movies$ | async">
 			<ml-movie-item [movie]="movie"></ml-movie-item>
 		</mat-grid-tile>
 	</mat-grid-list>
 </div>
+
+<ml-scroll-top></ml-scroll-top>

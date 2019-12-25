@@ -4,7 +4,8 @@ import {
 	MatInputModule,
 	MatGridListModule,
 	MatCardModule,
-	MatButtonModule
+	MatButtonModule,
+	MatIconModule
 } from '@angular/material';
 
 import { MovieListComponent } from './components/movie-list/movie-list.component';
@@ -14,6 +15,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MoviesRoutingModule } from './movies-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
 	declarations: [MovieListComponent, MovieItemComponent, MovieDetailsComponent],
@@ -25,7 +27,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 		MatButtonModule,
 		CoreModule,
 		InfiniteScrollModule,
-		MoviesRoutingModule
+		MoviesRoutingModule,
+		ScrollingModule,
+		SharedModule
 	]
 })
 export class MoviesModule {}

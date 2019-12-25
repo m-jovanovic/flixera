@@ -1,0 +1,9 @@
+<button
+	*ngIf="isScrolled"
+	class="scroll-to-top"
+	mat-fab
+	(click)="scrollToTop()"
+	[ngClass]="{ 'show-scroll-to-top': isScrolled }"
+>
+	<mat-icon>keyboard_arrow_up</mat-icon>
+</button>
