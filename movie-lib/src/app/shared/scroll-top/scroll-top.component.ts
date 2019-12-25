@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
 	selector: 'ml-scroll-top',
@@ -22,27 +22,31 @@ export class ScrollTopComponent implements OnInit, OnDestroy {
 		this.subscription = this.dispatcher
 			.scrolled()
 			.pipe(
-				tap((data: CdkScrollable) => {
-					this.scrolledElement = data.getElementRef().nativeElement;
-
-					this.isScrolled = this.getIsScrolled();
-
-					this.ref.detectChanges();
-				})
+				debounceTime(100),
+				map((scrollable: CdkScrollable) => ({
+					element: scrollable.getElementRef().nativeElement,
+					scrollTop: scrollable.measureScrollOffset("top")
+				}))
 			)
-			.subscribe();
+			.subscribe(scrollData => {
+				this.scrolledElement = scrollData.element;
+
+				this.isScrolled = this.getIsScrolled(scrollData.scrollTop);
+
+				this.ref.detectChanges();
+			});
 	}
 
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
 	}
 
-	getIsScrolled(): boolean {
-		if (this.scrolledElement.scrollTop > 100) {
+	getIsScrolled(scrollTop: number): boolean {
+		if (scrollTop > 100) {
 			return true;
 		}
 
-		if (this.isScrolled && this.scrolledElement.scrollTop < 10) {
+		if (this.isScrolled && scrollTop < 10) {
 			return false;
 		}
 	}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap, first, catchError } from 'rxjs/operators';
+import { first, catchError } from 'rxjs/operators';
 
 import { MovieApiService } from './api.service';
 import { ApiResponse } from '../models/api-response.model';
@@ -27,18 +27,17 @@ export class SearchService extends MovieApiService {
 		this.get<ApiResponse>(queryString)
 			.pipe(
 				first(),
-				tap(response => {
-					this.updateStore(response, search, page);
-
-					this.store.setLoading(false);
-				}),
 				catchError(_ => {
 					console.error('Error happened while fetching movies from API');
 
 					return of(null);
 				})
 			)
-			.subscribe();
+			.subscribe(response => {
+				this.updateStore(response, search, page);
+
+				this.store.setLoading(false);
+			});
 	}
 
 	private updateStore(
