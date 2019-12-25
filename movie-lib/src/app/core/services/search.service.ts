@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { tap, first, catchError } from 'rxjs/operators';
 
 import { MovieApiService } from './api.service';
 import { ApiResponse } from '../models/api-response.model';
 import { MovieSearchStore } from '../store/movie-search/movie-search.store';
+import { of } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
@@ -13,7 +15,7 @@ export class SearchService extends MovieApiService {
 		super(http);
 	}
 
-	searchMovies(search: string, page?: number) {
+	searchMovies(search: string, page?: number): void {
 		if (page == undefined) {
 			page = 1;
 		}
@@ -22,12 +24,28 @@ export class SearchService extends MovieApiService {
 
 		this.store.setLoading(true);
 
-		this.get<ApiResponse>(queryString).subscribe(response =>
-			this.updateStore(response, search, page)
-		);
+		this.get<ApiResponse>(queryString)
+			.pipe(
+				first(),
+				tap(response => {
+					this.updateStore(response, search, page);
+
+					this.store.setLoading(false);
+				}),
+				catchError(_ => {
+					console.error('Error happened while fetching movies from API');
+
+					return of(null);
+				})
+			)
+			.subscribe();
 	}
 
-	private updateStore(response: ApiResponse, search: string, page: number) {
+	private updateStore(
+		response: ApiResponse,
+		search: string,
+		page: number
+	): void {
 		const currentMovies = this.store.getValue().movies;
 
 		const movies =
@@ -39,7 +57,5 @@ export class SearchService extends MovieApiService {
 			page: page,
 			hasMore: movies.length < response.totalResults
 		});
-
-		this.store.setLoading(false);
 	}
 }

@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 	providedIn: 'root'
 })
 export class MovieApiService {
-	private apiPath: string = `http://www.omdbapi.com/?apikey=${environment.movieApiKey}`;
+	private apiPath: string = `${environment.movieApiPath}/?apikey=${environment.movieApiKey}`;
 	
 	protected constructor(private http: HttpClient) {}
 
