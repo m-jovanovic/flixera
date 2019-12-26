@@ -33,6 +33,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
 		{ mediaQuery: '(min-width: 1920px)', colCount: 5 }
 	];
 
+	searchTerm: string;
 	movies$: Observable<MovieDto[]>;
 	subscription: Subscription;
 
@@ -42,14 +43,13 @@ export class MovieListComponent implements OnInit, OnDestroy {
 	movieSearchInput: ElementRef;
 
 	constructor(
-		private movieApi: SearchService,
+		private searchService: SearchService,
 		private movieSearchQuery: MovieSearchQuery
 	) {}
 
 	ngOnInit(): void {
 		this.movies$ = this.movieSearchQuery.movies$;
 
-		// TODO: Add support for clearing search & movies.
 		this.subscription = fromEvent(this.movieSearchInput.nativeElement, 'keyup')
 			.pipe(
 				map((event: KeyboardEvent) => {
@@ -60,12 +60,18 @@ export class MovieListComponent implements OnInit, OnDestroy {
 				distinctUntilChanged()
 			)
 			.subscribe(value => {
-				this.movieApi.searchMovies(value, this.initialPage);
+				this.searchService.searchMovies(value, this.initialPage);
 			});
 	}
 
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
+	}
+
+	onClearClick() {
+		this.searchService.clearMovies();
+
+		this.searchTerm = '';
 	}
 
 	onScroll() {
@@ -74,7 +80,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		this.movieApi.searchMovies(
+		this.searchService.searchMovies(
 			this.movieSearchQuery.getSearchTerm(),
 			this.movieSearchQuery.getPage() + 1
 		);

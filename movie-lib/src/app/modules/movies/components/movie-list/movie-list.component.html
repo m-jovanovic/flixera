@@ -12,7 +12,18 @@
 			#movieSearchInput
 			matInput
 			placeholder="Enter something about the movie"
+			[(ngModel)]="searchTerm"
 		/>
+		<button
+			mat-button
+			*ngIf="searchTerm"
+			matSuffix
+			mat-icon-button
+			aria-label="Clear"
+			(click)="onClearClick()"
+		>
+			<mat-icon>close</mat-icon>
+		</button>
 	</mat-form-field>
 
 	<mat-grid-list

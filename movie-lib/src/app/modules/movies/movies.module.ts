@@ -17,6 +17,7 @@ import {
 } from '../movies';
 import { CoreModule } from '../../core';
 import { SharedModule } from '../../shared';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [MovieListComponent, MovieItemComponent, MovieDetailsComponent],
@@ -30,6 +31,7 @@ import { SharedModule } from '../../shared';
 		InfiniteScrollModule,
 		MoviesRoutingModule,
 		ScrollingModule,
+		FormsModule,
 		SharedModule
 	]
 })

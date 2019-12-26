@@ -6,6 +6,7 @@ import { first, catchError } from 'rxjs/operators';
 import { MovieApiService } from './api.service';
 import { ApiResponse } from '../models/api-response.model';
 import { MovieSearchStore } from '../../core';
+import { initialState } from '../store/movie-search/movie-search.store';
 
 @Injectable({
 	providedIn: 'root'
@@ -38,6 +39,10 @@ export class SearchService extends MovieApiService {
 
 				this.store.setLoading(false);
 			});
+	}
+
+	clearMovies(): void {
+		this.store.update(initialState);
 	}
 
 	private updateStore(
