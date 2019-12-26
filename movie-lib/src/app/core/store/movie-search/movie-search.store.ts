@@ -1,5 +1,6 @@
 import { Store, StoreConfig } from '@datorama/akita';
-import { MovieSearchState } from './movie-search.state';
+
+import { MovieSearchState } from '../../../core';
 
 export const initialState: MovieSearchState = {
 	searchTerm: '',

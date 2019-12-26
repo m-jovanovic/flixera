@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MovieApiService {
 	private apiPath: string = `${environment.movieApiPath}/?apikey=${environment.movieApiKey}`;
-	
+
 	protected constructor(private http: HttpClient) {}
 
 	protected get<T>(queryString: string): Observable<T> {

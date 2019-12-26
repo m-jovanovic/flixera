@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
 import { first, catchError } from 'rxjs/operators';
 
 import { MovieApiService } from './api.service';
 import { ApiResponse } from '../models/api-response.model';
-import { MovieSearchStore } from '../store/movie-search/movie-search.store';
-import { of } from 'rxjs';
+import { MovieSearchStore } from '../../core';
 
 @Injectable({
 	providedIn: 'root'

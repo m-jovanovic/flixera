@@ -4,7 +4,7 @@ import { MatGridList } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { MediaQueryColCountPair } from './media-query-col-count-pair';
+import { MediaQueryColCountPair } from '../../';
 
 @Directive({
 	selector: '[mlResponsiveColumns]'

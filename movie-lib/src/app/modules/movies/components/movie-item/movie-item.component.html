@@ -1,14 +1,14 @@
 <mat-card class="movie-container">
-  <img
-    class="movie-image"
-    mat-card-image
-    [src]="movie?.Poster"
-    onerror="this.src = 'https://3apq7g38q3kw2yn3fx4bojii-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/lazyplaceholder4.jpg';"
-  />
+	<img
+		class="movie-image"
+		mat-card-image
+		[src]="movie?.Poster"
+		onerror="this.src = 'https://3apq7g38q3kw2yn3fx4bojii-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/lazyplaceholder4.jpg';"
+	/>
 
-  <mat-card-content>
-    <p class="movie-title" (click)="onClick(movie?.imdbID)">
-        {{ movie?.Title }}
-    </p>
-  </mat-card-content>
+	<mat-card-content>
+		<p class="movie-title" (click)="onClick(movie?.imdbID)">
+			{{ movie?.Title }}
+		</p>
+	</mat-card-content>
 </mat-card>

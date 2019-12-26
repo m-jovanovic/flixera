@@ -29,8 +29,8 @@ import { RouterModule } from '@angular/router';
 		MatButtonModule,
 		MatListModule,
 		MatDividerModule,
-    HttpClientModule,
-    RouterModule
+		HttpClientModule,
+		RouterModule
 	],
 	exports: [
 		NavBarComponent,

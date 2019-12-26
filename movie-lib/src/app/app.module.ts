@@ -6,8 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { CoreModule } from './core/core.module';
-import { MoviesModule } from 'src/app/modules/movies/movies.module';
+import { CoreModule } from './core';
 
 @NgModule({
 	declarations: [AppComponent],

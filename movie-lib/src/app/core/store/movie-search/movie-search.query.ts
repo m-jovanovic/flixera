@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
-import { MovieSearchStore } from './movie-search.store';
-import { MovieSearchState } from './movie-search.state';
+
+import { MovieSearchStore, MovieSearchState } from '../../../core';
 
 @Injectable({ providedIn: 'root' })
 export class MovieSearchQuery extends Query<MovieSearchState> {

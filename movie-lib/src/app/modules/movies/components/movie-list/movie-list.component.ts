@@ -6,18 +6,15 @@ import {
 	OnDestroy
 } from '@angular/core';
 import { Observable, fromEvent, Subscription } from 'rxjs';
-
-import { MovieDto } from 'src/app/core';
-import { SearchService } from 'src/app/core/services/search.service';
-import { MovieSearchQuery } from 'src/app/core/store/movie-search/movie-search.query';
 import {
 	map,
 	filter,
 	debounceTime,
 	distinctUntilChanged
 } from 'rxjs/operators';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MediaQueryColCountPair } from 'src/app/shared/directives/responsive-columns/media-query-col-count-pair';
+
+import { MediaQueryColCountPair } from '../../../../shared';
+import { MovieDto, SearchService, MovieSearchQuery } from '../../../../core';
 
 @Component({
 	selector: 'ml-movie-list',

@@ -1,4 +1,4 @@
-import { MovieDto } from '../..';
+import { MovieDto } from '../../../core';
 
 export interface MovieSearchState {
 	searchTerm: string;

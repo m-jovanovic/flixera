@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
-import { tap, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 @Component({
 	selector: 'ml-scroll-top',
@@ -10,22 +10,22 @@ import { tap, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 })
 export class ScrollTopComponent implements OnInit, OnDestroy {
 	subscription: Subscription;
-	isScrolled: boolean;
 	scrolledElement: HTMLElement;
+	isScrolled: boolean;
 
 	constructor(
-		private dispatcher: ScrollDispatcher,
-		private ref: ChangeDetectorRef
+		private scrollDispatcher: ScrollDispatcher,
+		private changeDetectorRef: ChangeDetectorRef
 	) {}
 
 	ngOnInit(): void {
-		this.subscription = this.dispatcher
+		this.subscription = this.scrollDispatcher
 			.scrolled()
 			.pipe(
 				debounceTime(100),
 				map((scrollable: CdkScrollable) => ({
 					element: scrollable.getElementRef().nativeElement,
-					scrollTop: scrollable.measureScrollOffset("top")
+					scrollTop: scrollable.measureScrollOffset('top')
 				}))
 			)
 			.subscribe(scrollData => {
@@ -33,22 +33,12 @@ export class ScrollTopComponent implements OnInit, OnDestroy {
 
 				this.isScrolled = this.getIsScrolled(scrollData.scrollTop);
 
-				this.ref.detectChanges();
+				this.changeDetectorRef.detectChanges();
 			});
 	}
 
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
-	}
-
-	getIsScrolled(scrollTop: number): boolean {
-		if (scrollTop > 100) {
-			return true;
-		}
-
-		if (this.isScrolled && scrollTop < 10) {
-			return false;
-		}
 	}
 
 	scrollToTop(): void {
@@ -61,5 +51,15 @@ export class ScrollTopComponent implements OnInit, OnDestroy {
 		window.requestAnimationFrame(this.scrollToTop.bind(this));
 
 		this.scrolledElement.scrollTo(0, currentScroll - currentScroll / 20);
+	}
+
+	getIsScrolled(scrollTop: number): boolean {
+		if (scrollTop > 100) {
+			return true;
+		}
+
+		if (this.isScrolled && scrollTop < 10) {
+			return false;
+		}
 	}
 }
