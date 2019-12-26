@@ -5,7 +5,7 @@ import {
 	ElementRef,
 	OnDestroy
 } from '@angular/core';
-import { Observable, from, fromEvent, Subscription } from 'rxjs';
+import { Observable, fromEvent, Subscription } from 'rxjs';
 
 import { MovieDto } from 'src/app/core';
 import { SearchService } from 'src/app/core/services/search.service';
@@ -16,6 +16,8 @@ import {
 	debounceTime,
 	distinctUntilChanged
 } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MediaQueryColCountPair } from 'src/app/shared/directives/responsive-columns/media-query-col-count-pair';
 
 @Component({
 	selector: 'ml-movie-list',
@@ -25,10 +27,18 @@ import {
 export class MovieListComponent implements OnInit, OnDestroy {
 	private readonly enterKeyCode = 13;
 	private readonly initialPage = 1;
-	rowHeight: number = 465;
-	numberOfColumns: number;
+	private readonly rowHeight: number = 550;
+	private readonly mediaQueryColCountPairs: MediaQueryColCountPair[] = [
+		{ mediaQuery: '(max-width: 949px)', colCount: 1 },
+		{ mediaQuery: '(min-width: 950px)', colCount: 2 },
+		{ mediaQuery: '(min-width: 1270px)', colCount: 3 },
+		{ mediaQuery: '(min-width: 1600px)', colCount: 4 },
+		{ mediaQuery: '(min-width: 1920px)', colCount: 5 }
+	];
+
 	movies$: Observable<MovieDto[]>;
 	subscription: Subscription;
+
 	@ViewChild('movieSearchInput', {
 		static: true
 	})
@@ -36,15 +46,13 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private movieApi: SearchService,
-		private query: MovieSearchQuery
+		private movieSearchQuery: MovieSearchQuery
 	) {}
 
 	ngOnInit(): void {
-		this.numberOfColumns = 5;
+		this.movies$ = this.movieSearchQuery.movies$;
 
-		this.movies$ = this.query.movies$;
-		
-		// TODO: Add support for clearing search. Hitting enter? 
+		// TODO: Add support for clearing search & movies.
 		this.subscription = fromEvent(this.movieSearchInput.nativeElement, 'keyup')
 			.pipe(
 				map((event: KeyboardEvent) => {
@@ -63,29 +71,15 @@ export class MovieListComponent implements OnInit, OnDestroy {
 		this.subscription.unsubscribe();
 	}
 
-	onResize(event: Event): void {
-		const targetElement = <Window>event.target;
-
-		this.numberOfColumns =
-			targetElement.innerWidth >= 1700
-				? 5
-				: targetElement.innerWidth >= 1400
-				? 4
-				: targetElement.innerWidth >= 1130
-				? 3
-				: targetElement.innerWidth >= 850
-				? 2
-				: 1;
-	}
-
 	onScroll() {
-		if (!this.query.getHasMore()) {
+		if (!this.movieSearchQuery.getHasMore()) {
+			// TODO: Add a notification to tell the user there are no more movies.
 			return;
 		}
 
 		this.movieApi.searchMovies(
-			this.query.getSearchTerm(),
-			this.query.getPage() + 1
+			this.movieSearchQuery.getSearchTerm(),
+			this.movieSearchQuery.getPage() + 1
 		);
 	}
 }

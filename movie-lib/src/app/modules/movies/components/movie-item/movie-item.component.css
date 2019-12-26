@@ -1,5 +1,5 @@
 .movie-container {
-    max-width: 270px;
+    max-width: 300px;
     padding: 16px 0 !important;
 }
 
@@ -13,8 +13,8 @@
 }
 
 .movie-image {
-    width: 270px !important;
-    height: 350px !important;
+    width: 300px !important;
+    height: 400px !important;
     margin: 0 auto;
 }
 

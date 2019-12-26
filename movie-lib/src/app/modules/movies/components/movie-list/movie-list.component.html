@@ -8,6 +8,7 @@
 >
 	<mat-form-field class="search-input">
 		<input
+			type="search"
 			#movieSearchInput
 			matInput
 			placeholder="Enter something about the movie"
@@ -15,9 +16,9 @@
 	</mat-form-field>
 
 	<mat-grid-list
-		[cols]="numberOfColumns"
+		[mlResponsiveColumns]="mediaQueryColCountPairs"
+		[cols]="0"
 		[rowHeight]="rowHeight"
-		(window:resize)="onResize($event)"
 	>
 		<mat-grid-tile *ngFor="let movie of movies$ | async">
 			<ml-movie-item [movie]="movie"></ml-movie-item>

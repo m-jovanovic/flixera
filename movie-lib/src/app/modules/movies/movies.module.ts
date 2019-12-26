@@ -4,8 +4,7 @@ import {
 	MatInputModule,
 	MatGridListModule,
 	MatCardModule,
-	MatButtonModule,
-	MatIconModule
+	MatButtonModule
 } from '@angular/material';
 
 import { MovieListComponent } from './components/movie-list/movie-list.component';
