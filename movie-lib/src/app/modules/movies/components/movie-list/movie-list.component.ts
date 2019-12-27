@@ -5,6 +5,7 @@ import {
 	ElementRef,
 	OnDestroy
 } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Observable, fromEvent, Subscription } from 'rxjs';
 import {
 	map,
@@ -33,8 +34,8 @@ export class MovieListComponent implements OnInit, OnDestroy {
 		{ mediaQuery: '(min-width: 1920px)', colCount: 5 }
 	];
 
-	searchTerm: string;
 	movies$: Observable<MovieDto[]>;
+	searchTermExists$: Observable<boolean>;
 	subscription: Subscription;
 
 	@ViewChild('movieSearchInput', {
@@ -44,11 +45,14 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private searchService: SearchService,
-		private movieSearchQuery: MovieSearchQuery
+		private movieSearchQuery: MovieSearchQuery,
+		private snackBar: MatSnackBar
 	) {}
 
 	ngOnInit(): void {
 		this.movies$ = this.movieSearchQuery.movies$;
+
+		this.searchTermExists$ = this.movieSearchQuery.searchTermExists$;
 
 		this.subscription = fromEvent(this.movieSearchInput.nativeElement, 'keyup')
 			.pipe(
@@ -71,12 +75,15 @@ export class MovieListComponent implements OnInit, OnDestroy {
 	onClearClick() {
 		this.searchService.clearMovies();
 
-		this.searchTerm = '';
+		(<HTMLInputElement>this.movieSearchInput.nativeElement).value = '';
 	}
 
 	onScroll() {
 		if (!this.movieSearchQuery.getHasMore()) {
-			// TODO: Add a notification to tell the user there are no more movies.
+			this.snackBar.open('There are no more movies to show.', '', {
+				duration: 3000
+			});
+
 			return;
 		}
 

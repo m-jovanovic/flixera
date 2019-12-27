@@ -5,7 +5,7 @@ import { first, catchError } from 'rxjs/operators';
 
 import { MovieApiService } from './api.service';
 import { ApiResponse } from '../models/api-response.model';
-import { MovieSearchStore } from '../../core';
+import { MovieSearchStore } from '../store/movie-search/movie-search.store';
 import { initialState } from '../store/movie-search/movie-search.store';
 
 @Injectable({
@@ -31,7 +31,12 @@ export class SearchService extends MovieApiService {
 				catchError(_ => {
 					console.error('Error happened while fetching movies from API');
 
-					return of(null);
+					return of({
+						Search: [],
+						totalResults: 0,
+						Response: 'False',
+						Error: ''
+					});
 				})
 			)
 			.subscribe(response => {
@@ -50,6 +55,20 @@ export class SearchService extends MovieApiService {
 		search: string,
 		page: number
 	): void {
+		if (
+			response.Response == 'False' ||
+			(response.Error != undefined && response.Error.length > 0)
+		) {
+			this.store.update({
+				searchTerm: search,
+				movies: [],
+				page: page,
+				hasMore: false
+			});
+
+			return;
+		}
+
 		const currentMovies = this.store.getValue().movies;
 
 		const movies =

@@ -12,11 +12,10 @@
 			#movieSearchInput
 			matInput
 			placeholder="Enter something about the movie"
-			[(ngModel)]="searchTerm"
 		/>
 		<button
 			mat-button
-			*ngIf="searchTerm"
+			*ngIf="searchTermExists$ | async"
 			matSuffix
 			mat-icon-button
 			aria-label="Clear"

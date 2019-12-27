@@ -4,20 +4,18 @@ import {
 	MatInputModule,
 	MatGridListModule,
 	MatCardModule,
-	MatButtonModule
+	MatButtonModule,
+	MatSnackBarModule
 } from '@angular/material';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import {
-	MovieListComponent,
-	MovieItemComponent,
-	MovieDetailsComponent,
-	MoviesRoutingModule
-} from '../movies';
 import { CoreModule } from '../../core';
 import { SharedModule } from '../../shared';
-import { FormsModule } from '@angular/forms';
+import { MoviesRoutingModule } from './movies-routing.module';
+import { MovieListComponent } from './components/movie-list/movie-list.component';
+import { MovieItemComponent } from './components/movie-item/movie-item.component';
+import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 
 @NgModule({
 	declarations: [MovieListComponent, MovieItemComponent, MovieDetailsComponent],
@@ -27,11 +25,11 @@ import { FormsModule } from '@angular/forms';
 		MatGridListModule,
 		MatCardModule,
 		MatButtonModule,
+		MatSnackBarModule,
 		CoreModule,
 		InfiniteScrollModule,
 		MoviesRoutingModule,
 		ScrollingModule,
-		FormsModule,
 		SharedModule
 	]
 })
