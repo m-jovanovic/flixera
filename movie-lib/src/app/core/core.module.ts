@@ -1,16 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import {
-	MatToolbarModule,
-	MatSidenavModule,
-	MatIconModule,
-	MatButtonModule,
-	MatListModule,
-	MatDividerModule
-} from '@angular/material';
 
+import { SharedModule } from '@app/shared';
+import { MaterialModule } from '@app/material';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { SearchService } from './services/search.service';
@@ -19,27 +12,14 @@ import { MovieSearchStore } from './store/movie-search/movie-search.store';
 
 @NgModule({
 	declarations: [NavBarComponent, SideNavComponent],
-	imports: [
-		CommonModule,
-		MatSidenavModule,
-		MatToolbarModule,
-		MatIconModule,
-		MatButtonModule,
-		MatListModule,
-		MatDividerModule,
-		HttpClientModule,
-		RouterModule
-	],
-	exports: [
-		NavBarComponent,
-		SideNavComponent,
-		MatToolbarModule,
-		MatSidenavModule,
-		MatIconModule,
-		MatButtonModule,
-		MatListModule,
-		MatDividerModule
-	],
+	imports: [HttpClientModule, RouterModule, SharedModule, MaterialModule],
+	exports: [NavBarComponent, SideNavComponent],
 	providers: [SearchService, MovieSearchQuery, MovieSearchStore]
 })
-export class CoreModule {}
+export class CoreModule {
+	constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+		if (parentModule) {
+			throw new Error('The Core module has already been loaded.');
+		}
+	}
+}

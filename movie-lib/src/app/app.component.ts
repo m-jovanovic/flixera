@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 import { akitaDevtools } from '@datorama/akita';
 
 @Component({
