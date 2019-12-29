@@ -1,0 +1,15 @@
+<div *ngIf="user$ | async as user">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <span mat-menu-item>
+            {{ user.displayName }}
+        </span>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="signOut()">
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Sign Out</span>
+        </button>
+    </mat-menu>    
+</div>

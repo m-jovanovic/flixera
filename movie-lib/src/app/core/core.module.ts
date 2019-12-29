@@ -10,13 +10,15 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { FooterLayoutComponent } from './components/footer-layout/footer-layout.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { NavBarMenuComponent } from './components/nav-bar-menu/nav-bar-menu.component';
 
 @NgModule({
 	declarations: [
 		MainLayoutComponent,
 		FooterLayoutComponent,
 		SideNavComponent,
-		NavBarComponent
+		NavBarComponent,
+		NavBarMenuComponent
 	],
 	imports: [
 		HttpClientModule,

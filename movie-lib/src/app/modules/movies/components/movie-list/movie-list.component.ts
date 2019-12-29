@@ -23,10 +23,10 @@ import { MovieDto, SearchService, MovieSearchQuery } from '@app/core';
 	styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit, OnDestroy {
-	private readonly enterKeyCode = 13;
-	private readonly initialPage = 1;
-	private readonly rowHeight: number = 550;
-	private readonly mediaQueryColCountPairs: MediaQueryColCountPair[] = [
+	enterKeyCode = 13;
+	initialPage = 1;
+	rowHeight: number = 550;
+	mediaQueryColCountPairs: MediaQueryColCountPair[] = [
 		{ mediaQuery: '(max-width: 949px)', colCount: 1 },
 		{ mediaQuery: '(min-width: 950px)', colCount: 2 },
 		{ mediaQuery: '(min-width: 1270px)', colCount: 3 },
