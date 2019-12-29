@@ -55,6 +55,7 @@ export class SearchService extends MovieApiService {
 		search: string,
 		page: number
 	): void {
+		// TODO: Refactor!!!
 		if (
 			response.Response == 'False' ||
 			(response.Error != undefined && response.Error.length > 0)

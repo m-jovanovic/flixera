@@ -14,8 +14,8 @@ import {
 	distinctUntilChanged
 } from 'rxjs/operators';
 
-import { MediaQueryColCountPair } from '../../../../shared';
-import { MovieDto, SearchService, MovieSearchQuery } from '../../../../core';
+import { MediaQueryColCountPair } from '@app/shared';
+import { MovieDto, SearchService, MovieSearchQuery } from '@app/core';
 
 @Component({
 	selector: 'ml-movie-list',

@@ -1,6 +1,7 @@
 import { Store, StoreConfig } from '@datorama/akita';
+import { Injectable } from '@angular/core';
 
-import { MovieSearchState } from '../movie-search/movie-search.state';
+import { MovieSearchState } from './movie-search.state';
 
 export const initialState: MovieSearchState = {
 	searchTerm: '',
@@ -9,7 +10,10 @@ export const initialState: MovieSearchState = {
 	hasMore: false
 };
 
-@StoreConfig({ name: 'auth' })
+@StoreConfig({ name: 'movie-search' })
+@Injectable({
+	providedIn: 'root'
+})
 export class MovieSearchStore extends Store<MovieSearchState> {
 	constructor() {
 		super(initialState);

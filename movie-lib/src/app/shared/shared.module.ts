@@ -7,16 +7,12 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 import { ResponsiveColumnsDirective } from './directives/responsive-columns/responsive-columns.directive';
 
 @NgModule({
-	declarations: [ScrollTopComponent, ResponsiveColumnsDirective],
-	imports: [
-		CommonModule,
-		ScrollingModule,
-		MaterialModule
-	],
+	declarations: [ResponsiveColumnsDirective, ScrollTopComponent],
+	imports: [CommonModule, ScrollingModule, MaterialModule],
 	exports: [
 		CommonModule,
-		ScrollTopComponent,
-		ResponsiveColumnsDirective
+		ResponsiveColumnsDirective,
+		ScrollTopComponent
 	]
 })
 export class SharedModule {}
