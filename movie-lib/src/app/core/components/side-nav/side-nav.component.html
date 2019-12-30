@@ -1,40 +1,42 @@
-<mat-toolbar>
-	<mat-toolbar-row>
-		<h2>Movie Library</h2>
-	</mat-toolbar-row>
-</mat-toolbar>
+<mat-sidenav-container>
+	<mat-sidenav
+		#drawer
+		class="sidenav"
+		fixedInViewport="true"
+		[attr.role]="isHandset ? 'dialog' : 'navigation'"
+		[mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+		[opened]="!(isHandset | async)!.matches"
+	>
+		<mat-toolbar color="primary">
+			<mat-toolbar-row>
+				<h2>Movie Library</h2>
+			</mat-toolbar-row>
+		</mat-toolbar>
 
-<mat-nav-list>
-	<h2 matSubheader>Collections</h2>
+		<ml-side-nav-menu></ml-side-nav-menu>
+	</mat-sidenav>
+	<mat-sidenav-content class="sidenav-content" cdkScrollable>
+		<!-- Nav-bar -->
+		<mat-toolbar color="primary">
+			<button
+			type="button"
+			aria-label="Toggle sidenav"
+			mat-icon-button
+			(click)="drawer.toggle()"
+			*ngIf="(isHandset | async)!.matches">
+				<mat-icon aria-label="Sidenav toggle icon.">menu</mat-icon>
+			</button
+			>
+			<span *ngIf="(isHandset | async)!.matches">Movie Library</span>
 
-	<a mat-list-item [routerLink]="['/movies']">
-		<mat-icon>movie</mat-icon>
-		Movies
-	</a>
-	<a mat-list-item>
-		<mat-icon>collections</mat-icon>
-		Shows
-	</a>
+			<span class="spacer"></span>
 
-	<mat-divider></mat-divider>
+			<ml-nav-bar-menu></ml-nav-bar-menu>
+		</mat-toolbar>
 
-	<h2 matSubheader>Social</h2>
-
-	<a mat-list-item>
-		<mat-icon>person</mat-icon>
-		Friends
-	</a>
-	<a mat-list-item>
-		<mat-icon>person_add</mat-icon>
-		Search for friends
-	</a>
-
-	<mat-divider></mat-divider>
-
-	<h2 matSubheader>Configuration</h2>
-
-	<a mat-list-item>
-		<mat-icon>settings</mat-icon>
-		Settings
-	</a>
-</mat-nav-list>
+		<!-- Content -->
+		<main>
+			<ng-content></ng-content>
+		</main>
+	</mat-sidenav-content>
+</mat-sidenav-container>

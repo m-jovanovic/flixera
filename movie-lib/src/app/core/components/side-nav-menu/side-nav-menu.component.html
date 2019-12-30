@@ -1,0 +1,34 @@
+<mat-nav-list>
+    <h2 matSubheader>Collections</h2>
+
+    <a mat-list-item [routerLink]="['/movies']" routerLinkActive="active-list-item">
+        <mat-icon>movie</mat-icon>
+        Movies
+    </a>
+    <a mat-list-item>
+        <mat-icon>collections</mat-icon>
+        Shows
+    </a>
+
+    <mat-divider></mat-divider>
+
+    <h2 matSubheader>Social</h2>
+
+    <a mat-list-item>
+        <mat-icon>person</mat-icon>
+        Friends
+    </a>
+    <a mat-list-item>
+        <mat-icon>person_add</mat-icon>
+        Search for friends
+    </a>
+
+    <mat-divider></mat-divider>
+
+    <h2 matSubheader>Configuration</h2>
+
+    <a mat-list-item>
+        <mat-icon>settings</mat-icon>
+        Settings
+    </a>
+</mat-nav-list>

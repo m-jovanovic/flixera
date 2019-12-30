@@ -9,16 +9,16 @@ import { MaterialModule } from '@app/material';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { FooterLayoutComponent } from './components/footer-layout/footer-layout.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NavBarMenuComponent } from './components/nav-bar-menu/nav-bar-menu.component';
+import { SideNavMenuComponent } from './components/side-nav-menu/side-nav-menu.component';
 
 @NgModule({
 	declarations: [
 		MainLayoutComponent,
 		FooterLayoutComponent,
 		SideNavComponent,
-		NavBarComponent,
-		NavBarMenuComponent
+		NavBarMenuComponent,
+		SideNavMenuComponent
 	],
 	imports: [
 		HttpClientModule,

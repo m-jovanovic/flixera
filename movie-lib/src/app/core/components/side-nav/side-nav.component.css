@@ -1,17 +1,24 @@
-mat-icon {
-	margin-right: 15px;
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+	height: 100%;
 }
 
-mat-nav-list h2 {
-	font-size: 17px;
-	cursor: pointer;
+mat-sidenav {
+	width: 250px;
+	overflow: hidden;
 }
 
-mat-nav-list a {
-	padding-left: 10px;
-	width: 239px;
+main {
+	padding: 20px;
 }
 
-mat-nav-list a:hover {
-	color: #3f51b5;
+.spacer {
+	flex: 1 1 auto;
+}
+
+@media (max-width: 599px) {
+	mat-toolbar {
+		padding: 9px !important;
+	}
 }

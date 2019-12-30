@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import {
+	BreakpointObserver,
+	Breakpoints,
+	BreakpointState
+} from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'ml-side-nav',
@@ -6,5 +12,9 @@ import { Component } from '@angular/core';
 	styleUrls: ['./side-nav.component.css']
 })
 export class SideNavComponent {
-	constructor() {}
+	isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(
+		Breakpoints.Handset
+	);
+
+	constructor(private breakpointObserver: BreakpointObserver) {}
 }
