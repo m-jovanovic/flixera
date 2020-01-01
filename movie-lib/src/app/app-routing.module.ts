@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {
 	MainLayoutComponent,
-	FooterLayoutComponent,
+	BlankLayoutComponent,
 	AuthGuard
 } from '@app/core';
 
@@ -26,7 +26,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: FooterLayoutComponent,
+		component: BlankLayoutComponent,
 		children: [
 			{
 				path: 'login',

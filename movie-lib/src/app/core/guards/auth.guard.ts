@@ -9,7 +9,7 @@ import {
 	Router
 } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { take, tap, map } from 'rxjs/operators';
 
 @Injectable({
