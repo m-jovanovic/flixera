@@ -19,10 +19,10 @@ main {
 
 @media (max-width: 599px) {
 	mat-toolbar {
-		padding: 0;
+		padding: 5px;
 	}
 
 	main {
-		padding: 8.5px;
+		padding: 14px;
 	}
 }

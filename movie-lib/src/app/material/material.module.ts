@@ -9,7 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatMenuModule, MatChipsModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
 	exports: [
@@ -24,7 +26,8 @@ import { MatMenuModule, MatChipsModule } from '@angular/material';
 		MatCardModule,
 		MatSnackBarModule,
 		MatMenuModule,
-		MatChipsModule
+		MatChipsModule,
+		MatProgressSpinnerModule
 	]
 })
 export class MaterialModule {}

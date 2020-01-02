@@ -1,54 +1,67 @@
-<mat-card *ngIf="movie$ | async as movie">
-	<div mat-card-image [ngClass]="imageExpanded ? '' : 'movie-image-container'">
-		<img
-			class="movie-image"
-			[src]="movie?.Poster"
-			onerror="this.src = 'https://3apq7g38q3kw2yn3fx4bojii-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/lazyplaceholder4.jpg';"
-		/>
-	</div>
+<div *ngIf="isLoading$ | async; else content">
+	<mat-grid-list cols="1" rowHeight="500px">
+		<mat-grid-tile>
+			<mat-progress-spinner color="accent" mode="indeterminate"></mat-progress-spinner>
+		</mat-grid-tile>
+	</mat-grid-list>
+</div>
 
-	<mat-card-header style="position: relative;">
-		<button
-			class="movie-image-expander"
-			mat-mini-fab
-            color="accent"
-            [ngClass]="imageExpanded ? 'image-expanded' : ''"
-			(click)="expandImage()"
+<ng-template #content>
+	<mat-card *ngIf="movie$ | async as movie">
+		<div
+			mat-card-image
+			[ngClass]="imageExpanded ? '' : 'movie-image-container'"
 		>
-			<mat-icon>add</mat-icon>
-		</button>
+			<img
+				class="movie-image"
+				[src]="movie?.Poster"
+				onerror="this.src = 'https://3apq7g38q3kw2yn3fx4bojii-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/lazyplaceholder4.jpg';"
+			/>
+		</div>
 
-        <mat-card-title class="pull-left-16px">
-			{{ movie?.Title }}
-			<span class="movie-year"> ({{ movie?.Year }}) </span>
-		</mat-card-title>
-		<mat-card-subtitle class="pull-left-16px">
-			<mat-chip-list [selectable]="false">
-				<mat-chip
-					*ngFor="let genre of movie?.Genre.split(',')"
-					color="primary"
-					selected
-				>
-					{{ genre }}
-				</mat-chip>
-			</mat-chip-list>
-		</mat-card-subtitle>
-	</mat-card-header>
+		<mat-card-header style="position: relative;">
+			<button
+				class="movie-image-expander"
+				mat-mini-fab
+				color="accent"
+				[ngClass]="imageExpanded ? 'image-expanded' : ''"
+				(click)="expandImage()"
+			>
+				<mat-icon>add</mat-icon>
+			</button>
 
-	<mat-card-content>
-		<p class="movie-plot">
-			{{ movie?.Plot }}
-		</p>
-	</mat-card-content>
+			<mat-card-title class="pull-left-16px">
+				{{ movie?.Title }}
+				<span class="movie-year"> ({{ movie?.Year }}) </span>
+			</mat-card-title>
+			<mat-card-subtitle class="pull-left-16px">
+				<mat-chip-list [selectable]="false">
+					<mat-chip
+						*ngFor="let genre of movie?.Genre.split(',')"
+						color="primary"
+						selected
+					>
+						{{ genre }}
+					</mat-chip>
+				</mat-chip-list>
+			</mat-card-subtitle>
+		</mat-card-header>
 
-	<mat-divider></mat-divider>
+		<mat-card-content>
+			<p class="movie-plot">
+				{{ movie?.Plot }}
+			</p>
+		</mat-card-content>
 
-	<mat-card-actions>
-		<button mat-button color="accent">
-			ADD TO LIBRARY
-		</button>
-		<button mat-button color="accent">
-			SHARE
-		</button>
-	</mat-card-actions>
-</mat-card>
+		<mat-divider></mat-divider>
+
+		<mat-card-actions>
+			<button mat-button color="accent">
+				ADD TO LIBRARY
+			</button>
+			<button mat-button color="accent">
+				SHARE
+			</button>
+		</mat-card-actions>
+	</mat-card>
+</ng-template>

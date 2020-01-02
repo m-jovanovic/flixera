@@ -10,6 +10,7 @@ import { Subscription, Observable } from 'rxjs';
 	styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
+	isLoading$: Observable<boolean>;
 	movie$: Observable<MovieDto>;
 	subscription: Subscription;
 	imageExpanded: boolean = false;
@@ -21,6 +22,8 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
+		this.isLoading$ = this.movieDetailsQuery.selectLoading();
+
 		this.movie$ = this.movieDetailsQuery.movie$;
 
 		this.subscription = this.route.paramMap

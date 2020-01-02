@@ -1,4 +1,4 @@
-<mat-card class="movie-container"  (click)="onClick(movie?.imdbID)">
+<mat-card class="movie-container">
 	<img
 		class="movie-image"
 		mat-card-image
@@ -6,9 +6,25 @@
 		onerror="this.src = 'https://3apq7g38q3kw2yn3fx4bojii-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/lazyplaceholder4.jpg';"
 	/>
 
-	<mat-card-content>
-		<p class="movie-title">
+	<mat-card-header>
+		<mat-card-title class="movie-title pull-left-16px">
 			{{ movie?.Title }}
-		</p>
-	</mat-card-content>
+		</mat-card-title>
+	</mat-card-header>
+
+	<mat-divider></mat-divider>
+
+	<mat-card-actions>
+		<button mat-button color="primary">
+			ADD TO LIBRARY
+		</button>
+		<button
+			mat-icon-button
+			title="Details"
+			class="float-right"
+			(click)="onClick(movie?.imdbID)"
+		>
+			<mat-icon>search</mat-icon>
+		</button>
+	</mat-card-actions>
 </mat-card>
