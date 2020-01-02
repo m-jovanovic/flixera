@@ -6,13 +6,19 @@ import { first, catchError } from 'rxjs/operators';
 import { MovieApiService } from './api.service';
 import { ApiResponse } from '../models/api-response.model';
 import { MovieSearchStore } from '../store/movie-search/movie-search.store';
-import { initialState } from '../store/movie-search/movie-search.store';
+import { initialMovieSearchState } from '../store/movie-search/movie-search.store';
+import { MovieDto } from '../models/movie.model';
+import { MovieDetailsStore } from '../store/movie-details/movie-details.store';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class SearchService extends MovieApiService {
-	constructor(http: HttpClient, private store: MovieSearchStore) {
+	constructor(
+		http: HttpClient,
+		private movieSearchStore: MovieSearchStore,
+		private movieDetailsStore: MovieDetailsStore
+	) {
 		super(http);
 	}
 
@@ -23,7 +29,7 @@ export class SearchService extends MovieApiService {
 
 		const queryString = `s=${search}&type=movie&page=${page}`;
 
-		this.store.setLoading(true);
+		this.movieSearchStore.setLoading(true);
 
 		this.get<ApiResponse>(queryString)
 			.pipe(
@@ -42,12 +48,35 @@ export class SearchService extends MovieApiService {
 			.subscribe(response => {
 				this.updateStore(response, search, page);
 
-				this.store.setLoading(false);
+				this.movieSearchStore.setLoading(false);
 			});
 	}
 
 	clearMovies(): void {
-		this.store.update(initialState);
+		this.movieSearchStore.update(initialMovieSearchState);
+	}
+
+	getByImdbId(imdbId: string): void {
+		const queryString = `i=${imdbId}&type=movie&plot=full`;
+
+		this.movieDetailsStore.setLoading(true);
+
+		this.get<MovieDto>(queryString)
+			.pipe(
+				first(),
+				catchError(_ => {
+					console.error('Error happened while fetching movie from API');
+
+					return of(null);
+				})
+			)
+			.subscribe(movie => {
+				this.movieDetailsStore.update({
+					movie
+				});
+
+				this.movieDetailsStore.setLoading(false);
+			});
 	}
 
 	private updateStore(
@@ -60,7 +89,7 @@ export class SearchService extends MovieApiService {
 			response.Response == 'False' ||
 			(response.Error != undefined && response.Error.length > 0)
 		) {
-			this.store.update({
+			this.movieSearchStore.update({
 				searchTerm: search,
 				movies: [],
 				page: page,
@@ -70,12 +99,12 @@ export class SearchService extends MovieApiService {
 			return;
 		}
 
-		const currentMovies = this.store.getValue().movies;
+		const currentMovies = this.movieSearchStore.getValue().movies;
 
 		const movies =
 			page == 1 ? response.Search : currentMovies.concat(response.Search);
 
-		this.store.update({
+		this.movieSearchStore.update({
 			searchTerm: search,
 			movies: movies,
 			page: page,

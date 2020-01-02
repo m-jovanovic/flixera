@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MovieDto } from '@app/core';
@@ -8,14 +8,12 @@ import { MovieDto } from '@app/core';
 	templateUrl: './movie-item.component.html',
 	styleUrls: ['./movie-item.component.css']
 })
-export class MovieItemComponent implements OnInit {
+export class MovieItemComponent{
 	@Input() movie: MovieDto;
 
 	constructor(private router: Router) {}
-
-	ngOnInit() {}
-
-	onClick(imdbId: string) {
+	
+	onClick(imdbId: string): void {
 		this.router.navigate(['/movies', imdbId]);
 	}
 }

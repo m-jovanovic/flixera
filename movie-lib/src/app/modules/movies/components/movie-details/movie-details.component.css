@@ -1,0 +1,55 @@
+mat-card {
+	width: 500px !important;
+	display: block;
+	margin: 0 auto;
+}
+
+.movie-image-container {
+    position: relative;
+	max-height: 300px;
+	overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.movie-image {
+	width: 532px !important;
+	border-radius: inherit;
+}
+
+.movie-image-expander {
+    position: absolute;
+    top: -36px;
+    right: 0;
+}
+
+.movie-image-expander.image-expanded {
+    top: -41px;
+}
+
+.movie-plot {
+	overflow-wrap: break-word;
+    max-width: 500px;
+    text-align: justify;
+}
+
+.pull-left-16px {
+	margin-left: -16px;
+}
+
+@media (max-width: 499px) {
+    .mat-card {
+        width: 300px !important;
+    }
+
+    .movie-image-container {
+        max-height: 200px;
+    }
+    
+    .movie-image {
+		width: 332px !important;
+    }
+    
+    .movie-plot {
+        max-width: 300px;
+    }
+}

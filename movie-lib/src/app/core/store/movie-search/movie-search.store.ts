@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { MovieSearchState } from './movie-search.state';
 
-export const initialState: MovieSearchState = {
+export const initialMovieSearchState: MovieSearchState = {
 	searchTerm: '',
 	movies: [],
 	page: 0,
@@ -16,6 +16,6 @@ export const initialState: MovieSearchState = {
 })
 export class MovieSearchStore extends Store<MovieSearchState> {
 	constructor() {
-		super(initialState);
+		super(initialMovieSearchState);
     }
 }

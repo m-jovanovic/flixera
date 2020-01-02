@@ -12,9 +12,10 @@ import { Observable } from 'rxjs';
 	styleUrls: ['./side-nav.component.css']
 })
 export class SideNavComponent {
-	isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(
-		Breakpoints.Handset
-	);
+	isHandset: Observable<BreakpointState> = this.breakpointObserver.observe([
+		Breakpoints.XSmall,
+		Breakpoints.Small
+	]);
 
 	constructor(private breakpointObserver: BreakpointObserver) {}
 }

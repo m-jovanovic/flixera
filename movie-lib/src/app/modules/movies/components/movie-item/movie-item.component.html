@@ -1,4 +1,4 @@
-<mat-card class="movie-container">
+<mat-card class="movie-container"  (click)="onClick(movie?.imdbID)">
 	<img
 		class="movie-image"
 		mat-card-image
@@ -7,7 +7,7 @@
 	/>
 
 	<mat-card-content>
-		<p class="movie-title" (click)="onClick(movie?.imdbID)">
+		<p class="movie-title">
 			{{ movie?.Title }}
 		</p>
 	</mat-card-content>
