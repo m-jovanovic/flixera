@@ -1,4 +1,4 @@
-export interface MovieDto {
+export interface MovieModel {
     Title: string;
     Year: string;
     Rated: string;
@@ -13,7 +13,7 @@ export interface MovieDto {
     Country: string;
     Awards: string;
     Poster: string;
-    Ratings: RatingDto[];
+    Ratings: RatingModel[];
     Metascore: string;
     imdbRating: string;
     imdbVotes: string;
@@ -26,7 +26,7 @@ export interface MovieDto {
     Response: string;
 }
 
-export interface RatingDto {
+export interface RatingModel {
     Source: string;
     Value: string;
 }

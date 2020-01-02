@@ -1,46 +1,39 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { SearchService, MovieDetailsQuery, MovieDto } from '@app/core';
-import { tap, first } from 'rxjs/operators';
-import { Subscription, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { SearchService, MovieDetailsQuery, MovieDetailsModel } from '@app/core';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'ml-movie-details',
 	templateUrl: './movie-details.component.html',
 	styleUrls: ['./movie-details.component.css']
 })
-export class MovieDetailsComponent implements OnInit, OnDestroy {
+export class MovieDetailsComponent implements OnInit {
 	isLoading$: Observable<boolean>;
-	movie$: Observable<MovieDto>;
-	subscription: Subscription;
+	movie$: Observable<MovieDetailsModel>;
 	imageExpanded: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
 		private searchService: SearchService,
 		private movieDetailsQuery: MovieDetailsQuery
-	) {}
+	) {
+		this.movie$ = this.movieDetailsQuery.selectEntity(this.movieId);
+	}
 
 	ngOnInit(): void {
 		this.isLoading$ = this.movieDetailsQuery.selectLoading();
 
-		this.movie$ = this.movieDetailsQuery.movie$;
-
-		this.subscription = this.route.paramMap
-			.pipe(
-				first(),
-				tap((params: ParamMap) =>
-					this.searchService.getByImdbId(params.get('id'))
-				)
-			)
-			.subscribe();
-	}
-
-	ngOnDestroy(): void {
-		this.subscription.unsubscribe();
+		if (!this.movieDetailsQuery.hasEntity(this.movieId)) {
+			this.searchService.getByImdbId(this.movieId);
+		}
 	}
 
 	expandImage(): void {
 		this.imageExpanded = !this.imageExpanded;
+	}
+
+	get movieId(): string {
+		return this.route.snapshot.params.id;
 	}
 }

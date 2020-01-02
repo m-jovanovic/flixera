@@ -15,7 +15,7 @@ import {
 } from 'rxjs/operators';
 
 import { MediaQueryColCountPair } from '@app/shared';
-import { MovieDto, SearchService, MovieSearchQuery } from '@app/core';
+import { MovieListItemModel, SearchService, MovieSearchQuery } from '@app/core';
 
 @Component({
 	selector: 'ml-movie-list',
@@ -34,7 +34,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
 		{ mediaQuery: '(min-width: 1920px)', colCount: 5 }
 	];
 
-	movies$: Observable<MovieDto[]>;
+	movies$: Observable<MovieListItemModel[]>;
 	searchTermExists$: Observable<boolean>;
 	subscription: Subscription;
 
@@ -59,9 +59,8 @@ export class MovieListComponent implements OnInit, OnDestroy {
 				map((event: KeyboardEvent) => {
 					return (<HTMLInputElement>event.target).value;
 				}),
-				filter(value => value.length > 2),
-				debounceTime(400),
-				distinctUntilChanged()
+				filter(value => value.length > 1),
+				debounceTime(400)
 			)
 			.subscribe(value => {
 				this.searchService.searchMovies(value, this.initialPage);
@@ -72,10 +71,8 @@ export class MovieListComponent implements OnInit, OnDestroy {
 		this.subscription.unsubscribe();
 	}
 
-	onClearClick() {
+	onClearClick(): void {
 		this.searchService.clearMovies();
-
-		(<HTMLInputElement>this.movieSearchInput.nativeElement).value = '';
 	}
 
 	onScroll() {

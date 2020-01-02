@@ -1,8 +1,8 @@
-import { MovieDto } from '../../models/movie.model';
+import { MovieListItemModel } from '../../models/move-list-item.model';
 
 export interface MovieSearchState {
 	searchTerm: string;
-	movies: MovieDto[];
+	movies: MovieListItemModel[];
     page: number;
     hasMore: boolean
 }

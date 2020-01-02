@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { first, catchError } from 'rxjs/operators';
+import { first, catchError, map } from 'rxjs/operators';
 
 import { MovieApiService } from './api.service';
-import { ApiResponse } from '../models/api-response.model';
+import { ApiResponseModel } from '../models/api-response.model';
 import { MovieSearchStore } from '../store/movie-search/movie-search.store';
 import { initialMovieSearchState } from '../store/movie-search/movie-search.store';
-import { MovieDto } from '../models/movie.model';
+import { MovieModel } from '../models/movie.model';
 import { MovieDetailsStore } from '../store/movie-details/movie-details.store';
+import { MovieDetailsModel } from '../models/movie-details.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -31,11 +32,11 @@ export class SearchService extends MovieApiService {
 
 		this.movieSearchStore.setLoading(true);
 
-		this.get<ApiResponse>(queryString)
+		this.get<ApiResponseModel>(queryString)
 			.pipe(
 				first(),
 				catchError(_ => {
-					console.error('Error happened while fetching movies from API');
+					console.error('Error happened while fetching movies from API.');
 
 					return of({
 						Search: [],
@@ -61,26 +62,32 @@ export class SearchService extends MovieApiService {
 
 		this.movieDetailsStore.setLoading(true);
 
-		this.get<MovieDto>(queryString)
+		this.get<MovieModel>(queryString)
 			.pipe(
 				first(),
+				map(movie => ({
+					id: movie.imdbID,
+					title: movie.Title,
+					plot: movie.Plot,
+					year: movie.Year,
+					genre: movie.Genre,
+					posterUrl: movie.Poster
+				} as MovieDetailsModel)),
 				catchError(_ => {
 					console.error('Error happened while fetching movie from API');
 
 					return of(null);
 				})
 			)
-			.subscribe(movie => {
-				this.movieDetailsStore.update({
-					movie
-				});
+			.subscribe((movie: MovieDetailsModel) => {
+				this.movieDetailsStore.add(movie);
 
 				this.movieDetailsStore.setLoading(false);
 			});
 	}
 
 	private updateStore(
-		response: ApiResponse,
+		response: ApiResponseModel,
 		search: string,
 		page: number
 	): void {
@@ -101,8 +108,13 @@ export class SearchService extends MovieApiService {
 
 		const currentMovies = this.movieSearchStore.getValue().movies;
 
-		const movies =
-			page == 1 ? response.Search : currentMovies.concat(response.Search);
+		const newMovies = response.Search.map(movie => ({
+			id: movie.imdbID,
+			title: movie.Title,
+			posterUrl: movie.Poster
+		}));
+
+		const movies = page == 1 ? newMovies : currentMovies.concat(newMovies);
 
 		this.movieSearchStore.update({
 			searchTerm: search,

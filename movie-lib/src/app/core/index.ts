@@ -1,5 +1,6 @@
 export * from './services/search.service';
-export * from './models/movie.model';
+export * from './models/move-list-item.model';
+export * from './models/movie-details.model';
 export * from './store/movie-search/movie-search.query';
 export * from './store/movie-search/movie-search.state';
 export * from './store/movie-search/movie-search.store';

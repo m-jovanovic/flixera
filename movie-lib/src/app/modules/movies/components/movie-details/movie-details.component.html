@@ -14,7 +14,7 @@
 		>
 			<img
 				class="movie-image"
-				[src]="movie?.Poster"
+				[src]="movie?.posterUrl"
 				onerror="this.src = 'https://3apq7g38q3kw2yn3fx4bojii-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/lazyplaceholder4.jpg';"
 			/>
 		</div>
@@ -31,13 +31,13 @@
 			</button>
 
 			<mat-card-title class="pull-left-16px">
-				{{ movie?.Title }}
-				<span class="movie-year"> ({{ movie?.Year }}) </span>
+				{{ movie?.title }}
+				<span class="movie-year"> ({{ movie?.year }}) </span>
 			</mat-card-title>
 			<mat-card-subtitle class="pull-left-16px">
 				<mat-chip-list [selectable]="false">
 					<mat-chip
-						*ngFor="let genre of movie?.Genre.split(',')"
+						*ngFor="let genre of movie?.genre.split(',')"
 						color="primary"
 						selected
 					>
@@ -49,7 +49,7 @@
 
 		<mat-card-content>
 			<p class="movie-plot">
-				{{ movie?.Plot }}
+				{{ movie?.plot }}
 			</p>
 		</mat-card-content>
 

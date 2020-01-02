@@ -2,13 +2,13 @@
 	<img
 		class="movie-image"
 		mat-card-image
-		[src]="movie?.Poster"
+		[src]="movie?.posterUrl"
 		onerror="this.src = 'https://3apq7g38q3kw2yn3fx4bojii-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/lazyplaceholder4.jpg';"
 	/>
 
 	<mat-card-header>
 		<mat-card-title class="movie-title pull-left-16px">
-			{{ movie?.Title }}
+			{{ movie?.title }}
 		</mat-card-title>
 	</mat-card-header>
 
@@ -22,7 +22,7 @@
 			mat-icon-button
 			title="Details"
 			class="float-right"
-			(click)="onClick(movie?.imdbID)"
+			(click)="onClick(movie?.id)"
 		>
 			<mat-icon>search</mat-icon>
 		</button>

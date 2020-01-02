@@ -1,5 +1,4 @@
-import { MovieDto } from '../../models/movie.model';
+import { MovieDetailsModel } from '../../models/movie-details.model';
+import { EntityState } from '@datorama/akita';
 
-export interface MovieDetailsState {
-	movie: MovieDto;
-}
+export interface MovieDetailsState extends EntityState<MovieDetailsModel> {}

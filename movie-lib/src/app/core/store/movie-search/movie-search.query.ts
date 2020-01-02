@@ -3,7 +3,7 @@ import { Query } from '@datorama/akita';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { MovieDto } from '../../models/movie.model';
+import { MovieListItemModel } from '../../models/move-list-item.model';
 import { MovieSearchState } from './movie-search.state';
 import { MovieSearchStore } from './movie-search.store';
 
@@ -11,7 +11,7 @@ import { MovieSearchStore } from './movie-search.store';
 	providedIn: 'root'
 })
 export class MovieSearchQuery extends Query<MovieSearchState> {
-	movies$: Observable<MovieDto[]> = this.select(state => state.movies);
+	movies$: Observable<MovieListItemModel[]> = this.select(state => state.movies);
 
 	searchTermExists$: Observable<boolean> = this.select(state => state.searchTerm.length).pipe(
 		map(length => length > 0)

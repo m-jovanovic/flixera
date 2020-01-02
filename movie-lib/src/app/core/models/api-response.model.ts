@@ -1,7 +1,7 @@
-import { MovieDto } from './movie.model';
+import { MovieModel } from './movie.model';
 
-export interface ApiResponse {
-    Search: MovieDto[];
+export interface ApiResponseModel {
+    Search: MovieModel[];
     totalResults: number;
     Response: string;
     Error: string;
