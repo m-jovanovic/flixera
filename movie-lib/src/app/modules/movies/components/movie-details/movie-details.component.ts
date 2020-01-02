@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SearchService, MovieDetailsQuery, MovieDetailsModel } from '@app/core';
 import { Observable } from 'rxjs';
+
+import { MovieService, MovieDetailsQuery, MovieDetailsModel } from '@app/core';
 
 @Component({
 	selector: 'ml-movie-details',
@@ -9,23 +10,23 @@ import { Observable } from 'rxjs';
 	styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
+	movie$: Observable<MovieDetailsModel> = this.movieDetailsQuery.selectEntity(
+		this.movieId
+	);
 	isLoading$: Observable<boolean>;
-	movie$: Observable<MovieDetailsModel>;
 	imageExpanded: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
-		private searchService: SearchService,
+		private movieService: MovieService,
 		private movieDetailsQuery: MovieDetailsQuery
-	) {
-		this.movie$ = this.movieDetailsQuery.selectEntity(this.movieId);
-	}
+	) {}
 
 	ngOnInit(): void {
 		this.isLoading$ = this.movieDetailsQuery.selectLoading();
 
 		if (!this.movieDetailsQuery.hasEntity(this.movieId)) {
-			this.searchService.getByImdbId(this.movieId);
+			this.movieService.getById(this.movieId);
 		}
 	}
 
@@ -33,7 +34,7 @@ export class MovieDetailsComponent implements OnInit {
 		this.imageExpanded = !this.imageExpanded;
 	}
 
-	get movieId(): string {
-		return this.route.snapshot.params.id;
+	private get movieId(): string {
+		return this.route.snapshot.paramMap.get('id');
 	}
 }

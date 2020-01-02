@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { first, catchError, map } from 'rxjs/operators';
+import { first, catchError } from 'rxjs/operators';
 
 import { MovieApiService } from './api.service';
-import { ApiResponseModel } from '../models/api-response.model';
+import { ApiResponseModel, emptyApiResponse } from '../models/api-response.model';
 import { MovieSearchStore } from '../store/movie-search/movie-search.store';
 import { initialMovieSearchState } from '../store/movie-search/movie-search.store';
-import { MovieModel } from '../models/movie.model';
-import { MovieDetailsStore } from '../store/movie-details/movie-details.store';
-import { MovieDetailsModel } from '../models/movie-details.model';
+import { MovieListItemModel } from '../models/move-list-item.model';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class SearchService extends MovieApiService {
 	constructor(
-		http: HttpClient,
-		private movieSearchStore: MovieSearchStore,
-		private movieDetailsStore: MovieDetailsStore
+		protected http: HttpClient,
+		private movieSearchStore: MovieSearchStore
 	) {
 		super(http);
 	}
@@ -38,12 +35,7 @@ export class SearchService extends MovieApiService {
 				catchError(_ => {
 					console.error('Error happened while fetching movies from API.');
 
-					return of({
-						Search: [],
-						totalResults: 0,
-						Response: 'False',
-						Error: ''
-					});
+					return of(emptyApiResponse);
 				})
 			)
 			.subscribe(response => {
@@ -57,55 +49,48 @@ export class SearchService extends MovieApiService {
 		this.movieSearchStore.update(initialMovieSearchState);
 	}
 
-	getByImdbId(imdbId: string): void {
-		const queryString = `i=${imdbId}&type=movie&plot=full`;
-
-		this.movieDetailsStore.setLoading(true);
-
-		this.get<MovieModel>(queryString)
-			.pipe(
-				first(),
-				map(movie => ({
-					id: movie.imdbID,
-					title: movie.Title,
-					plot: movie.Plot,
-					year: movie.Year,
-					genre: movie.Genre,
-					posterUrl: movie.Poster
-				} as MovieDetailsModel)),
-				catchError(_ => {
-					console.error('Error happened while fetching movie from API');
-
-					return of(null);
-				})
-			)
-			.subscribe((movie: MovieDetailsModel) => {
-				this.movieDetailsStore.add(movie);
-
-				this.movieDetailsStore.setLoading(false);
-			});
-	}
-
 	private updateStore(
 		response: ApiResponseModel,
 		search: string,
 		page: number
 	): void {
-		// TODO: Refactor!!!
-		if (
-			response.Response == 'False' ||
-			(response.Error != undefined && response.Error.length > 0)
-		) {
-			this.movieSearchStore.update({
-				searchTerm: search,
-				movies: [],
-				page: page,
-				hasMore: false
-			});
-
+		if (this.setEmptyStateIfBadResponse(response, search, page)) {
 			return;
 		}
 
+		const movies = this.getMovies(response, page);
+
+		this.movieSearchStore.update({
+			searchTerm: search,
+			movies: movies,
+			page: page,
+			hasMore: movies.length < response.totalResults
+		});
+	}
+
+	private setEmptyStateIfBadResponse(
+		response: ApiResponseModel,
+		search: string,
+		page: number
+	): boolean {
+		if (response.Response == 'True' && response.Error == undefined) {
+			return false;
+		}
+
+		this.movieSearchStore.update({
+			searchTerm: search,
+			movies: [],
+			page: page,
+			hasMore: false
+		});
+
+		return true;
+	}
+
+	private getMovies(
+		response: ApiResponseModel,
+		page: number
+	): MovieListItemModel[] {
 		const currentMovies = this.movieSearchStore.getValue().movies;
 
 		const newMovies = response.Search.map(movie => ({
@@ -116,11 +101,6 @@ export class SearchService extends MovieApiService {
 
 		const movies = page == 1 ? newMovies : currentMovies.concat(newMovies);
 
-		this.movieSearchStore.update({
-			searchTerm: search,
-			movies: movies,
-			page: page,
-			hasMore: movies.length < response.totalResults
-		});
+		return movies;
 	}
 }
