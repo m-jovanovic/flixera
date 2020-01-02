@@ -21,4 +21,8 @@ main {
 	mat-toolbar {
 		padding: 9px !important;
 	}
+
+	main {
+		padding: 8px;
+	}
 }
