@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { first, catchError } from 'rxjs/operators';
 
-import { MovieApiService } from './api.service';
+import { MovieApiService } from './movie-api.service';
 import { ApiResponseModel, emptyApiResponse } from '../models/api-response.model';
 import { MovieSearchStore } from '../store/movie-search/movie-search.store';
 import { initialMovieSearchState } from '../store/movie-search/movie-search.store';
