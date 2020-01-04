@@ -1,6 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
@@ -11,6 +11,7 @@ import { BlankLayoutComponent } from './components/blank-layout/blank-layout.com
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { NavBarMenuComponent } from './components/nav-bar-menu/nav-bar-menu.component';
 import { SideNavMenuComponent } from './components/side-nav-menu/side-nav-menu.component';
+import { MovieApiCacheInterceptor } from './interceptors/movie-api-cache.interceptor';
 
 @NgModule({
 	declarations: [
@@ -27,6 +28,9 @@ import { SideNavMenuComponent } from './components/side-nav-menu/side-nav-menu.c
 		SharedModule,
 		MaterialModule,
 		RouterModule
+	],
+	providers: [
+		{ provide: HTTP_INTERCEPTORS, useClass: MovieApiCacheInterceptor, multi: true }
 	],
 	exports: [MainLayoutComponent, BlankLayoutComponent]
 })

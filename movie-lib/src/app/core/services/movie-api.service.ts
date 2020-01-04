@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 	providedIn: 'root'
 })
 export class MovieApiService {
-	private apiPath: string = `${environment.movieApiPath}/?apikey=${environment.movieApiKey}`;
+	private apiPath: string = `${environment.movieApiPath}?apikey=${environment.movieApiKey}`;
 
 	protected constructor(protected http: HttpClient) {}
 

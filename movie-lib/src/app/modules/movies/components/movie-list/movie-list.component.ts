@@ -45,7 +45,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private searchService: SearchService,
-		private movieSearchQuery: MovieSearchQuery,
+		public movieSearchQuery: MovieSearchQuery,
 		private snackBar: MatSnackBar
 	) {}
 
