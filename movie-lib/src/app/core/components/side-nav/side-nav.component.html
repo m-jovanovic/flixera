@@ -3,9 +3,9 @@
 		#drawer
 		class="sidenav"
 		fixedInViewport="true"
-		[attr.role]="isHandset ? 'dialog' : 'navigation'"
-		[mode]="(isHandset | async)!.matches ? 'over' : 'side'"
-		[opened]="!(isHandset | async)!.matches"
+		[attr.role]="isHandset$ ? 'dialog' : 'navigation'"
+		[mode]="(isHandset$ | async)!.matches ? 'over' : 'side'"
+		[opened]="!(isHandset$ | async)!.matches"
 	>
 		<mat-toolbar color="primary">
 			<mat-toolbar-row>
@@ -19,15 +19,15 @@
 		<!-- Nav-bar -->
 		<mat-toolbar color="primary">
 			<button
-			type="button"
-			aria-label="Toggle sidenav"
-			mat-icon-button
-			(click)="drawer.toggle()"
-			*ngIf="(isHandset | async)!.matches">
-				<mat-icon aria-label="Sidenav toggle icon.">menu</mat-icon>
-			</button
+				type="button"
+				aria-label="Toggle sidenav"
+				mat-icon-button
+				(click)="drawer.toggle()"
+				*ngIf="(isHandset$ | async)!.matches"
 			>
-			<span *ngIf="(isHandset | async)!.matches">Movie Library</span>
+				<mat-icon aria-label="Sidenav toggle icon.">menu</mat-icon>
+			</button>
+			<span *ngIf="(isHandset$ | async)!.matches">Movie Library</span>
 
 			<span class="spacer"></span>
 

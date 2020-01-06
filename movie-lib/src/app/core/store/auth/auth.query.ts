@@ -20,4 +20,10 @@ export class AuthQuery extends Query<AuthState> {
 	constructor(protected store: AuthStore) {
 		super(store);
 	}
+
+	getUserId(): string {
+		const user = this.getValue().user;
+
+		return user ? user.uid : '';
+	}
 }

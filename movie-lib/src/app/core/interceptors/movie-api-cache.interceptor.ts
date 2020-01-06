@@ -10,26 +10,25 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
-import { CacheItem } from '../models/cache-item';
 import { CacheService } from '../services/cache.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class MovieApiCacheInterceptor implements HttpInterceptor {
-	constructor(private cache: CacheService) {}
+	constructor(private cacheService: CacheService) {}
 
 	intercept(
 		request: HttpRequest<any>,
 		handler: HttpHandler
 	): Observable<HttpEvent<any>> {
-		const now = Date.now();
+		const nowTimestamp = Date.now();
 
 		if (!this.isCacheable(request)) {
 			return handler.handle(request);
 		}
 
-		const cacheItem = this.cache.get(request.urlWithParams);
+		const cacheItem = this.cacheService.get(request.urlWithParams);
 
 		if (cacheItem) {
 			return of(new HttpResponse(cacheItem.value));
@@ -38,9 +37,9 @@ export class MovieApiCacheInterceptor implements HttpInterceptor {
 		return handler.handle(request).pipe(
 			tap(event => {
 				if (event instanceof HttpResponse) {
-					this.cache.set(request.urlWithParams, {
+					this.cacheService.set(request.urlWithParams, {
 						value: event,
-						timestamp: now
+						timestamp: nowTimestamp
 					});
 				}
 			})

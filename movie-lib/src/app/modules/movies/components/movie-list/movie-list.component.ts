@@ -10,8 +10,7 @@ import { Observable, fromEvent, Subscription } from 'rxjs';
 import {
 	map,
 	filter,
-	debounceTime,
-	distinctUntilChanged
+	debounceTime
 } from 'rxjs/operators';
 
 import { MediaQueryColCountPair } from '@app/shared';
@@ -23,8 +22,8 @@ import { MovieListItemModel, SearchService, MovieSearchQuery } from '@app/core';
 	styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit, OnDestroy {
-	enterKeyCode = 13;
-	initialPage = 1;
+	private readonly initialPage = 1;
+	private subscription: Subscription;
 	rowHeight: number = 550;
 	mediaQueryColCountPairs: MediaQueryColCountPair[] = [
 		{ mediaQuery: '(max-width: 949px)', colCount: 1 },
@@ -33,10 +32,8 @@ export class MovieListComponent implements OnInit, OnDestroy {
 		{ mediaQuery: '(min-width: 1600px)', colCount: 4 },
 		{ mediaQuery: '(min-width: 1920px)', colCount: 5 }
 	];
-
 	movies$: Observable<MovieListItemModel[]>;
 	searchTermExists$: Observable<boolean>;
-	subscription: Subscription;
 
 	@ViewChild('movieSearchInput', {
 		static: true
@@ -45,7 +42,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private searchService: SearchService,
-		public movieSearchQuery: MovieSearchQuery,
+		private movieSearchQuery: MovieSearchQuery,
 		private snackBar: MatSnackBar
 	) {}
 
@@ -54,21 +51,15 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
 		this.searchTermExists$ = this.movieSearchQuery.searchTermExists$;
 
-		this.subscription = fromEvent(this.movieSearchInput.nativeElement, 'keyup')
-			.pipe(
-				map((event: KeyboardEvent) => {
-					return (<HTMLInputElement>event.target).value;
-				}),
-				filter(value => value.length > 1),
-				debounceTime(400)
-			)
-			.subscribe(value => {
-				this.searchService.searchMovies(value, this.initialPage);
-			});
+		this.subscribeToSearchInputKeyUp();
 	}
 
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
+	}
+
+	onEnterKeyUp(): void {
+		this.movieSearchInput.nativeElement.blur();
 	}
 
 	onClearClick(): void {
@@ -76,7 +67,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
 	}
 
 	onScroll() {
-		if (!this.movieSearchQuery.getHasMore()) {
+		if (!this.movieSearchQuery.hasMore && this.movieSearchQuery.anyMovies) {
 			this.snackBar.open('There are no more movies to show.', '', {
 				duration: 3000
 			});
@@ -85,8 +76,26 @@ export class MovieListComponent implements OnInit, OnDestroy {
 		}
 
 		this.searchService.searchMovies(
-			this.movieSearchQuery.getSearchTerm(),
-			this.movieSearchQuery.getPage() + 1
+			this.movieSearchQuery.searchTerm,
+			this.movieSearchQuery.page + 1
 		);
+	}
+
+	getSearchTerm(): string {
+		return this.movieSearchQuery.searchTerm;
+	}
+
+	private subscribeToSearchInputKeyUp(): void {
+		this.subscription = fromEvent(this.movieSearchInput.nativeElement, 'keyup')
+			.pipe(
+				map((event: KeyboardEvent) => {
+					return (<HTMLInputElement>event.target).value;
+				}),
+				filter(value => value.length > 1),
+				debounceTime(400)
+			)
+			.subscribe(searchTerm => {
+				this.searchService.searchMovies(searchTerm, this.initialPage);
+			});
 	}
 }

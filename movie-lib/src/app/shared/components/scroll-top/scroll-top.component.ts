@@ -1,7 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
-import { Subscription } from 'rxjs';
+import { BreakpointState } from '@angular/cdk/layout';
+import { Subscription, Observable } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
+
+import { HandsetStateService } from '../../services/handset-state.service';
 
 @Component({
 	selector: 'ml-scroll-top',
@@ -9,16 +12,20 @@ import { debounceTime, map } from 'rxjs/operators';
 	styleUrls: ['./scroll-top.component.css']
 })
 export class ScrollTopComponent implements OnInit, OnDestroy {
-	subscription: Subscription;
-	scrolledElement: HTMLElement;
+	private subscription: Subscription;
+	private scrolledElement: HTMLElement;
+	private isHandset$: Observable<BreakpointState>;
 	isScrolled: boolean;
 
 	constructor(
 		private scrollDispatcher: ScrollDispatcher,
-		private changeDetectorRef: ChangeDetectorRef
+		private changeDetectorRef: ChangeDetectorRef,
+		private handsetStateService: HandsetStateService
 	) {}
 
 	ngOnInit(): void {
+		this.isHandset$ = this.handsetStateService.isHandset$;
+
 		this.subscription = this.scrollDispatcher
 			.scrolled()
 			.pipe(
@@ -42,18 +49,18 @@ export class ScrollTopComponent implements OnInit, OnDestroy {
 	}
 
 	scrollToTop(): void {
-		const currentScroll = this.scrolledElement.scrollTop;
+		const scrollTop = this.scrolledElement.scrollTop;
 
-		if (currentScroll <= 0) {
+		if (scrollTop <= 0) {
 			return;
 		}
 
 		window.requestAnimationFrame(this.scrollToTop.bind(this));
 
-		this.scrolledElement.scrollTo(0, currentScroll - currentScroll / 20);
+		this.scrolledElement.scrollTo(0, scrollTop - scrollTop / 20);
 	}
 
-	getIsScrolled(scrollTop: number): boolean {
+	private getIsScrolled(scrollTop: number): boolean {
 		if (scrollTop > 100) {
 			return true;
 		}

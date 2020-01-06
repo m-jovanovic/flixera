@@ -13,7 +13,7 @@ export class MovieItemComponent {
 
 	constructor(private router: Router) {}
 
-	onClick(imdbId: string): void {
-		this.router.navigate(['/movies', imdbId]);
+	navigateToDetails(id: string): void {
+		this.router.navigate(['/movies', id]);
 	}
 }

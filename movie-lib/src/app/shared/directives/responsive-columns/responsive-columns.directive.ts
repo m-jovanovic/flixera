@@ -11,7 +11,7 @@ import { MediaQueryColCountPair } from './media-query-col-count-pair';
 })
 export class ResponsiveColumnsDirective implements OnInit, OnDestroy {
 	private readonly defaultColCount = 1;
-	subscription: Subscription;
+	private subscription: Subscription;
 	@Input('mlResponsiveColumns')
 	mediaQueries: MediaQueryColCountPair[];
 
@@ -33,7 +33,7 @@ export class ResponsiveColumnsDirective implements OnInit, OnDestroy {
 					return colCounts.length > 0 ? colCounts[0] : this.defaultColCount;
 				})
 			)
-			.subscribe(value => (this.grid.cols = value));
+			.subscribe(colCount => (this.grid.cols = colCount));
 	}
 
 	ngOnDestroy(): void {

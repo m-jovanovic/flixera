@@ -1,27 +1,25 @@
 import { Injectable } from '@angular/core';
 
-import { CacheItem } from '../models/cache-item';
+import { CacheItem, isExpired } from '../models/cache-item';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CacheService {
-    maxAge: number = 7 * 24 * 60 * 60 * 1000;
+    private readonly sevenDaysInMilliseconds: number = 7 * 24 * 60 * 60 * 1000;
 
     get(key: string): CacheItem | null{
-        if (key.length == 0) {
+        const cacheItem = this.safeGetCacheItem(key);
+
+        if (!cacheItem) {
             return null;
         }
-
-        const cacheItemJson = localStorage.getItem(key);
-
-        if (!cacheItemJson) {
-            return null;
-        }
-
-        const cacheItem = (<CacheItem>JSON.parse(cacheItemJson));
         
-        if (Date.now() - cacheItem.timestamp > this.maxAge) {
+        if (isExpired(cacheItem, this.sevenDaysInMilliseconds)) {
+            localStorage.removeItem(key);
+
+            this.clearExpiredCacheItems();
+
             return null;
         }
         
@@ -36,5 +34,37 @@ export class CacheService {
         const cacheItemJson = JSON.stringify(cacheItem);
         
         localStorage.setItem(key, cacheItemJson);
+    }
+
+    private safeGetCacheItem(key: string): CacheItem | null {
+        if (key.length == 0) {
+            return null;
+        }
+
+        const cacheItemJson = localStorage.getItem(key);
+
+        if (!cacheItemJson) {
+            return null;
+        }
+
+        const cacheItem = (<CacheItem>JSON.parse(cacheItemJson));
+
+        return cacheItem;
+    }
+
+    private clearExpiredCacheItems(): void {
+        const keys = Object.keys(localStorage);
+
+        keys.forEach(key => {
+            const cacheItem = this.safeGetCacheItem(key);       
+
+            if (!cacheItem) {
+                return;
+            }
+
+            if (isExpired(cacheItem, this.sevenDaysInMilliseconds)){
+                localStorage.removeItem(key);
+            }
+        });
     }
 }

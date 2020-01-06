@@ -1,0 +1,14 @@
+<button
+mat-button
+[color]="color"
+(click)="onClick()"
+*ngIf="isOnline$ | async; else offline"
+>
+{{ movie.inLibrary ? 'REMOVE FROM LIBRARY' : 'ADD TO LIBRARY' }}
+</button>
+
+<ng-template #offline>
+	<button mat-button>
+		NO INTERNET CONNECTION
+	</button>
+</ng-template>

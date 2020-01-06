@@ -7,4 +7,5 @@ export interface MovieDetailsModel {
     year: string;
     genre: string;
     posterUrl: string;
+    inLibrary: boolean;
 }

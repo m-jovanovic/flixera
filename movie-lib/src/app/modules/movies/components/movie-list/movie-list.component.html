@@ -12,7 +12,8 @@
 			#movieSearchInput
 			matInput
 			placeholder="Enter the movie title"
-			[value]="movieSearchQuery.getSearchTerm()"
+			[value]="getSearchTerm()"
+			(keyup.enter)="onEnterKeyUp()"
 		/>
 		<button
 			mat-button
@@ -21,6 +22,7 @@
 			mat-icon-button
 			aria-label="Clear"
 			(click)="onClearClick()"
+			title="Clear"
 		>
 			<mat-icon>close</mat-icon>
 		</button>

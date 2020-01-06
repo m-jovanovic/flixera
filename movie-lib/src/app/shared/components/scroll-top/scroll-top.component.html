@@ -1,5 +1,5 @@
 <button
-	*ngIf="isScrolled"
+	*ngIf="!(isHandset$ | async)!.matches; else small"
 	class="scroll-to-top"
 	mat-fab
 	(click)="scrollToTop()"
@@ -7,3 +7,14 @@
 >
 	<mat-icon>keyboard_arrow_up</mat-icon>
 </button>
+
+<ng-template #small>
+	<button
+		class="scroll-to-top"
+		mat-mini-fab
+		(click)="scrollToTop()"
+		[ngClass]="{ 'show-scroll-to-top': isScrolled }"
+	>
+		<mat-icon>keyboard_arrow_up</mat-icon>
+	</button>
+</ng-template>

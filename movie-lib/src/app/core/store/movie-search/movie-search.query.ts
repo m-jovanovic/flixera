@@ -21,15 +21,21 @@ export class MovieSearchQuery extends Query<MovieSearchState> {
 		super(store);
 	}
 
-	getSearchTerm(): string {
+	get searchTerm(): string {
 		return this.getValue().searchTerm;
 	}
 
-	getPage(): number {
+	get page(): number {
 		return this.getValue().page;
 	}
 
-	getHasMore(): boolean {
-		return this.getValue().hasMore;
+	get hasMore(): boolean {
+		const state = this.getValue();
+
+		return state.movies.length && state.hasMore;
+	}
+
+	get anyMovies(): boolean {
+		return this.getValue().movies.length > 0;
 	}
 }

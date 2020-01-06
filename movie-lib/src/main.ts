@@ -1,9 +1,16 @@
 import 'hammerjs';
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { persistState } from '@datorama/akita';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+
+
+persistState({
+  include: ['auth.user'],
+  key: 'move-library'
+});
 
 if (environment.production) {
   enableProdMode();

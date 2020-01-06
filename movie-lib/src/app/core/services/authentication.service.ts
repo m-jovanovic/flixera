@@ -15,8 +15,8 @@ import { AuthStore } from '../store/auth/auth.store';
 @Injectable({
 	providedIn: 'root'
 })
-export class AuthenticationService implements OnInit, OnDestroy {
-	subscription: Subscription;
+export class AuthenticationService implements OnDestroy {
+	private subscription: Subscription;
 
 	constructor(
 		private fireAuth: AngularFireAuth,
@@ -24,24 +24,8 @@ export class AuthenticationService implements OnInit, OnDestroy {
 		private authStore: AuthStore,
 		private router: Router
 	) {
-		this.subscription = this.fireAuth.authState
-			.pipe(
-				switchMap(user => {
-					if (user) {
-						return this.firestore.doc<User>(`users/${user.uid}`).valueChanges();
-					} else {
-						return of(null);
-					}
-				})
-			)
-			.subscribe((user: User) => {
-				this.authStore.update({
-					user
-				});
-			});
+		this.subscribeToFireAuthAuthState();
 	}
-
-	ngOnInit(): void {}
 
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
@@ -69,6 +53,26 @@ export class AuthenticationService implements OnInit, OnDestroy {
 		} catch (error) {
 			console.error(error);
 		}
+	}
+
+	private subscribeToFireAuthAuthState(): void {
+		this.subscription = this.fireAuth.authState
+			.pipe(
+				switchMap(user => {
+					if (user) {
+						const userUid = `users/${user.uid}`;
+
+						return this.firestore.doc<User>(userUid).valueChanges();
+					} else {
+						return of(null);
+					}
+				})
+			)
+			.subscribe((user: User) => {
+				this.authStore.update({
+					user
+				});
+			});
 	}
 
 	private updateUserData(user: User): Promise<void> {
