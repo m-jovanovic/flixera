@@ -9,7 +9,7 @@ import {
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'movies/search',
+		redirectTo: 'movies/library',
 		pathMatch: 'full'
 	},
 	{
@@ -31,9 +31,13 @@ const routes: Routes = [
 			{
 				path: 'login',
 				loadChildren: () =>
-					import('./login/login.module').then(m => m.LoginModule)
+					import('./modules/login/login.module').then(m => m.LoginModule)
 			}
 		]
+	},
+	{
+		path: '**',
+		redirectTo: 'movies/library'
 	}
 ];
 
