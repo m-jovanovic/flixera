@@ -17,11 +17,11 @@ import { MediaQueryColCountPair } from '@app/shared';
 import { MovieListItemModel, SearchService, MovieSearchQuery } from '@app/core';
 
 @Component({
-	selector: 'ml-movie-list',
-	templateUrl: './movie-list.component.html',
-	styleUrls: ['./movie-list.component.css']
+	selector: 'ml-movie-search',
+	templateUrl: './movie-search.component.html',
+	styleUrls: ['./movie-search.component.css']
 })
-export class MovieListComponent implements OnInit, OnDestroy {
+export class MovieSearchComponent implements OnInit, OnDestroy {
 	private readonly initialPage = 1;
 	private subscription: Subscription;
 	rowHeight: number = 550;

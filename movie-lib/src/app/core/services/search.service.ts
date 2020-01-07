@@ -17,6 +17,7 @@ import { MovieInLibrary } from '../models/movie-in-library';
 import { MovieSearchStore } from '../store/movie-search/movie-search.store';
 import { initialMovieSearchState } from '../store/movie-search/movie-search.store';
 import { AuthQuery } from '../store/auth/auth.query';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
 	providedIn: 'root'
@@ -29,7 +30,8 @@ export class SearchService extends MovieApiService implements OnDestroy {
 		protected http: HttpClient,
 		private movieSearchStore: MovieSearchStore,
 		private firestore: AngularFirestore,
-		private authQuery: AuthQuery
+		private authQuery: AuthQuery,
+		private snackBar: MatSnackBar
 	) {
 		super(http);
 
@@ -94,6 +96,8 @@ export class SearchService extends MovieApiService implements OnDestroy {
 		search: string,
 		page: number
 	): void {
+		this.showSnackBar(response.Response, response.Error, search);
+
 		if (this.emptyMovieStoreIfBadResponse(response, search, page)) {
 			return;
 		}
@@ -190,5 +194,24 @@ export class SearchService extends MovieApiService implements OnDestroy {
 				movies
 			};
 		});
+	}
+
+	private showSnackBar(
+		status: string,
+		error: string | undefined,
+		searchTerm: string
+	): void {
+		let message = '';
+		if (status == 'False' && error !== '') {
+			message = `No movies were found matching the search term "${searchTerm}".`;
+		} else if (status == 'False') {
+			message = 'An unexpected error ocurred, please try again later.';
+		}
+
+		if (message) {
+			this.snackBar.open(message, '', {
+				duration: 3000
+			});
+		}
 	}
 }

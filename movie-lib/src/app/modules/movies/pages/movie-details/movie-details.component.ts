@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { MovieService, MovieDetailsQuery, MovieDetailsModel } from '@app/core';
@@ -18,11 +18,16 @@ export class MovieDetailsComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private router: Router,
 		private movieService: MovieService,
 		private movieDetailsQuery: MovieDetailsQuery
 	) {}
 
 	ngOnInit(): void {
+		if (this.movieId.length == 0) {
+			this.router.navigate(['/movies/library']);
+		}
+
 		this.isLoading$ = this.movieDetailsQuery.selectLoading();
 
 		if (!this.movieDetailsQuery.hasEntity(this.movieId)) {

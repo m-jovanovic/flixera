@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 
 import {
@@ -6,7 +7,6 @@ import {
 	MovieLibraryQuery,
 	MovieInLibrary
 } from '@app/core';
-import { BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
 	selector: 'ml-movie-library',
@@ -29,8 +29,6 @@ export class MovieLibraryComponent implements OnInit {
 
 		this.isSmallScreen$ = this.breakpointObserver.observe('(min-width: 700px)');
 	}
-
-	navigateToDetails(): void {}
 
 	trackByFunction(_index: any, item: any): any {
 		return item.id;
