@@ -14,7 +14,7 @@ import { HandsetStateService } from '../../services/handset-state.service';
 export class ScrollTopComponent implements OnInit, OnDestroy {
 	private subscription: Subscription;
 	private scrolledElement: HTMLElement;
-	private isHandset$: Observable<BreakpointState>;
+	isHandset$: Observable<BreakpointState>;
 	isScrolled: boolean;
 
 	constructor(
