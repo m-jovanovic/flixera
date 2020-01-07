@@ -17,11 +17,11 @@ import {
 export type ButtonColor = 'primary' | 'accent';
 
 @Component({
-	selector: 'ml-add-to-library-button',
-	templateUrl: './add-to-library-button.component.html',
-	styleUrls: ['./add-to-library-button.component.css']
+	selector: 'ml-add-to-movie-library-button',
+	templateUrl: './add-to-movie-library-button.component.html',
+	styleUrls: ['./add-to-movie-library-button.component.css']
 })
-export class AddToLibraryButtonComponent implements OnInit {
+export class AddToMovieLibraryButtonComponent implements OnInit {
 	@Input()
 	color: string;
 

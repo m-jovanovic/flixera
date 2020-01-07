@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { MovieListItemModel } from '@app/core';
 
 @Component({
-	selector: 'ml-movie-item',
-	templateUrl: './movie-item.component.html',
-	styleUrls: ['./movie-item.component.css']
+	selector: 'ml-movie-search-item',
+	templateUrl: './movie-search-item.component.html',
+	styleUrls: ['./movie-search-item.component.css']
 })
-export class MovieItemComponent {
+export class MovieSearchItemComponent {
 	@Input() movie: MovieListItemModel;
 
 	constructor(private router: Router) {}

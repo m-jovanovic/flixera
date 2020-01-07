@@ -23,14 +23,14 @@
 			<span class="likes-number"> {{ movie.likes }} </span>
 		</button>
 
-		<ml-add-to-library-button
+		<ml-add-to-movie-library-button
 			color="primary"
 			[movie]="movie"
-		></ml-add-to-library-button>
+		></ml-add-to-movie-library-button>
 
-		<ml-navigate-to-details-button
+		<ml-navigate-to-movie-details-button
 			[id]="movie?.movieId"
-		></ml-navigate-to-details-button>
+		></ml-navigate-to-movie-details-button>
 	</div>
 </ng-template>
 
@@ -40,15 +40,15 @@
 		<span class="likes-number"> {{ movie.likes }} </span>
 	</button>
 
-	<ml-add-to-library-button
+	<ml-add-to-movie-library-button
 		color="primary"
 		[movie]="movie"
-	></ml-add-to-library-button>
+	></ml-add-to-movie-library-button>
 
-	<ml-navigate-to-details-button
+	<ml-navigate-to-movie-details-button
 		[id]="movie?.movieId"
 		cssClass="details-button"
-	></ml-navigate-to-details-button>
+	></ml-navigate-to-movie-details-button>
 </ng-template>
 
 <ml-scroll-top></ml-scroll-top>

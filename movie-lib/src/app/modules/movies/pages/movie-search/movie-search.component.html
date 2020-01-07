@@ -34,7 +34,7 @@
 		[rowHeight]="rowHeight"
 	>
 		<mat-grid-tile *ngFor="let movie of movies$ | async">
-			<ml-movie-item [movie]="movie"></ml-movie-item>
+			<ml-movie-search-item [movie]="movie"></ml-movie-search-item>
 		</mat-grid-tile>
 	</mat-grid-list>
 </div>

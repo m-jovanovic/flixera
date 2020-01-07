@@ -6,18 +6,18 @@ import { SharedModule } from '@app/shared';
 import { MaterialModule } from '@app/material';
 import { MoviesRoutingModule } from './movies-routing.module';
 import { MovieSearchComponent } from './pages/movie-search/movie-search.component';
-import { MovieItemComponent } from './components/movie-item/movie-item.component';
 import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
-import { AddToLibraryButtonComponent } from './components/add-to-library-button/add-to-library-button.component';
+import { AddToMovieLibraryButtonComponent } from './components/add-to-movie-library-button/add-to-movie-library-button.component';
 import { MovieLibraryComponent } from './pages/movie-library/movie-library.component';
-import { NavigateToDetailsButtonComponent } from './components/navigate-to-details-button/navigate-to-details-button.component';
+import { NavigateToDetailsButtonComponent } from './components/navigate-to-movie-details-button/navigate-to-movie-details-button.component';
+import { MovieSearchItemComponent } from './components/movie-search-item/movie-search-item.component';
 
 @NgModule({
 	declarations: [
 		MovieSearchComponent,
-		MovieItemComponent,
+		MovieSearchItemComponent,
 		MovieDetailsComponent,
-		AddToLibraryButtonComponent,
+		AddToMovieLibraryButtonComponent,
 		MovieLibraryComponent,
 		NavigateToDetailsButtonComponent
 	],
