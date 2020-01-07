@@ -32,7 +32,7 @@ mat-card {
     text-align: justify;
 }
 
-@media (max-width: 499px) {
+@media (max-width: 599px) {
     .mat-card {
         width: 300px !important;
     }

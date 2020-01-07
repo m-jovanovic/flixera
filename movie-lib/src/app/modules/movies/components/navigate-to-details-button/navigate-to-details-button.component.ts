@@ -10,9 +10,6 @@ export class NavigateToDetailsButtonComponent {
 	@Input()
 	id: string;
 
-	@Input()
-	cssClass: string = '';
-
 	constructor(private router: Router) {}
 
 	async navigateToDetails(): Promise<boolean> {
