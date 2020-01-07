@@ -9,7 +9,7 @@ import {
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'movies',
+		redirectTo: 'movies/search',
 		pathMatch: 'full'
 	},
 	{

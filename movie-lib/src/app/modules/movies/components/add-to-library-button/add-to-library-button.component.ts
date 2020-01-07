@@ -1,7 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
-import { OnlineStateService } from '@app/shared';
+import {
+	OnlineStateService,
+	ConfirmDialogComponent,
+	ConfirmDialogData
+} from '@app/shared';
 import {
 	MovieListItemModel,
 	MovieDetailsModel,
@@ -27,7 +32,8 @@ export class AddToLibraryButtonComponent implements OnInit {
 
 	constructor(
 		private onlineStateService: OnlineStateService,
-		private movieLibraryService: MovieLibraryService
+		private movieLibraryService: MovieLibraryService,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
@@ -35,14 +41,41 @@ export class AddToLibraryButtonComponent implements OnInit {
 	}
 
 	async onClick(): Promise<void> {
-		return this.determineIfTypeIsMovieInLibrary(this.movie) ||
-			this.movie.inLibrary
-			? await this.movieLibraryService.removeFromLibrary(this.movieId)
-			: await this.movieLibraryService.addToLibrary(
-					this.movieId,
-					this.movie.title,
-					this.movie.posterUrl
-			  );
+		const inLibrary =
+			this.determineIfTypeIsMovieInLibrary(this.movie) || this.movie.inLibrary;
+
+		if (inLibrary) {
+			this.handleRemove();
+		} else {
+			await this.handleAdd();
+		}
+	}
+
+	private async handleAdd() {
+		await this.movieLibraryService.addToLibrary(this.movieId, this.movie.title, this.movie.posterUrl);
+	}
+
+	private handleRemove() {
+		const data: ConfirmDialogData = {
+			title: 'Remove movie from library?',
+			message: 'This action can not be reversed.',
+			dismissButtonText: 'CANCEL',
+			confirmButtonText: 'OK',
+			dismissButtonColor: 'primary',
+			confirmButtonColor: 'primary',
+		};
+		
+		const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+			maxWidth: '350px',
+			width: '350px',
+			data: data
+		});
+		
+		dialogRef.afterClosed().subscribe(async (dialogResult: boolean) => {
+			if (dialogResult) {
+				await this.movieLibraryService.removeFromLibrary(this.movieId);
+			}
+		});
 	}
 
 	private get movieId(): string {
