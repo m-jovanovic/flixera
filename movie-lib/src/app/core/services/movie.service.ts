@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of, Subscription } from 'rxjs';
-import { first, catchError, map, mergeMap, debounceTime } from 'rxjs/operators';
+import { first, catchError, map, mergeMap } from 'rxjs/operators';
 import {
 	AngularFirestoreCollection,
 	AngularFirestore
@@ -61,7 +61,6 @@ export class MovieService extends MovieApiService implements OnDestroy {
 						inLibrary: false
 					} as MovieDetailsModel;
 				}),
-				debounceTime(50),
 				catchError(_ => {
 					console.error('Error happened while fetching movie from API');
 
@@ -73,25 +72,6 @@ export class MovieService extends MovieApiService implements OnDestroy {
 
 				this.movieDetailsStore.setLoading(false);
 			});
-	}
-
-	async addToLibrary(id: string): Promise<void> {
-		const userId = this.authQuery.getUserId();
-
-		const uid = `${userId}-${id}`;
-
-		return await this.moviesCollection.doc<MovieInLibrary>(uid).set({
-			userId,
-			movieId: id
-		});
-	}
-
-	async removeFromLibrary(id: string): Promise<void> {
-		const userId = this.authQuery.getUserId();
-
-		const uid = `${userId}-${id}`;
-
-		return await this.moviesCollection.doc(uid).delete();
 	}
 
 	private subscribeToMoviesCollectionStateChanges(): void {

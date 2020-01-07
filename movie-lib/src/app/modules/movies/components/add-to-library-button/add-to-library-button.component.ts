@@ -1,8 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { MovieListItemModel, MovieDetailsModel, MovieService } from '@app/core';
 import { OnlineStateService } from '@app/shared';
+import {
+	MovieListItemModel,
+	MovieDetailsModel,
+	MovieLibraryService,
+	MovieInLibrary
+} from '@app/core';
 
 export type ButtonColor = 'primary' | 'accent';
 
@@ -16,13 +21,13 @@ export class AddToLibraryButtonComponent implements OnInit {
 	color: string;
 
 	@Input()
-	movie: MovieListItemModel | MovieDetailsModel;
+	movie: MovieListItemModel | MovieDetailsModel | MovieInLibrary;
 
 	isOnline$: Observable<boolean>;
 
 	constructor(
-		private movieService: MovieService,
-		private onlineStateService: OnlineStateService
+		private onlineStateService: OnlineStateService,
+		private movieLibraryService: MovieLibraryService
 	) {}
 
 	ngOnInit(): void {
@@ -30,12 +35,27 @@ export class AddToLibraryButtonComponent implements OnInit {
 	}
 
 	async onClick(): Promise<void> {
-		return this.movie.inLibrary
-			? await this.movieService.removeFromLibrary(this.movieId)
-			: await this.movieService.addToLibrary(this.movieId);
+		return this.determineIfTypeIsMovieInLibrary(this.movie) ||
+			this.movie.inLibrary
+			? await this.movieLibraryService.removeFromLibrary(this.movieId)
+			: await this.movieLibraryService.addToLibrary(
+					this.movieId,
+					this.movie.title,
+					this.movie.posterUrl
+			  );
 	}
 
 	private get movieId(): string {
+		if (this.determineIfTypeIsMovieInLibrary(this.movie)) {
+			return this.movie.movieId;
+		}
+
 		return this.movie.id.toString();
+	}
+
+	determineIfTypeIsMovieInLibrary(
+		movie: MovieListItemModel | MovieDetailsModel | MovieInLibrary
+	): movie is MovieInLibrary {
+		return (movie as MovieInLibrary).movieId ? true : false;
 	}
 }

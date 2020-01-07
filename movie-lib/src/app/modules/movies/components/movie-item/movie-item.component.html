@@ -15,15 +15,14 @@
 	<mat-divider></mat-divider>
 
 	<mat-card-actions>
-		<ml-add-to-library-button color="primary" [movie]="movie"></ml-add-to-library-button>
-		
-		<button
-			mat-icon-button
-			title="Details"
-			class="float-right"
-			(click)="navigateToDetails(movie?.id)"
-		>
-			<mat-icon>search</mat-icon>
-		</button>
+		<ml-add-to-library-button
+			color="primary"
+			[movie]="movie"
+		></ml-add-to-library-button>
+
+		<ml-navigate-to-details-button
+			[id]="movie?.id"
+			cssClass="float-right"
+		></ml-navigate-to-details-button>
 	</mat-card-actions>
 </mat-card>

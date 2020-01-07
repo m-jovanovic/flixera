@@ -1,0 +1,24 @@
+<mat-list>
+	<ng-container *ngFor="let movie of movies$ | async; trackBy: trackByFunction">
+		<mat-list-item>
+			<img class="movie-image" matListAvatar [src]="movie.posterUrl" />
+			<h3 matLine>{{ movie.title }}</h3>
+
+			<button mat-icon-button color="primary" matTooltip="Likes">
+				<mat-icon>thumb_up</mat-icon>
+				<span class="likes-number"> {{ movie.likes }} </span>
+			</button>
+
+			<ml-add-to-library-button
+				color="primary"
+				[movie]="movie"
+			></ml-add-to-library-button>
+
+			<ml-navigate-to-details-button
+				[id]="movie?.movieId"
+				cssClass="details-button"
+			></ml-navigate-to-details-button>
+		</mat-list-item>
+		<mat-divider></mat-divider>
+	</ng-container>
+</mat-list>

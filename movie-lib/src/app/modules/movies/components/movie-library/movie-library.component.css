@@ -1,0 +1,33 @@
+mat-list-item {
+	min-height: 120px;
+	background: #fff;
+	padding: 10px;
+}
+
+.movie-image {
+	width: 70px !important;
+	height: 100px !important;
+	border-radius: 0 !important;
+	margin-top: 65px;
+}
+
+.actions {
+    display: inline-block;
+}
+
+.likes-number {
+	margin-left: 5px;
+}
+
+button {
+    margin: 0 8px !important;
+}
+
+ml-add-to-library-button {
+    margin: 0 8px !important;
+}
+
+.details-button {
+    text-align: center !important;
+    min-width: 90px !important;
+}

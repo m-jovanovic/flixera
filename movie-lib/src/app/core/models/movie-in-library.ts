@@ -1,4 +1,10 @@
+import { ID } from '@datorama/akita';
+
 export interface MovieInLibrary {
-    userId: string;
-    movieId: string;
+	id: ID;
+	userId: string;
+	movieId: string;
+	title: string;
+	posterUrl: string;
+	likes: number;
 }
