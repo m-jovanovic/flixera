@@ -2,23 +2,52 @@
 	<ng-container *ngFor="let movie of movies$ | async; trackBy: trackByFunction">
 		<mat-list-item>
 			<img class="movie-image" matListAvatar [src]="movie.posterUrl" />
-			<h3 matLine>{{ movie.title }}</h3>
+			<h3 matLine class="movie-title">{{ movie.title }}</h3>
 
-			<button mat-icon-button color="primary" matTooltip="Likes">
-				<mat-icon>thumb_up</mat-icon>
-				<span class="likes-number"> {{ movie.likes }} </span>
-			</button>
-
-			<ml-add-to-library-button
-				color="primary"
-				[movie]="movie"
-			></ml-add-to-library-button>
-
-			<ml-navigate-to-details-button
-				[id]="movie?.movieId"
-				cssClass="details-button"
-			></ml-navigate-to-details-button>
+			<ng-container
+				[ngTemplateOutlet]="
+					!(isSmallScreen$ | async).matches ? twoLine : singleLine
+				"
+				[ngTemplateOutletContext]="{ movie: movie }"
+			>
+			</ng-container>
 		</mat-list-item>
 		<mat-divider></mat-divider>
 	</ng-container>
 </mat-list>
+
+<ng-template #twoLine let-movie="movie">
+	<div matLine class="actions-container">
+		<button mat-icon-button color="primary" matTooltip="Likes">
+			<mat-icon>thumb_up</mat-icon>
+			<span class="likes-number"> {{ movie.likes }} </span>
+		</button>
+
+		<ml-add-to-library-button
+			color="primary"
+			[movie]="movie"
+		></ml-add-to-library-button>
+
+		<ml-navigate-to-details-button
+			[id]="movie?.movieId"
+			cssClass="details-button"
+		></ml-navigate-to-details-button>
+	</div>
+</ng-template>
+
+<ng-template #singleLine let-movie="movie">
+	<button mat-icon-button color="primary" matTooltip="Likes">
+		<mat-icon>thumb_up</mat-icon>
+		<span class="likes-number"> {{ movie.likes }} </span>
+	</button>
+
+	<ml-add-to-library-button
+		color="primary"
+		[movie]="movie"
+	></ml-add-to-library-button>
+
+	<ml-navigate-to-details-button
+		[id]="movie?.movieId"
+		cssClass="details-button"
+	></ml-navigate-to-details-button>
+</ng-template>
