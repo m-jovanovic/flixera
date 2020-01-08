@@ -9,8 +9,20 @@ mat-sidenav {
 	overflow: hidden;
 }
 
+mat-toolbar {
+	z-index: 1000;
+}
+
 main {
 	padding: 20px;
+	margin-top: 64px;
+}
+
+.fixed-to-top {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 }
 
 .spacer {
@@ -24,5 +36,12 @@ main {
 
 	main {
 		padding: 14px;
+		margin-top: 56px;
+	}
+}
+
+@media (min-width: 961px) {
+	.spacer {
+		flex: auto;
 	}
 }
