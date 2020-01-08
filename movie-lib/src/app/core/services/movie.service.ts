@@ -4,7 +4,8 @@ import { of, Subscription } from 'rxjs';
 import { first, catchError, map, mergeMap } from 'rxjs/operators';
 import {
 	AngularFirestoreCollection,
-	AngularFirestore
+	AngularFirestore,
+	DocumentData
 } from '@angular/fire/firestore';
 
 import { MovieApiService } from './movie-api.service';
@@ -40,16 +41,16 @@ export class MovieService extends MovieApiService implements OnDestroy {
 		this.subscription.unsubscribe();
 	}
 
-	getById(id: string): void {
+	async getById(id: string): Promise<void> {
 		const queryString = `i=${id}&type=movie&plot=full`;
 
 		this.movieDetailsStore.setLoading(true);
 
-		this.get<MovieModel>(queryString)
+		const movie: MovieDetailsModel = await this.get<MovieModel>(queryString)
 			.pipe(
 				first(),
-				map(m => {
-					this.subscribeToMovieInLibraryDocument(m.imdbID);
+				map(async m => {
+					const doc = await this.getMovieDocument(m.imdbID);
 
 					return {
 						id: m.imdbID,
@@ -58,7 +59,7 @@ export class MovieService extends MovieApiService implements OnDestroy {
 						year: m.Year,
 						genre: m.Genre,
 						posterUrl: m.Poster,
-						inLibrary: false
+						inLibrary: doc.exists
 					} as MovieDetailsModel;
 				}),
 				catchError(_ => {
@@ -67,11 +68,11 @@ export class MovieService extends MovieApiService implements OnDestroy {
 					return of(null);
 				})
 			)
-			.subscribe((movie: MovieDetailsModel) => {
-				this.movieDetailsStore.add(movie);
+			.toPromise();
 
-				this.movieDetailsStore.setLoading(false);
-			});
+		this.movieDetailsStore.add(movie);
+
+		this.movieDetailsStore.setLoading(false);
 	}
 
 	private subscribeToMoviesCollectionStateChanges(): void {
@@ -90,18 +91,16 @@ export class MovieService extends MovieApiService implements OnDestroy {
 			.subscribe();
 	}
 
-	private subscribeToMovieInLibraryDocument(movieId: string) {
+	private getMovieDocument(
+		movieId: string
+	): Promise<firebase.firestore.DocumentSnapshot<DocumentData>> {
 		const movieUid = `${this.authQuery.getUserId()}-${movieId}`;
 
-		this.moviesCollection
+		return this.moviesCollection
 			.doc(movieUid)
 			.get()
 			.pipe(first())
-			.subscribe(doc => {
-				if (doc.exists) {
-					this.updateMovieInStore(doc.data().movieId, true);
-				}
-			});
+			.toPromise();
 	}
 
 	private updateMovieInStore(movieId: string, inLibrary: boolean): void {

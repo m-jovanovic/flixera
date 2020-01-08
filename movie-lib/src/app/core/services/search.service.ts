@@ -2,7 +2,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
 	AngularFirestore,
-	AngularFirestoreCollection
+	AngularFirestoreCollection,
+	DocumentData
 } from '@angular/fire/firestore';
 import { of, Subscription } from 'rxjs';
 import { first, catchError, map, mergeMap } from 'rxjs/operators';
@@ -46,7 +47,7 @@ export class SearchService extends MovieApiService implements OnDestroy {
 		this.subscription.unsubscribe();
 	}
 
-	searchMovies(search: string, page?: number): void {
+	async searchMovies(search: string, page?: number): Promise<void> {
 		if (page == undefined) {
 			page = 1;
 		}
@@ -55,7 +56,7 @@ export class SearchService extends MovieApiService implements OnDestroy {
 
 		this.movieSearchStore.setLoading(true);
 
-		this.get<ApiResponseModel>(queryString)
+		const response = await this.get<ApiResponseModel>(queryString)
 			.pipe(
 				first(),
 				catchError(_ => {
@@ -64,11 +65,11 @@ export class SearchService extends MovieApiService implements OnDestroy {
 					return of(emptyApiResponse);
 				})
 			)
-			.subscribe(response => {
-				this.updateMoviesStore(response, search, page);
+			.toPromise();
 
-				this.movieSearchStore.setLoading(false);
-			});
+		await this.updateMoviesStore(response, search, page);
+
+		this.movieSearchStore.setLoading(false);
 	}
 
 	clearMovies(): void {
@@ -91,18 +92,18 @@ export class SearchService extends MovieApiService implements OnDestroy {
 			.subscribe();
 	}
 
-	private updateMoviesStore(
+	private async updateMoviesStore(
 		response: ApiResponseModel,
 		search: string,
 		page: number
-	): void {
+	): Promise<void> {
 		this.showSnackBar(response.Response, response.Error, search);
 
 		if (this.emptyMovieStoreIfBadResponse(response, search, page)) {
 			return;
 		}
 
-		const movies = this.createMoviesArray(response, page);
+		const movies = await this.createMoviesArray(response, page);
 
 		this.movieSearchStore.update({
 			searchTerm: search,
@@ -131,40 +132,40 @@ export class SearchService extends MovieApiService implements OnDestroy {
 		return true;
 	}
 
-	private createMoviesArray(
+	private async createMoviesArray(
 		response: ApiResponseModel,
 		page: number
-	): MovieListItemModel[] {
+	): Promise<MovieListItemModel[]> {
 		const currentMovies = this.movieSearchStore.getValue().movies;
 
-		const newMovies = response.Search.map(m => {
-			this.subscribeToMovieInLibraryDocument(m.imdbID);
+		const newMoviesPromises = response.Search.map(async m => {
+			const doc = await this.getMovieDocument(m.imdbID);
 
 			return {
 				id: m.imdbID,
 				title: m.Title,
 				posterUrl: m.Poster,
-				inLibrary: false
+				inLibrary: doc.exists
 			} as MovieListItemModel;
 		});
+
+		const newMovies = await Promise.all(newMoviesPromises);
 
 		const movies = page == 1 ? newMovies : currentMovies.concat(newMovies);
 
 		return movies;
 	}
 
-	private subscribeToMovieInLibraryDocument(movieId: string): void {
+	private getMovieDocument(
+		movieId: string
+	): Promise<firebase.firestore.DocumentSnapshot<DocumentData>> {
 		const movieUid = `${this.authQuery.getUserId()}-${movieId}`;
 
-		this.moviesCollection
+		return this.moviesCollection
 			.doc(movieUid)
 			.get()
 			.pipe(first())
-			.subscribe(doc => {
-				if (doc.exists) {
-					this.updateMovieInStore(doc.data().movieId, true);
-				}
-			});
+			.toPromise();
 	}
 
 	private updateMovieInStore(movieId: string, inLibrary: boolean): void {

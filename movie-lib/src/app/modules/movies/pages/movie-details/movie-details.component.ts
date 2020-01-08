@@ -23,7 +23,7 @@ export class MovieDetailsComponent implements OnInit {
 		private movieDetailsQuery: MovieDetailsQuery
 	) {}
 
-	ngOnInit(): void {
+	async ngOnInit(): Promise<void> {
 		if (this.movieId.length == 0) {
 			this.router.navigate(['/movies/library']);
 		}
@@ -31,7 +31,7 @@ export class MovieDetailsComponent implements OnInit {
 		this.isLoading$ = this.movieDetailsQuery.selectLoading();
 
 		if (!this.movieDetailsQuery.hasEntity(this.movieId)) {
-			this.movieService.getById(this.movieId);
+			await this.movieService.getById(this.movieId);
 		}
 	}
 

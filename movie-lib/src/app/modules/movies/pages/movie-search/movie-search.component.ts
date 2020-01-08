@@ -7,11 +7,7 @@ import {
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Observable, fromEvent, Subscription } from 'rxjs';
-import {
-	map,
-	filter,
-	debounceTime
-} from 'rxjs/operators';
+import { map, filter, debounceTime } from 'rxjs/operators';
 
 import { MediaQueryColCountPair } from '@app/shared';
 import { MovieListItemModel, SearchService, MovieSearchQuery } from '@app/core';
@@ -94,8 +90,8 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 				filter(value => value.length > 1),
 				debounceTime(400)
 			)
-			.subscribe(searchTerm => {
-				this.searchService.searchMovies(searchTerm, this.initialPage);
+			.subscribe(async searchTerm => {
+				await this.searchService.searchMovies(searchTerm, this.initialPage);
 			});
 	}
 }
