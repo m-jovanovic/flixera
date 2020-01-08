@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@app/core/services/authentication.service';
+import { AuthenticationService } from '@app/core/services/auth/authentication.service';
 import { AuthQuery } from '@app/core/store/auth/auth.query';
 import { Observable } from 'rxjs';
-import { User } from '@app/core/models/user.model';
+import { User } from '@app/core/models/user';
 
 @Component({
 	selector: 'ml-nav-bar-menu',

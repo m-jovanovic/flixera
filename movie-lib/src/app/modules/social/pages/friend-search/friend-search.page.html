@@ -1,0 +1,33 @@
+<mat-form-field class="search-input">
+	<input
+		class="search-input"
+		type="search"
+		#friendSearchInput
+		matInput
+		placeholder="Enter email address"
+	/>
+	<button
+		mat-button
+		*ngIf="searchTermExists$ | async"
+		matSuffix
+		mat-icon-button
+		aria-label="Clear"
+		(click)="onClearClick()"
+		title="Clear"
+	>
+		<mat-icon>close</mat-icon>
+	</button>
+</mat-form-field>
+
+<mat-list>
+	<ng-container *ngFor="let user of users$ | async; trackBy: trackByFunction">
+		<mat-list-item>
+			<img matListAvatar [src]="user.photoURL" />
+			<h3 matLine>{{ user.displayName }} <{{user.email}}></h3>
+			<button class="send-friend-request-button" mat-stroked-button color="primary">
+				SEND FRIEND REQUEST
+			</button>
+		</mat-list-item>
+		<mat-divider></mat-divider>
+	</ng-container>
+</mat-list>

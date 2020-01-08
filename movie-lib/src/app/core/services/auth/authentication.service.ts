@@ -9,8 +9,8 @@ import {
 import { of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { User } from '../models/user.model';
-import { AuthStore } from '../store/auth/auth.store';
+import { User } from '../../models/user';
+import { AuthStore } from '../../store/auth/auth.store';
 
 @Injectable({
 	providedIn: 'root'

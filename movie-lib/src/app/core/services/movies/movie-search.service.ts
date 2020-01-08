@@ -12,18 +12,18 @@ import { MovieApiService } from './movie-api.service';
 import {
 	ApiResponseModel,
 	emptyApiResponse
-} from '../models/api-response.model';
-import { MovieListItemModel } from '../models/move-list-item.model';
-import { MovieInLibrary } from '../models/movie-in-library';
-import { MovieSearchStore } from '../store/movie-search/movie-search.store';
-import { initialMovieSearchState } from '../store/movie-search/movie-search.store';
-import { AuthQuery } from '../store/auth/auth.query';
+} from '../../models/api-response.model';
+import { MovieListItemModel } from '../../models/move-list-item.model';
+import { MovieInLibrary } from '../../models/movie-in-library';
+import { MovieSearchStore } from '../../store/movie-search/movie-search.store';
+import { initialMovieSearchState } from '../../store/movie-search/movie-search.store';
+import { AuthQuery } from '../../store/auth/auth.query';
 import { MatSnackBar } from '@angular/material';
 
 @Injectable({
 	providedIn: 'root'
 })
-export class SearchService extends MovieApiService implements OnDestroy {
+export class MovieSearchService extends MovieApiService implements OnDestroy {
 	private moviesCollection: AngularFirestoreCollection<MovieInLibrary>;
 	private subscription: Subscription;
 

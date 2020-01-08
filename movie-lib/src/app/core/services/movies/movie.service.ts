@@ -9,11 +9,11 @@ import {
 } from '@angular/fire/firestore';
 
 import { MovieApiService } from './movie-api.service';
-import { MovieModel } from '../models/movie.model';
-import { MovieDetailsModel } from '../models/movie-details.model';
-import { MovieInLibrary } from '../models/movie-in-library';
-import { MovieDetailsStore } from '../store/movie-details/movie-details.store';
-import { AuthQuery } from '../store/auth/auth.query';
+import { MovieModel } from '../../models/movie.model';
+import { MovieDetailsModel } from '../../models/movie-details.model';
+import { MovieInLibrary } from '../../models/movie-in-library';
+import { MovieDetailsStore } from '../../store/movie-details/movie-details.store';
+import { AuthQuery } from '../../store/auth/auth.query';
 
 @Injectable({
 	providedIn: 'root'

@@ -26,7 +26,11 @@
 		<mat-icon>person</mat-icon>
 		Friends
 	</a>
-	<a mat-list-item>
+	<a
+		mat-list-item
+		[routerLink]="['/friends/search']"
+		routerLinkActive="active-list-item"
+	>
 		<mat-icon>person_add</mat-icon>
 		Search for friends
 	</a>

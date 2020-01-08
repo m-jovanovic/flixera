@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Query, toBoolean } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
-import { User } from '../../models/user.model';
+import { User } from '../../models/user';
 import { AuthState } from './auth.state';
 import { AuthStore } from './auth.store';
 import { map } from 'rxjs/operators';

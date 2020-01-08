@@ -5,9 +5,9 @@ import {
 } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 
-import { MovieInLibrary } from '../models/movie-in-library';
-import { AuthQuery } from '../store/auth/auth.query';
-import { MovieLibraryStore } from '../store/movie-library/movie-library.store';
+import { MovieInLibrary } from '../../models/movie-in-library';
+import { AuthQuery } from '../../store/auth/auth.query';
+import { MovieLibraryStore } from '../../store/movie-library/movie-library.store';
 
 @Injectable({
 	providedIn: 'root'
@@ -46,12 +46,11 @@ export class MovieLibraryService implements OnDestroy {
 		const id = `${userId}-${movieId}`;
 
 		const movieInLibrary: MovieInLibrary = {
-			id,
 			userId,
 			movieId,
 			title,
 			posterUrl,
-			likes: 0
+			likesCount: 0
 		};
 
 		await this.moviesCollection.doc<MovieInLibrary>(id).set(movieInLibrary);

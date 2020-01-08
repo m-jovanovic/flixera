@@ -10,7 +10,7 @@ import { Observable, fromEvent, Subscription } from 'rxjs';
 import { map, filter, debounceTime } from 'rxjs/operators';
 
 import { MediaQueryColCountPair } from '@app/shared';
-import { MovieListItemModel, SearchService, MovieSearchQuery } from '@app/core';
+import { MovieListItemModel, MovieSearchService, MovieSearchQuery } from '@app/core';
 
 @Component({
 	selector: 'ml-movie-search',
@@ -37,7 +37,7 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 	movieSearchInput: ElementRef;
 
 	constructor(
-		private searchService: SearchService,
+		private searchService: MovieSearchService,
 		private movieSearchQuery: MovieSearchQuery,
 		private snackBar: MatSnackBar
 	) {}

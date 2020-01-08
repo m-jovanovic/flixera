@@ -21,6 +21,12 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('./modules/movies/movies.module').then(m => m.MoviesModule),
 				canLoad: [AuthGuard]
+			},
+			{
+				path: 'friends',
+				loadChildren: () =>
+					import('./modules/social/friends.module').then(m => m.FriendsModule),
+				canLoad: [AuthGuard]
 			}
 		]
 	},
