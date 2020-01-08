@@ -139,13 +139,20 @@ export class MovieSearchService extends MovieApiService implements OnDestroy {
 		const currentMovies = this.movieSearchStore.getValue().movies;
 
 		const newMoviesPromises = response.Search.map(async m => {
-			const doc = await this.getMovieDocument(m.imdbID);
+			let inLibrary = false;
+			try {
+				const doc = await this.getMovieDocument(m.imdbID);
+
+				inLibrary = doc.exists;
+			} catch (e) {
+				console.log((e as Error).message);
+			}
 
 			return {
 				id: m.imdbID,
 				title: m.Title,
 				posterUrl: m.Poster,
-				inLibrary: doc.exists
+				inLibrary
 			} as MovieListItemModel;
 		});
 

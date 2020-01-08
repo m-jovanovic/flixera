@@ -50,7 +50,15 @@ export class MovieService extends MovieApiService implements OnDestroy {
 			.pipe(
 				first(),
 				map(async m => {
-					const doc = await this.getMovieDocument(m.imdbID);
+					let inLibrary = false;
+					try {
+						const doc = await this.getMovieDocument(m.imdbID);
+
+						inLibrary = doc.exists;
+					}
+					catch (e) {
+						console.log((e as Error).message);
+					}
 
 					return {
 						id: m.imdbID,
@@ -59,7 +67,7 @@ export class MovieService extends MovieApiService implements OnDestroy {
 						year: m.Year,
 						genre: m.Genre,
 						posterUrl: m.Poster,
-						inLibrary: doc.exists
+						inLibrary
 					} as MovieDetailsModel;
 				}),
 				catchError(_ => {
