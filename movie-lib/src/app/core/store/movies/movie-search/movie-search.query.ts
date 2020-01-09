@@ -3,7 +3,7 @@ import { Query } from '@datorama/akita';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { MovieListItemModel } from '../../models/move-list-item.model';
+import { MovieListItemModel } from '../../../contracts/models/move-list-item.model';
 import { MovieSearchState } from './movie-search.state';
 import { MovieSearchStore } from './movie-search.store';
 

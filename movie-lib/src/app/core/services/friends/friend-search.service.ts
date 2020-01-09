@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { User } from '../../models/user';
-import { AuthQuery } from '@app/core/store/auth/auth.query';
-import { FriendSearchStore } from '@app/core/store/friend-search/friend-search.store';
+import { User } from '../../contracts/db/user';
+import { AuthQuery } from '../../store/auth/auth.query';
+import { FriendSearchStore } from '../../store/friend-search/friend-search.store';
 
 @Injectable({
 	providedIn: 'root'
@@ -20,14 +20,7 @@ export class FriendSearchService {
 	searchFriends(start: string, end: string): void {
 		this.friendSearchStore.setLoading(true);
 
-		this.firestore
-			.collection<User>('users', ref =>
-				ref
-					.orderBy('email')
-					.startAt(start)
-					.endAt(end)
-			)
-			.valueChanges()
+		this.getUsersCollectionObservable(start, end)
 			.pipe(
 				first(),
 				map((users: User[]) =>
@@ -43,5 +36,19 @@ export class FriendSearchService {
 
 	clearFriends(): void {
 		this.friendSearchStore.set([]);
+	}
+
+	private getUsersCollectionObservable(
+		start: string,
+		end: string
+	): Observable<User[]> {
+		return this.firestore
+			.collection<User>('users', ref =>
+				ref
+					.orderBy('email')
+					.startAt(start)
+					.endAt(end)
+			)
+			.valueChanges();
 	}
 }

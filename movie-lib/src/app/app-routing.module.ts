@@ -25,7 +25,7 @@ const routes: Routes = [
 			{
 				path: 'friends',
 				loadChildren: () =>
-					import('./modules/social/friends.module').then(m => m.FriendsModule),
+					import('./modules/friends/friends.module').then(m => m.FriendsModule),
 				canLoad: [AuthGuard]
 			}
 		]

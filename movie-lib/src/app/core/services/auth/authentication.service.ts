@@ -9,7 +9,7 @@ import {
 import { of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { User } from '../../models/user';
+import { User } from '../../contracts/db/user';
 import { AuthStore } from '../../store/auth/auth.store';
 
 @Injectable({

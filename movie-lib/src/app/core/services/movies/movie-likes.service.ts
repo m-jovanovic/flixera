@@ -5,7 +5,7 @@ import {
 } from '@angular/fire/firestore';
 import { AuthQuery } from '@app/core/store/auth/auth.query';
 
-import { Like } from '../../models/like';
+import { Like } from '../../contracts/db/like';
 
 @Injectable({
 	providedIn: 'root'

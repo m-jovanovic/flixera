@@ -5,9 +5,9 @@ import {
 } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 
-import { MovieInLibrary } from '../../models/movie-in-library';
+import { MovieInLibrary } from '../../contracts/db/movie-in-library';
 import { AuthQuery } from '../../store/auth/auth.query';
-import { MovieLibraryStore } from '../../store/movie-library/movie-library.store';
+import { MovieLibraryStore } from '../../store/movies/movie-library/movie-library.store';
 
 @Injectable({
 	providedIn: 'root'

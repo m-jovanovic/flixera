@@ -9,10 +9,10 @@ import {
 } from '@angular/fire/firestore';
 
 import { MovieApiService } from './movie-api.service';
-import { MovieModel } from '../../models/movie.model';
-import { MovieDetailsModel } from '../../models/movie-details.model';
-import { MovieInLibrary } from '../../models/movie-in-library';
-import { MovieDetailsStore } from '../../store/movie-details/movie-details.store';
+import { MovieModel } from '../../contracts/models/movie.model';
+import { MovieDetailsModel } from '../../contracts/models/movie-details.model';
+import { MovieInLibrary } from '../../contracts/db/movie-in-library';
+import { MovieDetailsStore } from '../../store/movies/movie-details/movie-details.store';
 import { AuthQuery } from '../../store/auth/auth.query';
 
 @Injectable({

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 
 import { MovieLibraryState } from './movie-library.state';
-import { MovieInLibrary } from '../../models/movie-in-library';
+import { MovieInLibrary } from '../../../contracts/db/movie-in-library';
 import { MovieLibraryStore } from './movie-library.store';
 
 @Injectable({

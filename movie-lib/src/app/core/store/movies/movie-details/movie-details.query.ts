@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 
-import { MovieDetailsModel } from '../../models/movie-details.model';
+import { MovieDetailsModel } from '../../../contracts/models/movie-details.model';
 import { MovieDetailsState } from './movie-details.state';
 import { MovieDetailsStore } from './movie-details.store';
 

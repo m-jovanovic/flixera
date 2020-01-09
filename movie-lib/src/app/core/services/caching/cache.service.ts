@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { CacheItem, isExpired } from '../../models/cache-item';
+import { CacheItem, isExpired } from './cache-item';
 
 @Injectable({
     providedIn: 'root'

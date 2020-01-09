@@ -12,11 +12,11 @@ import { MovieApiService } from './movie-api.service';
 import {
 	ApiResponseModel,
 	emptyApiResponse
-} from '../../models/api-response.model';
-import { MovieListItemModel } from '../../models/move-list-item.model';
-import { MovieInLibrary } from '../../models/movie-in-library';
-import { MovieSearchStore } from '../../store/movie-search/movie-search.store';
-import { initialMovieSearchState } from '../../store/movie-search/movie-search.store';
+} from '../../contracts/models/api-response.model';
+import { MovieListItemModel } from '../../contracts/models/move-list-item.model';
+import { MovieInLibrary } from '../../contracts/db/movie-in-library';
+import { MovieSearchStore } from '../../store/movies/movie-search/movie-search.store';
+import { initialMovieSearchState } from '../../store/movies/movie-search/movie-search.store';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { MatSnackBar } from '@angular/material';
 

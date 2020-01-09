@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
-import { CacheService } from '../services/common/cache.service';
+import { CacheService } from '../services/caching/cache.service';
 
 @Injectable({
 	providedIn: 'root'
