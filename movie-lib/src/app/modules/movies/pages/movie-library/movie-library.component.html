@@ -20,7 +20,7 @@
 	<div matLine class="actions-container">
 		<button mat-icon-button color="primary" matTooltip="Likes">
 			<mat-icon>thumb_up</mat-icon>
-			<span class="likes-number"> {{ movie.likes }} </span>
+			<span class="likes-number"> {{ movie.likesCount }} </span>
 		</button>
 
 		<ml-add-to-movie-library-button
@@ -37,7 +37,7 @@
 <ng-template #singleLine let-movie="movie">
 	<button mat-icon-button color="primary" matTooltip="Likes">
 		<mat-icon>thumb_up</mat-icon>
-		<span class="likes-number"> {{ movie.likes }} </span>
+		<span class="likes-number"> {{ movie.likesCount }} </span>
 	</button>
 
 	<ml-add-to-movie-library-button

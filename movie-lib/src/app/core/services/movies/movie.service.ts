@@ -55,8 +55,7 @@ export class MovieService extends MovieApiService implements OnDestroy {
 						const doc = await this.getMovieDocument(m.imdbID);
 
 						inLibrary = doc.exists;
-					}
-					catch (e) {
+					} catch (e) {
 						console.log((e as Error).message);
 					}
 
@@ -89,9 +88,11 @@ export class MovieService extends MovieApiService implements OnDestroy {
 			.pipe(
 				mergeMap(actions => actions),
 				map(action => {
-					const movieId = action.payload.doc.data().movieId;
+					const data = action.payload.doc.data();
 
-					const inLibrary = action.type == 'added';
+					const movieId = data.movieId;
+
+					const inLibrary = action.type == 'added' || action.type == 'modified';
 
 					this.updateMovieInStore(movieId, inLibrary);
 				})

@@ -24,8 +24,8 @@ import { FriendSearchService, FriendSearchQuery } from '@app/core';
 
 @Component({
 	selector: 'ml-friend-search',
-	templateUrl: './friend-search.page.html',
-	styleUrls: ['./friend-search.page.css']
+	templateUrl: './friend-search.component.html',
+	styleUrls: ['./friend-search.component.css']
 })
 export class FriendSearchComponent implements OnInit, OnDestroy {
 	private keyUpSubscription: Subscription;
@@ -92,5 +92,9 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 		this.friendSearchService.clearFriends();
 
 		(<HTMLInputElement>this.friendSearchInput.nativeElement).value = '';
+	}
+
+	trackByFunction(_index: any, item: any): any {
+		return item.uid;
 	}
 }

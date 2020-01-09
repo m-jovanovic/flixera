@@ -84,7 +84,7 @@ export class MovieSearchService extends MovieApiService implements OnDestroy {
 				map(action => {
 					const movieId = action.payload.doc.data().movieId;
 
-					const inLibrary = action.type == 'added';
+					const inLibrary = action.type == 'added' || action.type == 'modified';
 
 					this.updateMovieInStore(movieId, inLibrary);
 				})

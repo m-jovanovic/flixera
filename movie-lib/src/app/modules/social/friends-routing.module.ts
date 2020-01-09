@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FriendSearchComponent } from './pages/friend-search/friend-search.page';
+import { FriendSearchComponent } from './pages/friend-search/friend-search.component';
 
 const routes: Routes = [
 	{

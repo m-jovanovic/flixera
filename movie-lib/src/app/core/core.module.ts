@@ -24,7 +24,9 @@ import { MovieApiCacheInterceptor } from './interceptors/movie-api-cache.interce
 	imports: [
 		HttpClientModule,
 		AngularFireAuthModule,
-		AngularFirestoreModule.enablePersistence(),
+		AngularFirestoreModule.enablePersistence({
+			synchronizeTabs: true
+		}),
 		SharedModule,
 		MaterialModule,
 		RouterModule
