@@ -14,8 +14,8 @@ import { DefaultImageDirective } from './directives/default-image/default-image.
 	imports: [CommonModule, ScrollingModule, MaterialModule],
 	exports: [
 		CommonModule,
-		ResponsiveColumnsDirective,
 		ScrollTopComponent,
+		ResponsiveColumnsDirective,
 		DefaultImageDirective
 	]
 })

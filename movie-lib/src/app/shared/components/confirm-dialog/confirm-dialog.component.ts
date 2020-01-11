@@ -3,6 +3,7 @@ import {
 	MatDialogRef,
 	MAT_DIALOG_DATA
 } from '@angular/material/dialog';
+import { ThemePalette } from '@angular/material/typings/core/common-behaviors/color';
 
 import { ConfirmDialogData } from './confirm-dialog.data';
 
@@ -15,9 +16,9 @@ export class ConfirmDialogComponent {
 	title: string;
 	message: string;
 	dismissButtonText: string;
-	dismissButtonColor: string;
+	dismissButtonColor: ThemePalette;
 	confirmButtonText: string;
-	confirmButtonColor: string;
+	confirmButtonColor: ThemePalette;
 
 	constructor(
 		private dialogRef: MatDialogRef<ConfirmDialogComponent>,
@@ -27,8 +28,8 @@ export class ConfirmDialogComponent {
 		this.message = this.data.message;
 		this.dismissButtonText = this.data.dismissButtonText;
 		this.confirmButtonText = this.data.confirmButtonText;
-		this.dismissButtonColor = this.data.dismissButtonColor;
-		this.confirmButtonColor = this.data.confirmButtonColor;
+		this.dismissButtonColor = this.data.dismissButtonColor as ThemePalette;
+		this.confirmButtonColor = this.data.confirmButtonColor as ThemePalette;
 	}
 
 	onConfirm(): void {

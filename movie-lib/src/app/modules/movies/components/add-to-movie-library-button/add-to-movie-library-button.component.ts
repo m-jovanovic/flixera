@@ -13,6 +13,7 @@ import {
 	MovieLibraryService,
 	Movie
 } from '@app/core';
+import { ThemePalette } from '@angular/material/typings/core/common-behaviors/color';
 
 export type ButtonColor = 'primary' | 'accent';
 
@@ -23,7 +24,7 @@ export type ButtonColor = 'primary' | 'accent';
 })
 export class AddToMovieLibraryButtonComponent implements OnInit {
 	@Input()
-	color: string;
+	color: ThemePalette;
 
 	@Input()
 	movie: MovieListItemModel | MovieDetailsModel | Movie;
