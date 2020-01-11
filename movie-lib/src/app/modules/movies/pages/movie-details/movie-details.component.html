@@ -1,7 +1,10 @@
 <div *ngIf="isLoading$ | async; else content">
 	<mat-grid-list cols="1" rowHeight="500px">
 		<mat-grid-tile>
-			<mat-progress-spinner color="accent" mode="indeterminate"></mat-progress-spinner>
+			<mat-progress-spinner
+				color="accent"
+				mode="indeterminate"
+			></mat-progress-spinner>
 		</mat-grid-tile>
 	</mat-grid-list>
 </div>
@@ -14,9 +17,8 @@
 		>
 			<img
 				class="movie-image"
-				default
+				default="./assets/images/default-movie-image.jpg"
 				[src]="movie?.posterUrl"
-				onerror="this.src = 'https://3apq7g38q3kw2yn3fx4bojii-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/lazyplaceholder4.jpg';"
 			/>
 		</div>
 
@@ -57,9 +59,17 @@
 		<mat-divider></mat-divider>
 
 		<mat-card-actions>
-			<ml-add-to-movie-library-button color="accent" [movie]="movie"></ml-add-to-movie-library-button>
-			
-			<button *ngIf="movie.inLibrary" mat-button color="accent" (click)="likeMovie()">
+			<ml-add-to-movie-library-button
+				color="accent"
+				[movie]="movie"
+			></ml-add-to-movie-library-button>
+
+			<button
+				*ngIf="movie.inLibrary"
+				mat-button
+				color="accent"
+				(click)="likeMovie()"
+			>
 				LIKE
 			</button>
 		</mat-card-actions>

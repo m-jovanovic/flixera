@@ -1,7 +1,12 @@
 <mat-list>
 	<ng-container *ngFor="let movie of movies$ | async; trackBy: trackByFunction">
 		<mat-list-item>
-			<img class="movie-image" default matListAvatar [src]="movie.posterUrl" />
+			<img
+				class="movie-image"
+				matListAvatar
+				default="./assets/images/default-movie-image.jpg"
+				[src]="movie.posterUrl"
+			/>
 			<h3 matLine class="movie-title">{{ movie.title }}</h3>
 
 			<ng-container
