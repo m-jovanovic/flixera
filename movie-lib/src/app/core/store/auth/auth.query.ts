@@ -26,4 +26,8 @@ export class AuthQuery extends Query<AuthState> {
 
 		return user ? user.uid : '';
 	}
+
+	getUser(): User | null {
+		return this.getValue().user;
+	}
 }

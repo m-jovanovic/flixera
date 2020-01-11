@@ -24,7 +24,7 @@
 		<mat-list-item>
 			<img matListAvatar [src]="user.photoURL" />
 			<h3 matLine>{{ user.displayName }} <{{user.email}}></h3>
-			<button class="send-friend-request-button" mat-stroked-button color="primary">
+			<button class="send-friend-request-button" mat-stroked-button color="primary" (click)="sendFriendRequest(user)">
 				SEND FRIEND REQUEST
 			</button>
 		</mat-list-item>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EntityStore, StoreConfig } from '@datorama/akita';
 
-import { User } from '../../contracts/db/user';
+import { User } from '../../../contracts/db/user';
 import { FriendSearchState } from './friend-search.state';
 
 @StoreConfig({

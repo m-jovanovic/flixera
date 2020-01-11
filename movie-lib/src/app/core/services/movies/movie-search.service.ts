@@ -14,7 +14,7 @@ import {
 	emptyApiResponse
 } from '../../contracts/models/api-response.model';
 import { MovieListItemModel } from '../../contracts/models/move-list-item.model';
-import { MovieInLibrary } from '../../contracts/db/movie-in-library';
+import { Movie } from '../../contracts/db/movie';
 import { MovieSearchStore } from '../../store/movies/movie-search/movie-search.store';
 import { initialMovieSearchState } from '../../store/movies/movie-search/movie-search.store';
 import { AuthQuery } from '../../store/auth/auth.query';
@@ -24,7 +24,7 @@ import { MatSnackBar } from '@angular/material';
 	providedIn: 'root'
 })
 export class MovieSearchService extends MovieApiService implements OnDestroy {
-	private moviesCollection: AngularFirestoreCollection<MovieInLibrary>;
+	private moviesCollection: AngularFirestoreCollection<Movie>;
 	private subscription: Subscription;
 
 	constructor(
@@ -151,7 +151,7 @@ export class MovieSearchService extends MovieApiService implements OnDestroy {
 			return {
 				id: m.imdbID,
 				title: m.Title,
-				posterUrl: m.Poster,
+				posterURL: m.Poster,
 				inLibrary
 			} as MovieListItemModel;
 		});
@@ -194,7 +194,7 @@ export class MovieSearchService extends MovieApiService implements OnDestroy {
 			movies.splice(indexOfMovie, 1, {
 				id: movieToUpdate.id,
 				title: movieToUpdate.title,
-				posterUrl: movieToUpdate.posterUrl,
+				posterURL: movieToUpdate.posterURL,
 				inLibrary
 			});
 

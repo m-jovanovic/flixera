@@ -1,7 +1,7 @@
-export interface MovieInLibrary {
+export interface Movie {
 	userId: string;
 	movieId: string;
 	title: string;
-	posterUrl: string;
+	posterURL: string;
 	likesCount: number;
 }

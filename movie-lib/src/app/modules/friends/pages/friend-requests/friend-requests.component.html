@@ -1,0 +1,25 @@
+<mat-list>
+	<ng-container *ngFor="let friendRequest of friendRequests$ | async; trackBy: trackByFunction">
+		<mat-list-item>
+			<img matListAvatar [src]="friendRequest.friendPhotoURL" />
+			<h3 matLine>{{ friendRequest.friendDisplayName }}</h3>
+			<button
+				class="accept-friend-request-button"
+				mat-stroked-button
+				color="primary"
+				(click)="acceptFriendRequest(friendRequest)"
+			>
+				ACCEPT
+			</button>
+			<button
+				class="reject-friend-request-button"
+				mat-stroked-button
+				color="primary"
+				(click)="rejectFriendRequest(friendRequest.friendId)"
+			>
+				REJECT
+			</button>
+		</mat-list-item>
+		<mat-divider></mat-divider>
+	</ng-container>
+</mat-list>

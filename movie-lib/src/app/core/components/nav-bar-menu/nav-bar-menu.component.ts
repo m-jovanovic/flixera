@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@app/core/services/auth/authentication.service';
-import { AuthQuery } from '@app/core/store/auth/auth.query';
 import { Observable } from 'rxjs';
-import { User } from '@app/core/contracts/db/user';
+
+import { User } from '../../contracts/db/user';
+import { AuthenticationService } from '../../services/auth/authentication.service';
+import { AuthQuery } from '../../store/auth/auth.query';
 
 @Component({
 	selector: 'ml-nav-bar-menu',
@@ -17,11 +18,11 @@ export class NavBarMenuComponent implements OnInit {
 		private authQuery: AuthQuery
 	) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.user$ = this.authQuery.user$;
 	}
 
-	async signOut() {
+	async signOut(): Promise<void> {
 		await this.authenticationService.signOut();
 	}
 }

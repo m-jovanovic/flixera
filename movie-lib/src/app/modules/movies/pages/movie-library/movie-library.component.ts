@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {
 	MovieLibraryService,
 	MovieLibraryQuery,
-	MovieInLibrary
+	Movie
 } from '@app/core';
 
 @Component({
@@ -14,7 +14,7 @@ import {
 	styleUrls: ['./movie-library.component.css']
 })
 export class MovieLibraryComponent implements OnInit {
-	movies$: Observable<MovieInLibrary[]>;
+	movies$: Observable<Movie[]>;
 	isSmallScreen$: Observable<BreakpointState>;
 
 	constructor(
@@ -24,7 +24,7 @@ export class MovieLibraryComponent implements OnInit {
 		private breakpointObserver: BreakpointObserver
 	) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.movies$ = this.movieLibraryQuery.selectAll();
 
 		this.isSmallScreen$ = this.breakpointObserver.observe('(min-width: 700px)');

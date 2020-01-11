@@ -19,7 +19,7 @@ import {
 	debounceTime
 } from 'rxjs/operators';
 
-import { User, FriendSearchService, FriendSearchQuery } from '@app/core';
+import { User, FriendSearchService, FriendSearchQuery, FriendRequestsService } from '@app/core';
 
 @Component({
 	selector: 'ml-friend-search',
@@ -41,10 +41,11 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private friendSearchService: FriendSearchService,
-		private friendSearchQuery: FriendSearchQuery
+		private friendSearchQuery: FriendSearchQuery,
+		private friendRequestsService: FriendRequestsService
 	) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.users$ = this.friendSearchQuery.selectAll();
 
 		this.subscribeToSearchTermSubjects();
@@ -56,9 +57,9 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 		this.searchTermStart.complete();
 
 		this.searchTermEnd.complete();
-		
+
 		this.searchSubscription.unsubscribe();
-		
+
 		this.keyUpSubscription.unsubscribe();
 	}
 
@@ -66,6 +67,10 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 		this.friendSearchService.clearFriends();
 
 		(<HTMLInputElement>this.friendSearchInput.nativeElement).value = '';
+	}
+
+	async sendFriendRequest(friend: User): Promise<void> {
+		await this.friendRequestsService.sendFriendRequest(friend.uid);
 	}
 
 	trackByFunction(_index: any, item: any): any {

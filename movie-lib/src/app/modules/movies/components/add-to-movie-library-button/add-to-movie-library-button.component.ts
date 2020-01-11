@@ -11,7 +11,7 @@ import {
 	MovieListItemModel,
 	MovieDetailsModel,
 	MovieLibraryService,
-	MovieInLibrary
+	Movie
 } from '@app/core';
 
 export type ButtonColor = 'primary' | 'accent';
@@ -26,7 +26,7 @@ export class AddToMovieLibraryButtonComponent implements OnInit {
 	color: string;
 
 	@Input()
-	movie: MovieListItemModel | MovieDetailsModel | MovieInLibrary;
+	movie: MovieListItemModel | MovieDetailsModel | Movie;
 
 	isOnline$: Observable<boolean>;
 
@@ -52,7 +52,7 @@ export class AddToMovieLibraryButtonComponent implements OnInit {
 	}
 
 	private async handleAdd() {
-		await this.movieLibraryService.addToLibrary(this.movieId, this.movie.title, this.movie.posterUrl);
+		await this.movieLibraryService.addToLibrary(this.movieId, this.movie.title, this.movie.posterURL);
 	}
 
 	private handleRemove() {
@@ -87,8 +87,8 @@ export class AddToMovieLibraryButtonComponent implements OnInit {
 	}
 
 	determineIfTypeIsMovieInLibrary(
-		movie: MovieListItemModel | MovieDetailsModel | MovieInLibrary
-	): movie is MovieInLibrary {
-		return (movie as MovieInLibrary).movieId ? true : false;
+		movie: MovieListItemModel | MovieDetailsModel | Movie
+	): movie is Movie {
+		return (movie as Movie).movieId ? true : false;
 	}
 }

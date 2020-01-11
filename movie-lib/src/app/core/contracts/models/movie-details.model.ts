@@ -6,6 +6,6 @@ export interface MovieDetailsModel {
     plot: string;
     year: string;
     genre: string;
-    posterUrl: string;
+    posterURL: string;
     inLibrary: boolean;
 }

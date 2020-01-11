@@ -1,4 +1,4 @@
 import { EntityState } from '@datorama/akita';
-import { MovieInLibrary } from '@app/core/contracts/db/movie-in-library';
+import { Movie } from '@app/core/contracts/db/movie';
 
-export interface MovieLibraryState extends EntityState<MovieInLibrary> {}
+export interface MovieLibraryState extends EntityState<Movie> {}

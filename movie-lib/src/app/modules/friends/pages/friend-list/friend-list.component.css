@@ -1,0 +1,10 @@
+img {
+    height: 50px !important;
+    width: 50px !important;
+}
+
+mat-list-item {
+    background: #fff;
+    min-height: 70px;
+    padding-top: 15px !important;
+}

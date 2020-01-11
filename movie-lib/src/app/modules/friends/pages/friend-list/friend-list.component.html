@@ -1,0 +1,11 @@
+<mat-list>
+	<ng-container
+		*ngFor="let friend of friends$ | async; trackBy: trackByFunction"
+	>
+		<mat-list-item>
+			<img matListAvatar [src]="friend.friendPhotoURL" />
+			<h3 matLine>{{ friend.friendDisplayName }} <{{friend.friendEmail}}></h3>
+		</mat-list-item>
+		<mat-divider></mat-divider>
+	</ng-container>
+</mat-list>

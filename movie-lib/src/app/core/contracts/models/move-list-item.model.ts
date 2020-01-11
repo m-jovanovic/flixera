@@ -1,6 +1,6 @@
 export interface MovieListItemModel {
     id: string;
     title: string;
-    posterUrl: string;
+    posterURL: string;
     inLibrary: boolean;
 }

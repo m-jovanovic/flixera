@@ -11,7 +11,7 @@ import {
 import { MovieApiService } from './movie-api.service';
 import { MovieModel } from '../../contracts/models/movie.model';
 import { MovieDetailsModel } from '../../contracts/models/movie-details.model';
-import { MovieInLibrary } from '../../contracts/db/movie-in-library';
+import { Movie } from '../../contracts/db/movie';
 import { MovieDetailsStore } from '../../store/movies/movie-details/movie-details.store';
 import { AuthQuery } from '../../store/auth/auth.query';
 
@@ -19,7 +19,7 @@ import { AuthQuery } from '../../store/auth/auth.query';
 	providedIn: 'root'
 })
 export class MovieService extends MovieApiService implements OnDestroy {
-	private moviesCollection: AngularFirestoreCollection<MovieInLibrary>;
+	private moviesCollection: AngularFirestoreCollection<Movie>;
 	private subscription: Subscription;
 
 	constructor(
@@ -65,7 +65,7 @@ export class MovieService extends MovieApiService implements OnDestroy {
 						plot: m.Plot,
 						year: m.Year,
 						genre: m.Genre,
-						posterUrl: m.Poster,
+						posterURL: m.Poster,
 						inLibrary
 					} as MovieDetailsModel;
 				}),

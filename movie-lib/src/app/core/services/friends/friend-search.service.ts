@@ -5,7 +5,7 @@ import { first, map } from 'rxjs/operators';
 
 import { User } from '../../contracts/db/user';
 import { AuthQuery } from '../../store/auth/auth.query';
-import { FriendSearchStore } from '../../store/friend-search/friend-search.store';
+import { FriendSearchStore } from '../../store/friends/friend-search/friend-search.store';
 
 @Injectable({
 	providedIn: 'root'

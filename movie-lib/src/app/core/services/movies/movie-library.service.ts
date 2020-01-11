@@ -5,7 +5,7 @@ import {
 } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 
-import { MovieInLibrary } from '../../contracts/db/movie-in-library';
+import { Movie } from '../../contracts/db/movie';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { MovieLibraryStore } from '../../store/movies/movie-library/movie-library.store';
 
@@ -13,7 +13,7 @@ import { MovieLibraryStore } from '../../store/movies/movie-library/movie-librar
 	providedIn: 'root'
 })
 export class MovieLibraryService implements OnDestroy {
-	private moviesCollection: AngularFirestoreCollection<MovieInLibrary>;
+	private moviesCollection: AngularFirestoreCollection<Movie>;
 	private subscription: Subscription;
 
 	constructor(
@@ -27,7 +27,7 @@ export class MovieLibraryService implements OnDestroy {
 
 		this.subscription = this.moviesCollection
 			.valueChanges()
-			.subscribe((movies: MovieInLibrary[]) => {
+			.subscribe((movies: Movie[]) => {
 				this.movieLibraryStore.set(movies);
 			});
 	}
@@ -39,21 +39,21 @@ export class MovieLibraryService implements OnDestroy {
 	async addToLibrary(
 		movieId: string,
 		title: string,
-		posterUrl: string
+		posterURL: string
 	): Promise<void> {
 		const userId = this.authQuery.getUserId();
 
 		const id = `${userId}-${movieId}`;
 
-		const movieInLibrary: MovieInLibrary = {
+		const movieInLibrary: Movie = {
 			userId,
 			movieId,
 			title,
-			posterUrl,
+			posterURL: posterURL,
 			likesCount: 0
 		};
 
-		await this.moviesCollection.doc<MovieInLibrary>(id).set(movieInLibrary);
+		await this.moviesCollection.doc<Movie>(id).set(movieInLibrary);
 
 		this.movieLibraryStore.add(movieInLibrary);
 	}
@@ -63,7 +63,7 @@ export class MovieLibraryService implements OnDestroy {
 
 		const uid = `${userId}-${movieId}`;
 
-		await this.moviesCollection.doc<MovieInLibrary>(uid).delete();
+		await this.moviesCollection.doc<Movie>(uid).delete();
 
 		this.movieLibraryStore.remove(uid);
 	}

@@ -22,10 +22,24 @@
 
 	<h2 matSubheader>Social</h2>
 
-	<a mat-list-item>
+	<a
+		mat-list-item
+		[routerLink]="['/friends/list']"
+		routerLinkActive="active-list-item"
+	>
 		<mat-icon>person</mat-icon>
 		Friends
 	</a>
+
+	<a
+		mat-list-item
+		[routerLink]="['/friends/requests']"
+		routerLinkActive="active-list-item"
+	>
+		<mat-icon>person_add</mat-icon>
+		Friend Requests
+	</a>
+
 	<a
 		mat-list-item
 		[routerLink]="['/friends/search']"

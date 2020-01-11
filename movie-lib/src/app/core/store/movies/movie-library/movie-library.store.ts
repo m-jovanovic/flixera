@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { StoreConfig, EntityStore } from '@datorama/akita';
 
 import { MovieLibraryState } from './movie-library.state';
-import { MovieInLibrary } from '../../../contracts/db/movie-in-library';
+import { Movie } from '../../../contracts/db/movie';
 
 @StoreConfig({
 	name: 'movie-library',
@@ -13,7 +13,7 @@ import { MovieInLibrary } from '../../../contracts/db/movie-in-library';
 })
 export class MovieLibraryStore extends EntityStore<
 	MovieLibraryState,
-	MovieInLibrary
+	Movie
 > {
 	constructor() {
 		super();
