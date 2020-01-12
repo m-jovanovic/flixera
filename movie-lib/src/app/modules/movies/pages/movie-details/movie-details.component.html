@@ -65,15 +65,6 @@
 				color="accent"
 				[movie]="movie"
 			></ml-add-to-movie-library-button>
-
-			<button
-				*ngIf="movie.inLibrary"
-				mat-button
-				color="accent"
-				(click)="likeMovie()"
-			>
-				LIKE
-			</button>
 		</mat-card-actions>
 	</mat-card>
 </ng-template>

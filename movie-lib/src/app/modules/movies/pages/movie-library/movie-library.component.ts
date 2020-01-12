@@ -31,6 +31,6 @@ export class MovieLibraryComponent implements OnInit {
 	}
 
 	trackByFunction(_index: any, item: any): any {
-		return item.id;
+		return item.movieId;
 	}
 }

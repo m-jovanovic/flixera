@@ -5,6 +5,13 @@
 		<mat-list-item>
 			<img matListAvatar [src]="friend.friendPhotoURL" />
 			<h3 matLine>{{ friend.friendDisplayName }} <{{friend.friendEmail}}></h3>
+			<button
+				mat-button
+				color="primary"
+				(click)="viewFriendLibrary(friend.friendId)">
+				VIEW LIBRARY
+			</button
+			>
 		</mat-list-item>
 		<mat-divider></mat-divider>
 	</ng-container>

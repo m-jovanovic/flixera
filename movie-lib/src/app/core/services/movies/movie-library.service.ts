@@ -8,6 +8,8 @@ import { Subscription } from 'rxjs';
 import { Movie } from '../../contracts/db/movie';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { MovieLibraryStore } from '../../store/movies/movie-library/movie-library.store';
+import { FriendLibraryStore } from '../../store/friends/friend-library/friend-library.store';
+import { first, map } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,7 +21,8 @@ export class MovieLibraryService implements OnDestroy {
 	constructor(
 		private firestore: AngularFirestore,
 		private authQuery: AuthQuery,
-		private movieLibraryStore: MovieLibraryStore
+		private movieLibraryStore: MovieLibraryStore,
+		private friendLibrary: FriendLibraryStore
 	) {
 		this.moviesCollection = this.firestore.collection('movies', ref =>
 			ref.where('userId', '==', this.authQuery.getUserId()).orderBy('title')
@@ -36,17 +39,31 @@ export class MovieLibraryService implements OnDestroy {
 		this.subscription.unsubscribe();
 	}
 
+	getFriendsLibrary(friendId: string): void {
+		const collection = this.firestore.collection<Movie>('movies', ref =>
+			ref.where('userId', '==', friendId)
+		);
+
+		collection
+			.get()
+			.pipe(
+				first(),
+				map(snapshot => snapshot.docs.map(d => d.data()))
+			)
+			.subscribe((movies: Movie[]) => {
+				this.friendLibrary.set(movies);
+			});
+	}
+
 	async addToLibrary(
 		movieId: string,
 		title: string,
 		posterURL: string
 	): Promise<void> {
-		const userId = this.authQuery.getUserId();
-
-		const id = `${userId}-${movieId}`;
+		const id = this.getMovieDocId(movieId);
 
 		const movieInLibrary: Movie = {
-			userId,
+			userId: this.authQuery.getUserId(),
 			movieId,
 			title,
 			posterURL: posterURL,
@@ -59,12 +76,16 @@ export class MovieLibraryService implements OnDestroy {
 	}
 
 	async removeFromLibrary(movieId: string): Promise<void> {
+		const id = this.getMovieDocId(movieId);
+
+		await this.moviesCollection.doc<Movie>(id).delete();
+
+		this.movieLibraryStore.remove(id);
+	}
+
+	private getMovieDocId(movieId: string): string {
 		const userId = this.authQuery.getUserId();
 
-		const uid = `${userId}-${movieId}`;
-
-		await this.moviesCollection.doc<Movie>(uid).delete();
-
-		this.movieLibraryStore.remove(uid);
+		return `${userId}-${movieId}`;
 	}
 }

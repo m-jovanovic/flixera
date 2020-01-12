@@ -1,0 +1,67 @@
+mat-list-item {
+	min-height: 120px;
+	background: #fff;
+	padding: 10px;
+}
+
+.movie-image {
+	width: 70px !important;
+	height: 100px !important;
+	border-radius: 0 !important;
+	margin-top: 65px;
+}
+
+.movie-title {
+	overflow-wrap: break-word !important;
+	white-space: normal !important;
+	position: absolute;
+	top: 15px;
+}
+
+.likes-number {
+	margin-left: 5px;
+}
+
+.actions-container {
+	position: absolute;
+	top: 70px;
+	left: 95px;
+}
+
+@media screen and (max-width: 360px) {
+	.movie-image {
+		display: none;
+	}
+
+	.actions-container {
+		position: absolute;
+		top: 70px;
+		left: 20px !important;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.actions-container button {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.movie-image {
+		width: 60px !important;
+		height: 90px !important;
+		margin-top: 65px;
+	}
+
+	.actions-container {
+		position: absolute;
+		top: 70px;
+		left: 80px;
+	}
+}
+
+@media screen and (max-width: 1050px) {
+	.movie-title {
+		max-width: 250px;
+	}
+}

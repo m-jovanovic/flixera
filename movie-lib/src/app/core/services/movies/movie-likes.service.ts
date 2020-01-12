@@ -3,36 +3,44 @@ import {
 	AngularFirestore,
 	AngularFirestoreCollection
 } from '@angular/fire/firestore';
-import { AuthQuery } from '@app/core/store/auth/auth.query';
 
 import { Like } from '../../contracts/db/like';
+import { AuthQuery } from '../../store/auth/auth.query';
+import { FriendLibraryStore } from '../../store/friends/friend-library/friend-library.store';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class MovieLikesService {
-	likesCollection: AngularFirestoreCollection<Like>;
-
 	constructor(
 		private firestore: AngularFirestore,
-		private authQuery: AuthQuery
-	) {
-		this.likesCollection = this.firestore.collection('likes', ref =>
-			ref.where('userId', '==', this.authQuery.getUserId())
-		);
-	}
+		private authQuery: AuthQuery,
+		private friendLibraryStore: FriendLibraryStore
+	) {}
 
-	async like(movieId: string): Promise<void> {
+	async like(friendId: string, movieId: string): Promise<void> {
+		const likesCollection = this.getLikesCollection(friendId, movieId);
+
 		const userId = this.authQuery.getUserId();
 
-		const uid = `${userId}-${movieId}`;
-
-		const doc = {
+		const doc: Like = {
+			userId: friendId,
+			friendId: userId,
 			movieId,
-			userId,
 			timestamp: Date.now()
 		};
 
-		await this.likesCollection.doc<Like>(uid).set(doc);
+		await likesCollection.doc<Like>(userId).set(doc);
+
+		this.friendLibraryStore.update(movieId, movie => ({
+			likesCount: !movie.likesCount ? 1 : movie.likesCount + 1
+		}));
+	}
+
+	private getLikesCollection(
+		friendId: string,
+		movieId: string
+	): AngularFirestoreCollection<Like> {
+		return this.firestore.collection(`movies/${friendId}-${movieId}/likes`);
 	}
 }

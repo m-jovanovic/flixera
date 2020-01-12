@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import {
-	MovieService,
-	MovieDetailsQuery,
-	MovieDetailsModel,
-	MovieLikesService
-} from '@app/core';
+import { MovieService, MovieDetailsQuery, MovieDetailsModel } from '@app/core';
 
 @Component({
 	selector: 'ml-movie-details',
@@ -25,8 +20,7 @@ export class MovieDetailsComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private movieService: MovieService,
-		private movieDetailsQuery: MovieDetailsQuery,
-		private likeService: MovieLikesService
+		private movieDetailsQuery: MovieDetailsQuery
 	) {}
 
 	async ngOnInit(): Promise<void> {
@@ -45,11 +39,7 @@ export class MovieDetailsComponent implements OnInit {
 		this.imageExpanded = !this.imageExpanded;
 	}
 
-	async likeMovie(): Promise<void> {
-		await this.likeService.like(this.movieId);
-	}
-
 	private get movieId(): string {
-		return this.route.snapshot.paramMap.get('id');
+		return this.route.snapshot.paramMap.get('friendId');
 	}
 }

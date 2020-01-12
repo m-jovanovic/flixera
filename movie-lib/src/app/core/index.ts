@@ -12,6 +12,7 @@ export * from './store/movies/movie-library/movie-library.query';
 export * from './store/friends/friend-search/friend-search.query';
 export * from './store/friends/friend-requests/friend-requests.query';
 export * from './store/friends/friend/friend.query';
+export * from './store/friends/friend-library/friend-library.query';
 export * from './guards/auth.guard';
 export * from './components/main-layout/main-layout.component';
 export * from './components/blank-layout/blank-layout.component';

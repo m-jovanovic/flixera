@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FriendSearchComponent } from './pages/friend-search/friend-search.component';
 import { FriendRequestsComponent } from './pages/friend-requests/friend-requests.component';
 import { FriendListComponent } from './pages/friend-list/friend-list.component';
+import { FriendLibraryComponent } from './pages/friend-library/friend-library.component';
 
 const routes: Routes = [
 	{
@@ -16,6 +17,10 @@ const routes: Routes = [
 	{
 		path: 'requests',
 		component: FriendRequestsComponent	
+	},
+	{
+		path: 'library/:friendId',
+		component: FriendLibraryComponent
 	}
 ];
 
