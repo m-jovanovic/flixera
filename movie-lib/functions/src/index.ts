@@ -3,5 +3,8 @@ import * as admin from 'firebase-admin';
 
 admin.initializeApp(functions.config().firebase);
 
-import { onLikeCreate, onLikeDelete } from './likes';
-export { onLikeCreate, onLikeDelete };
+import { onMovieDeleteRemoveLikes } from './movies';
+export { onMovieDeleteRemoveLikes };
+
+import { onLikeWriteUpdateMovieLikesCount } from './likes';
+export { onLikeWriteUpdateMovieLikesCount };
