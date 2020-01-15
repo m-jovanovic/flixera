@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 
 import { FriendRequest } from '../../contracts/db/friend-request';
 import { User } from '../../contracts/db/user';
+import { CollectionNames } from '../../contracts/enums/collection-names.enum';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { FriendRequestsStore } from '../../store/friends/friend-requests/friend-requests.store';
 import { FriendService } from './friend.service';
@@ -25,7 +26,7 @@ export class FriendRequestsService implements OnDestroy {
 		private friendService: FriendService
 	) {
 		this.friendRequestsCollection = this.firestore.collection(
-			`users/${this.authQuery.getUserId()}/friend-requests`,
+			this.getFriendRequestsCollectionPath(this.authQuery.getUserId()),
 			ref => ref.orderBy('timestamp', 'desc')
 		);
 
@@ -40,9 +41,7 @@ export class FriendRequestsService implements OnDestroy {
 		this.subscription.unsubscribe();
 	}
 
-	async sendFriendRequest(
-		friendId: string
-	): Promise<void> {
+	async sendFriendRequest(friendId: string): Promise<void> {
 		const user = this.authQuery.getUser();
 
 		const friendRequest: FriendRequest = {
@@ -55,7 +54,7 @@ export class FriendRequestsService implements OnDestroy {
 		};
 
 		await this.firestore
-			.collection(`users/${friendId}/friend-requests`)
+			.collection(this.getFriendRequestsCollectionPath(friendId))
 			.doc<FriendRequest>(user.uid)
 			.set(friendRequest);
 	}
@@ -72,7 +71,7 @@ export class FriendRequestsService implements OnDestroy {
 			displayName: friendRequest.friendDisplayName,
 			email: friendRequest.friendEmail,
 			photoURL: friendRequest.friendPhotoURL
-		}
+		};
 
 		await this.friendService.addFriend(user.uid, friend, timestamp);
 
@@ -87,5 +86,9 @@ export class FriendRequestsService implements OnDestroy {
 		await this.friendRequestsCollection.doc(friendId).delete();
 
 		this.friendRequestsStore.remove(friendId);
+	}
+
+	private getFriendRequestsCollectionPath(userId: string): string {
+		return `${CollectionNames.Users}/${userId}/${CollectionNames.FriendRequests}`;
 	}
 }

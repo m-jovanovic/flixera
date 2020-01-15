@@ -6,6 +6,7 @@ import {
 import { Subscription } from 'rxjs';
 
 import { Movie } from '../../contracts/db/movie';
+import { CollectionNames } from '../../contracts/enums/collection-names.enum';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { MovieLibraryStore } from '../../store/movies/movie-library/movie-library.store';
 import { FriendLibraryStore } from '../../store/friends/friend-library/friend-library.store';
@@ -24,8 +25,8 @@ export class MovieLibraryService implements OnDestroy {
 		private movieLibraryStore: MovieLibraryStore,
 		private friendLibrary: FriendLibraryStore
 	) {
-		this.moviesCollection = this.firestore.collection('movies', ref =>
-			ref.where('userId', '==', this.authQuery.getUserId()).orderBy('title')
+		this.moviesCollection = this.getMoviesCollectionForUserId(
+			this.authQuery.getUserId()
 		);
 
 		this.subscription = this.moviesCollection
@@ -40,15 +41,13 @@ export class MovieLibraryService implements OnDestroy {
 	}
 
 	getFriendsLibrary(friendId: string): void {
-		const collection = this.firestore.collection<Movie>('movies', ref =>
-			ref.where('userId', '==', friendId)
-		);
+		const collection = this.getMoviesCollectionForUserId(friendId);
 
 		collection
 			.get()
 			.pipe(
 				first(),
-				map(snapshot => snapshot.docs.map(d => d.data()))
+				map(snapshot => snapshot.docs.map(doc => doc.data()))
 			)
 			.subscribe((movies: Movie[]) => {
 				this.friendLibrary.set(movies);
@@ -60,7 +59,7 @@ export class MovieLibraryService implements OnDestroy {
 		title: string,
 		posterURL: string
 	): Promise<void> {
-		const id = this.getMovieDocId(movieId);
+		const id = this.createMovieDocId(movieId);
 
 		const movieInLibrary: Movie = {
 			userId: this.authQuery.getUserId(),
@@ -76,16 +75,29 @@ export class MovieLibraryService implements OnDestroy {
 	}
 
 	async removeFromLibrary(movieId: string): Promise<void> {
-		const id = this.getMovieDocId(movieId);
+		const id = this.createMovieDocId(movieId);
 
 		await this.moviesCollection.doc<Movie>(id).delete();
 
 		this.movieLibraryStore.remove(id);
 	}
 
-	private getMovieDocId(movieId: string): string {
+	private getMoviesCollectionForUserId(
+		userId: string
+	): AngularFirestoreCollection<Movie> {
+		return this.firestore.collection<Movie>(
+			this.getMoviesCollectionPath(),
+			ref => ref.where('userId', '==', userId)
+		);
+	}
+
+	private createMovieDocId(movieId: string): string {
 		const userId = this.authQuery.getUserId();
 
 		return `${userId}-${movieId}`;
+	}
+
+	private getMoviesCollectionPath(): string {
+		return CollectionNames.Movies;
 	}
 }

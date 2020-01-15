@@ -5,6 +5,7 @@ import {
 } from '@angular/fire/firestore';
 
 import { Like } from '../../contracts/db/like';
+import { CollectionNames } from '../../contracts/enums/collection-names.enum';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { FriendLibraryStore } from '../../store/friends/friend-library/friend-library.store';
 
@@ -41,6 +42,6 @@ export class MovieLikesService {
 		friendId: string,
 		movieId: string
 	): AngularFirestoreCollection<Like> {
-		return this.firestore.collection(`movies/${friendId}-${movieId}/likes`);
+		return this.firestore.collection(`${CollectionNames.Movies}/${friendId}-${movieId}/${CollectionNames.MovieLikes}`);
 	}
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
 import { User } from '../../contracts/db/user';
+import { CollectionNames } from '../../contracts/enums/collection-names.enum';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { FriendSearchStore } from '../../store/friends/friend-search/friend-search.store';
 
@@ -43,7 +44,7 @@ export class FriendSearchService {
 		end: string
 	): Observable<User[]> {
 		return this.firestore
-			.collection<User>('users', ref =>
+			.collection<User>(CollectionNames.Users, ref =>
 				ref
 					.orderBy('email')
 					.startAt(start)

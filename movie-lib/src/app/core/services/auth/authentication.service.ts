@@ -10,6 +10,7 @@ import { of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { User } from '../../contracts/db/user';
+import { CollectionNames } from '../../contracts/enums/collection-names.enum';
 import { AuthStore } from '../../store/auth/auth.store';
 
 @Injectable({
@@ -60,7 +61,7 @@ export class AuthenticationService implements OnDestroy {
 			.pipe(
 				switchMap(user => {
 					if (user) {
-						const userUid = `users/${user.uid}`;
+						const userUid = this.getUserDocId(user.uid);
 
 						return this.firestore.doc<User>(userUid).valueChanges();
 					} else {
@@ -77,7 +78,7 @@ export class AuthenticationService implements OnDestroy {
 
 	private updateUserData(user: User): Promise<void> {
 		const userRef: AngularFirestoreDocument<User> = this.firestore.doc(
-			`users/${user.uid}`
+			this.getUserDocId(user.uid)
 		);
 
 		const data = {
@@ -90,5 +91,9 @@ export class AuthenticationService implements OnDestroy {
 		return userRef.set(data, {
 			merge: true
 		});
+	}
+
+	private getUserDocId(userId: string): string {
+		return `${CollectionNames.Users}/${userId}`;
 	}
 }

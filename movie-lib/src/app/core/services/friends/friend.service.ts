@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 
 import { User } from '../../contracts/db/user';
 import { Friend } from '../../contracts/db/friend';
+import { CollectionNames } from '../../contracts/enums/collection-names.enum';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { FriendStore } from '../../store/friends/friend/friend.store';
 
@@ -23,7 +24,7 @@ export class FriendService implements OnDestroy {
 		private friendStore: FriendStore
 	) {
 		this.friendsCollection = this.firestore.collection(
-			`users/${this.authQuery.getUserId()}/friends`
+			this.getFriendsCollectionPathForUserId(this.authQuery.getUserId())
 		);
 
 		this.subscription = this.friendsCollection
@@ -52,8 +53,12 @@ export class FriendService implements OnDestroy {
 		};
 
 		await this.firestore
-			.collection(`users/${userId}/friends`)
+			.collection(this.getFriendsCollectionPathForUserId(userId))
 			.doc<Friend>(friend.friendId)
 			.set(friend);
+	}
+
+	private getFriendsCollectionPathForUserId(userId: string): string {
+		return `${CollectionNames.Users}/${userId}/${CollectionNames.Friends}`;
 	}
 }

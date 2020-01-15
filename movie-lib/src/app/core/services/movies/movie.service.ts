@@ -12,6 +12,7 @@ import { MovieApiService } from './movie-api.service';
 import { MovieModel } from '../../contracts/models/movie.model';
 import { MovieDetailsModel } from '../../contracts/models/movie-details.model';
 import { Movie } from '../../contracts/db/movie';
+import { CollectionNames } from '../../contracts/enums/collection-names.enum';
 import { MovieDetailsStore } from '../../store/movies/movie-details/movie-details.store';
 import { AuthQuery } from '../../store/auth/auth.query';
 
@@ -30,7 +31,7 @@ export class MovieService extends MovieApiService implements OnDestroy {
 	) {
 		super(http);
 
-		this.moviesCollection = this.firestore.collection('movies', ref =>
+		this.moviesCollection = this.firestore.collection(CollectionNames.Movies, ref =>
 			ref.where('userId', '==', this.authQuery.getUserId())
 		);
 
