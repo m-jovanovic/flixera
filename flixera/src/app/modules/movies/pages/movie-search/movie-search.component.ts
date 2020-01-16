@@ -10,7 +10,11 @@ import { Observable, fromEvent, Subscription } from 'rxjs';
 import { map, filter, debounceTime } from 'rxjs/operators';
 
 import { MediaQueryColCountPair } from '@app/shared';
-import { MovieListItemModel, MovieSearchService, MovieSearchQuery } from '@app/core';
+import {
+	MovieListItemModel,
+	MovieSearchService,
+	MovieSearchQuery
+} from '@app/core';
 
 @Component({
 	selector: 'ml-movie-search',
@@ -48,6 +52,8 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 		this.searchTermExists$ = this.movieSearchQuery.searchTermExists$;
 
 		this.subscribeToSearchInputKeyUp();
+
+		this.setSearchInputValue(this.movieSearchQuery.searchTerm);
 	}
 
 	ngOnDestroy(): void {
@@ -60,6 +66,8 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 
 	onClearClick(): void {
 		this.searchService.clearMovies();
+
+		this.setSearchInputValue();
 	}
 
 	onScroll() {
@@ -77,10 +85,6 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	getSearchTerm(): string {
-		return this.movieSearchQuery.searchTerm;
-	}
-
 	private subscribeToSearchInputKeyUp(): void {
 		this.subscription = fromEvent(this.movieSearchInput.nativeElement, 'keyup')
 			.pipe(
@@ -93,5 +97,9 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 			.subscribe(async searchTerm => {
 				await this.searchService.searchMovies(searchTerm, this.initialPage);
 			});
+	}
+
+	private setSearchInputValue(value: string = ''): void {
+		this.movieSearchInput.nativeElement.value = value;
 	}
 }

@@ -40,6 +40,6 @@ export class MovieDetailsComponent implements OnInit {
 	}
 
 	private get movieId(): string {
-		return this.route.snapshot.paramMap.get('friendId');
+		return this.route.snapshot.paramMap.get('id');
 	}
 }

@@ -99,7 +99,7 @@ export class MovieSearchService extends MovieApiService implements OnDestroy {
 	): Promise<void> {
 		this.showSnackBar(response.Response, response.Error, search);
 
-		if (this.emptyMovieStoreIfBadResponse(response, search, page)) {
+		if (this.emptyMovieStoreIfBadResponse(response)) {
 			return;
 		}
 
@@ -114,20 +114,13 @@ export class MovieSearchService extends MovieApiService implements OnDestroy {
 	}
 
 	private emptyMovieStoreIfBadResponse(
-		response: ApiResponseModel,
-		search: string,
-		page: number
+		response: ApiResponseModel
 	): boolean {
 		if (response.Response == 'True' && response.Error == undefined) {
 			return false;
 		}
 
-		this.movieSearchStore.update({
-			searchTerm: search,
-			movies: [],
-			page: page,
-			hasMore: false
-		});
+		this.clearMovies();
 
 		return true;
 	}
