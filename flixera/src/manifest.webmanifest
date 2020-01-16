@@ -1,8 +1,8 @@
 {
-  "name": "movie-lib",
-  "short_name": "movie-lib",
+  "name": "Flixera",
+  "short_name": "Flixera",
   "theme_color": "#3f51b5",
-  "background_color": "#000000",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
