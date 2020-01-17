@@ -14,6 +14,20 @@ $dark-theme: mat-dark-theme($dark-theme-primary, $dark-theme-accent);
 
 @include angular-material-theme($light-theme);
 
+$background: map-get($light-theme, background);
+$foreground: map-get($light-theme, foreground);
+
+mat-list-item {
+	background-color: mat-color($background, dialog);
+}
+
 .dark-theme {
 	@include angular-material-theme($dark-theme);
+
+	$background: map-get($dark-theme, background);
+	$foreground: map-get($dark-theme, foreground);
+	
+	mat-list-item {
+		background-color: mat-color($background, dialog);
+	}
 }

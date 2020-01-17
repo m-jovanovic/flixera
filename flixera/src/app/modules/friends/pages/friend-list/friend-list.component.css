@@ -4,7 +4,6 @@ img {
 }
 
 mat-list-item {
-    background: #fff;
     min-height: 70px;
     padding-top: 15px !important;
 }

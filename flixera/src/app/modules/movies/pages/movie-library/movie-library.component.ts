@@ -11,7 +11,7 @@ import {
 @Component({
 	selector: 'ml-movie-library',
 	templateUrl: './movie-library.component.html',
-	styleUrls: ['./movie-library.component.css']
+	styleUrls: ['./movie-library.component.scss']
 })
 export class MovieLibraryComponent implements OnInit {
 	movies$: Observable<Movie[]>;
