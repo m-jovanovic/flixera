@@ -14,6 +14,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
 	exports: [
@@ -31,7 +32,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 		MatChipsModule,
 		MatProgressSpinnerModule,
 		MatTooltipModule,
-		MatDialogModule
+		MatDialogModule,
+		MatSlideToggleModule
 	]
 })
 export class MaterialModule {}

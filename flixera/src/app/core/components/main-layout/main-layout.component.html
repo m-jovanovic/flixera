@@ -1,3 +1,5 @@
-<ml-side-nav>
-	<router-outlet></router-outlet>
-</ml-side-nav>
+<div class="wrapper" [class.dark-theme]="!(isLightMode$ | async)">
+	<ml-side-nav>
+		<router-outlet></router-outlet>
+	</ml-side-nav>
+</div>

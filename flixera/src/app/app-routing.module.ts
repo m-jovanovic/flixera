@@ -27,7 +27,13 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('./modules/friends/friends.module').then(m => m.FriendsModule),
 				canLoad: [AuthGuard]
-			}
+			},
+			{
+				path: 'settings',
+				loadChildren: () =>
+					import('./modules/settings/settings.module').then(m => m.SettingsModule),
+				canLoad: [AuthGuard]
+			},
 		]
 	},
 	{

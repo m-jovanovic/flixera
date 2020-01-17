@@ -53,7 +53,11 @@
 
 	<h2 matSubheader>Configuration</h2>
 
-	<a mat-list-item>
+	<a
+		mat-list-item
+		[routerLink]="['/settings']"
+		routerLinkActive="active-list-item"
+	>
 		<mat-icon>settings</mat-icon>
 		Settings
 	</a>
