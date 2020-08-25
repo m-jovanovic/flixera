@@ -1,23 +1,6 @@
-import {
-	Component,
-	OnInit,
-	ViewChild,
-	ElementRef,
-	OnDestroy
-} from '@angular/core';
-import {
-	Observable,
-	fromEvent,
-	combineLatest,
-	Subject,
-	Subscription
-} from 'rxjs';
-import {
-	map,
-	filter,
-	distinctUntilChanged,
-	debounceTime
-} from 'rxjs/operators';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Observable, fromEvent, combineLatest, Subject, Subscription } from 'rxjs';
+import { map, filter, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 import { User, FriendSearchService, FriendSearchQuery, FriendRequestsService } from '@app/core';
 
@@ -66,22 +49,19 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 	onClearClick(): void {
 		this.friendSearchService.clearFriends();
 
-		(<HTMLInputElement>this.friendSearchInput.nativeElement).value = '';
+		(this.friendSearchInput.nativeElement as HTMLInputElement).value = '';
 	}
 
 	async sendFriendRequest(friend: User): Promise<void> {
 		await this.friendRequestsService.sendFriendRequest(friend.uid);
 	}
 
-	trackByFunction(_index: any, item: any): any {
+	trackByFunction(_: any, item: any): any {
 		return item.uid;
 	}
 
 	private subscribeToSearchTermSubjects(): void {
-		this.searchSubscription = combineLatest(
-			this.searchTermStart,
-			this.searchTermEnd
-		).subscribe(([start, end]) => {
+		this.searchSubscription = combineLatest(this.searchTermStart, this.searchTermEnd).subscribe(([start, end]) => {
 			this.friendSearchService.searchFriends(start, end);
 		});
 	}
@@ -89,17 +69,15 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 	private subscribeToKeyUpObservable(): void {
 		const keyUpObservable = this.getKeyUpObservable();
 
-		this.searchTermExists$ = keyUpObservable.pipe(
-			map(searchTerm => searchTerm.length > 0)
-		);
+		this.searchTermExists$ = keyUpObservable.pipe(map((searchTerm) => searchTerm.length > 0));
 
 		this.keyUpSubscription = keyUpObservable
 			.pipe(
-				filter(value => value.length > 2),
+				filter((value) => value.length > 2),
 				distinctUntilChanged(),
 				debounceTime(400)
 			)
-			.subscribe(searchTerm => {
+			.subscribe((searchTerm) => {
 				this.searchTermStart.next(searchTerm);
 
 				this.searchTermEnd.next(`${searchTerm}${'\uf8ff'}`);
@@ -109,7 +87,7 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 	private getKeyUpObservable(): Observable<string> {
 		return fromEvent(this.friendSearchInput.nativeElement, 'keyup').pipe(
 			map((event: KeyboardEvent) => {
-				return (<HTMLInputElement>event.target).value;
+				return (event.target as HTMLInputElement).value;
 			})
 		);
 	}

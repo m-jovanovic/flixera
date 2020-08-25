@@ -1,6 +1,6 @@
 <mat-slide-toggle
 	color="accent"
-	[checked]="!(isLightMode$ | async)"
+	[checked]="(isLightMode$ | async) === false"
 	(change)="themeToggle()"
 >
 	{{ (isLightMode$ | async) ? 'Light mode' : 'Dark mode' }}

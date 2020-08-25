@@ -32,7 +32,7 @@ export class FriendRequestsComponent implements OnInit {
 		await this.friendRequestsService.rejectFriendRequest(friendId);
 	}
 
-	trackByFunction(_index: any, item: any): any {
+	trackByFunction(_: any, item: any): any {
 		return item.friendId;
 	}
 }

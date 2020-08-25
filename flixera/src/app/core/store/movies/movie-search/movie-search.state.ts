@@ -3,6 +3,6 @@ import { MovieListItemModel } from '../../../contracts/models/move-list-item.mod
 export interface MovieSearchState {
 	searchTerm: string;
 	movies: MovieListItemModel[];
-    page: number;
-    hasMore: boolean
+	page: number;
+	hasMore: boolean;
 }

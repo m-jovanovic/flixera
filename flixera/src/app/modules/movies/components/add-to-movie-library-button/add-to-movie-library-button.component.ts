@@ -2,17 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
-import {
-	OnlineStateService,
-	ConfirmDialogComponent,
-	ConfirmDialogData
-} from '@app/shared';
-import {
-	MovieListItemModel,
-	MovieDetailsModel,
-	MovieLibraryService,
-	Movie
-} from '@app/core';
+import { OnlineStateService, ConfirmDialogComponent, ConfirmDialogData } from '@app/shared';
+import { MovieListItemModel, MovieDetailsModel, MovieLibraryService, Movie } from '@app/core';
 import { ThemePalette } from '@angular/material/typings/core/common-behaviors/color';
 
 export type ButtonColor = 'primary' | 'accent';
@@ -42,8 +33,7 @@ export class AddToMovieLibraryButtonComponent implements OnInit {
 	}
 
 	async onClick(): Promise<void> {
-		const inLibrary =
-			this.determineIfTypeIsMovieInLibrary(this.movie) || this.movie.inLibrary;
+		const inLibrary = this.determineIfTypeIsMovieInLibrary(this.movie) || this.movie.inLibrary;
 
 		if (inLibrary) {
 			this.handleRemove();
@@ -63,15 +53,15 @@ export class AddToMovieLibraryButtonComponent implements OnInit {
 			dismissButtonText: 'CANCEL',
 			confirmButtonText: 'OK',
 			dismissButtonColor: 'primary',
-			confirmButtonColor: 'primary',
+			confirmButtonColor: 'primary'
 		};
-		
+
 		const dialogRef = this.dialog.open(ConfirmDialogComponent, {
 			maxWidth: '350px',
 			width: '350px',
-			data: data
+			data
 		});
-		
+
 		dialogRef.afterClosed().subscribe(async (dialogResult: boolean) => {
 			if (dialogResult) {
 				await this.movieLibraryService.removeFromLibrary(this.movieId);
@@ -87,9 +77,7 @@ export class AddToMovieLibraryButtonComponent implements OnInit {
 		return this.movie.id.toString();
 	}
 
-	determineIfTypeIsMovieInLibrary(
-		movie: MovieListItemModel | MovieDetailsModel | Movie
-	): movie is Movie {
+	determineIfTypeIsMovieInLibrary(movie: MovieListItemModel | MovieDetailsModel | Movie): movie is Movie {
 		return (movie as Movie).movieId ? true : false;
 	}
 }

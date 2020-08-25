@@ -17,5 +17,5 @@ export const initialMovieSearchState: MovieSearchState = {
 export class MovieSearchStore extends Store<MovieSearchState> {
 	constructor() {
 		super(initialMovieSearchState);
-    }
+	}
 }

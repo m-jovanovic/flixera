@@ -33,7 +33,7 @@ export class MovieLikesService {
 
 		await likesCollection.doc<Like>(userId).set(doc);
 
-		this.friendLibraryStore.update(movieId, movie => ({
+		this.friendLibraryStore.update(movieId, (movie) => ({
 			likesCount: !movie.likesCount ? 1 : movie.likesCount + 1
 		}));
 	}
@@ -42,6 +42,8 @@ export class MovieLikesService {
 		friendId: string,
 		movieId: string
 	): AngularFirestoreCollection<Like> {
-		return this.firestore.collection(`${CollectionNames.Movies}/${friendId}-${movieId}/${CollectionNames.MovieLikes}`);
+		return this.firestore.collection(
+			`${CollectionNames.Movies}/${friendId}-${movieId}/${CollectionNames.MovieLikes}`
+		);
 	}
 }

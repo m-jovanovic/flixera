@@ -3,15 +3,12 @@ import { BreakpointState, BreakpointObserver, Breakpoints } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+	providedIn: 'root'
 })
 export class HandsetStateService {
 	isHandset$: Observable<BreakpointState>;
 
-    constructor(private breakpointObserver: BreakpointObserver) {
-		this.isHandset$ = this.breakpointObserver.observe([
-			Breakpoints.XSmall,
-			Breakpoints.Small
-		]);
+	constructor(private breakpointObserver: BreakpointObserver) {
+		this.isHandset$ = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]);
 	}
 }

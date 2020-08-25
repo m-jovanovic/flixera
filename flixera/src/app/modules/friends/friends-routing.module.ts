@@ -16,7 +16,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'requests',
-		component: FriendRequestsComponent	
+		component: FriendRequestsComponent
 	},
 	{
 		path: 'library/:friendId',

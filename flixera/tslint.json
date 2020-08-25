@@ -12,19 +12,24 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "ml",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "ml",
       "kebab-case"
     ],
     "import-blacklist": [
       true,
       "rxjs/Rx"
     ],
+    "indent": {
+      "options": [
+        "tabs"
+      ]
+    },
     "interface-name": false,
     "max-classes-per-file": false,
     "max-line-length": [

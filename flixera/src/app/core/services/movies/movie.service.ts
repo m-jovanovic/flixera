@@ -31,8 +31,9 @@ export class MovieService extends MovieApiService implements OnDestroy {
 	) {
 		super(http);
 
-		this.moviesCollection = this.firestore.collection(CollectionNames.Movies, ref =>
-			ref.where('userId', '==', this.authQuery.getUserId())
+		this.moviesCollection = this.firestore.collection(
+			CollectionNames.Movies,
+			(ref) => ref.where('userId', '==', this.authQuery.getUserId())
 		);
 
 		this.subscribeToMoviesCollectionStateChanges();
@@ -50,7 +51,7 @@ export class MovieService extends MovieApiService implements OnDestroy {
 		const movie: MovieDetailsModel = await this.get<MovieModel>(queryString)
 			.pipe(
 				first(),
-				map(async m => {
+				map(async (m) => {
 					let inLibrary = false;
 					try {
 						const doc = await this.getMovieDocument(m.imdbID);
@@ -70,7 +71,7 @@ export class MovieService extends MovieApiService implements OnDestroy {
 						inLibrary
 					} as MovieDetailsModel;
 				}),
-				catchError(_ => {
+				catchError((_) => {
 					console.error('Error happened while fetching movie from API');
 
 					return of(null);
@@ -87,13 +88,13 @@ export class MovieService extends MovieApiService implements OnDestroy {
 		this.subscription = this.moviesCollection
 			.stateChanges()
 			.pipe(
-				mergeMap(actions => actions),
-				map(action => {
+				mergeMap((actions) => actions),
+				map((action) => {
 					const data = action.payload.doc.data();
 
 					const movieId = data.movieId;
 
-					const inLibrary = action.type == 'added' || action.type == 'modified';
+					const inLibrary = action.type === 'added' || action.type === 'modified';
 
 					this.updateMovieInStore(movieId, inLibrary);
 				})
@@ -106,11 +107,7 @@ export class MovieService extends MovieApiService implements OnDestroy {
 	): Promise<firebase.firestore.DocumentSnapshot<DocumentData>> {
 		const movieUid = `${this.authQuery.getUserId()}-${movieId}`;
 
-		return this.moviesCollection
-			.doc(movieUid)
-			.get()
-			.pipe(first())
-			.toPromise();
+		return this.moviesCollection.doc(movieUid).get().pipe(first()).toPromise();
 	}
 
 	private updateMovieInStore(movieId: string, inLibrary: boolean): void {

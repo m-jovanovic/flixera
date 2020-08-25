@@ -26,7 +26,7 @@ export class FriendLibraryComponent implements OnInit {
 	ngOnInit() {
 		const friendId = this.friendId;
 
-		if (friendId.length == 0) {
+		if (friendId.length === 0) {
 			this.router.navigate(['/friends/list']);
 		}
 
@@ -41,7 +41,7 @@ export class FriendLibraryComponent implements OnInit {
 		await this.movieLikesService.like(this.friendId, movieId);
 	}
 
-	trackByFunction(_index: any, item: any): any {
+	trackByFunction(_: any, item: any): any {
 		return item.movieId;
 	}
 

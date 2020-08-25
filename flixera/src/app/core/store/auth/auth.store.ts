@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { AuthState } from './auth.state';
 
 export const initialState: AuthState = {
-    user: null
+	user: null
 };
 
 @StoreConfig({ name: 'auth' })
@@ -14,5 +14,5 @@ export const initialState: AuthState = {
 export class AuthStore extends Store<AuthState> {
 	constructor() {
 		super(initialState);
-    }
+	}
 }

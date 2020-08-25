@@ -6,11 +6,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
-  declarations: [SettingsComponent],
-  imports: [
-    SharedModule,
-    SettingsRoutingModule,
-    MaterialModule
-  ]
+	declarations: [SettingsComponent],
+	imports: [SharedModule, SettingsRoutingModule, MaterialModule]
 })
-export class SettingsModule { }
+export class SettingsModule {}

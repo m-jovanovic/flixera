@@ -1,20 +1,10 @@
-import {
-	Component,
-	OnInit,
-	ViewChild,
-	ElementRef,
-	OnDestroy
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Observable, fromEvent, Subscription } from 'rxjs';
 import { map, filter, debounceTime } from 'rxjs/operators';
 
 import { MediaQueryColCountPair } from '@app/shared';
-import {
-	MovieListItemModel,
-	MovieSearchService,
-	MovieSearchQuery
-} from '@app/core';
+import { MovieListItemModel, MovieSearchService, MovieSearchQuery } from '@app/core';
 
 @Component({
 	selector: 'ml-movie-search',
@@ -24,7 +14,7 @@ import {
 export class MovieSearchComponent implements OnInit, OnDestroy {
 	private readonly initialPage = 1;
 	private subscription: Subscription;
-	rowHeight: number = 550;
+	rowHeight = 550;
 	mediaQueryColCountPairs: MediaQueryColCountPair[] = [
 		{ mediaQuery: '(max-width: 949px)', colCount: 1 },
 		{ mediaQuery: '(min-width: 950px)', colCount: 2 },
@@ -40,11 +30,7 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 	})
 	movieSearchInput: ElementRef;
 
-	constructor(
-		private searchService: MovieSearchService,
-		private movieSearchQuery: MovieSearchQuery,
-		private snackBar: MatSnackBar
-	) {}
+	constructor(private searchService: MovieSearchService, private movieSearchQuery: MovieSearchQuery, private snackBar: MatSnackBar) {}
 
 	ngOnInit(): void {
 		this.movies$ = this.movieSearchQuery.movies$;
@@ -79,22 +65,19 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		this.searchService.searchMovies(
-			this.movieSearchQuery.searchTerm,
-			this.movieSearchQuery.page + 1
-		);
+		this.searchService.searchMovies(this.movieSearchQuery.searchTerm, this.movieSearchQuery.page + 1);
 	}
 
 	private subscribeToSearchInputKeyUp(): void {
 		this.subscription = fromEvent(this.movieSearchInput.nativeElement, 'keyup')
 			.pipe(
 				map((event: KeyboardEvent) => {
-					return (<HTMLInputElement>event.target).value;
+					return (event.target as HTMLInputElement).value;
 				}),
-				filter(value => value.length > 1),
+				filter((value) => value.length > 1),
 				debounceTime(400)
 			)
-			.subscribe(async searchTerm => {
+			.subscribe(async (searchTerm) => {
 				await this.searchService.searchMovies(searchTerm, this.initialPage);
 			});
 	}

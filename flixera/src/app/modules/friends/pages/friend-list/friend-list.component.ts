@@ -26,7 +26,7 @@ export class FriendListComponent implements OnInit {
 		return await this.router.navigate(['/friends/library', friendId]);
 	}
 
-	trackByFunction(_index: any, item: any): any {
+	trackByFunction(_: any, item: any): any {
 		return item.friendId;
 	}
 }

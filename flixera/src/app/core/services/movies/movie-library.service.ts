@@ -1,8 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import {
-	AngularFirestoreCollection,
-	AngularFirestore
-} from '@angular/fire/firestore';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 
 import { Movie } from '../../contracts/db/movie';
@@ -25,15 +22,11 @@ export class MovieLibraryService implements OnDestroy {
 		private movieLibraryStore: MovieLibraryStore,
 		private friendLibrary: FriendLibraryStore
 	) {
-		this.moviesCollection = this.getMoviesCollectionForUserId(
-			this.authQuery.getUserId()
-		);
+		this.moviesCollection = this.getMoviesCollectionForUserId(this.authQuery.getUserId());
 
-		this.subscription = this.moviesCollection
-			.valueChanges()
-			.subscribe((movies: Movie[]) => {
-				this.movieLibraryStore.set(movies);
-			});
+		this.subscription = this.moviesCollection.valueChanges().subscribe((movies: Movie[]) => {
+			this.movieLibraryStore.set(movies);
+		});
 	}
 
 	ngOnDestroy(): void {
@@ -47,25 +40,21 @@ export class MovieLibraryService implements OnDestroy {
 			.get()
 			.pipe(
 				first(),
-				map(snapshot => snapshot.docs.map(doc => doc.data()))
+				map((snapshot) => snapshot.docs.map((doc) => doc.data()))
 			)
 			.subscribe((movies: Movie[]) => {
 				this.friendLibrary.set(movies);
 			});
 	}
 
-	async addToLibrary(
-		movieId: string,
-		title: string,
-		posterURL: string
-	): Promise<void> {
+	async addToLibrary(movieId: string, title: string, posterURL: string): Promise<void> {
 		const id = this.createMovieDocId(movieId);
 
 		const movieInLibrary: Movie = {
 			userId: this.authQuery.getUserId(),
 			movieId,
 			title,
-			posterURL: posterURL,
+			posterURL,
 			likesCount: 0
 		};
 
@@ -82,13 +71,8 @@ export class MovieLibraryService implements OnDestroy {
 		this.movieLibraryStore.remove(id);
 	}
 
-	private getMoviesCollectionForUserId(
-		userId: string
-	): AngularFirestoreCollection<Movie> {
-		return this.firestore.collection<Movie>(
-			this.getMoviesCollectionPath(),
-			ref => ref.where('userId', '==', userId)
-		);
+	private getMoviesCollectionForUserId(userId: string): AngularFirestoreCollection<Movie> {
+		return this.firestore.collection<Movie>(this.getMoviesCollectionPath(), (ref) => ref.where('userId', '==', userId));
 	}
 
 	private createMovieDocId(movieId: string): string {

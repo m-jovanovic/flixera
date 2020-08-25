@@ -1,4 +1,4 @@
-<div class="wrapper" [class.dark-theme]="!(isLightMode$ | async)">
+<div class="wrapper" [class.dark-theme]="(isLightMode$ | async) === false">
 	<ml-side-nav>
 		<router-outlet></router-outlet>
 	</ml-side-nav>

@@ -10,11 +10,9 @@ import { MovieService, MovieDetailsQuery, MovieDetailsModel } from '@app/core';
 	styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
-	movie$: Observable<MovieDetailsModel> = this.movieDetailsQuery.selectEntity(
-		this.movieId
-	);
+	movie$: Observable<MovieDetailsModel> = this.movieDetailsQuery.selectEntity(this.movieId);
 	isLoading$: Observable<boolean>;
-	imageExpanded: boolean = false;
+	imageExpanded = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -24,7 +22,7 @@ export class MovieDetailsComponent implements OnInit {
 	) {}
 
 	async ngOnInit(): Promise<void> {
-		if (this.movieId.length == 0) {
+		if (this.movieId.length === 0) {
 			this.router.navigate(['/movies/library']);
 		}
 

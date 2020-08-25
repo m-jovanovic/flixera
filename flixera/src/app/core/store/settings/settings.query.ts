@@ -9,13 +9,13 @@ import { Observable } from 'rxjs';
 	providedIn: 'root'
 })
 export class SettingsQuery extends Query<SettingsState> {
-	isLightMode$: Observable<boolean> = this.select(state => state.lightMode);
+	isLightMode$: Observable<boolean> = this.select((state) => state.lightMode);
 
 	constructor(protected store: SettingsStore) {
 		super(store);
-    }
-    
-    get isLightMode(): boolean {
-        return this.getValue().lightMode;
-    }
+	}
+
+	get isLightMode(): boolean {
+		return this.getValue().lightMode;
+	}
 }

@@ -11,8 +11,8 @@ export class DefaultImageDirective {
 
 	@HostListener('error')
 	onError(): void {
-		const imageElement = (<HTMLImageElement>this.elementRef.nativeElement);
-		
+		const imageElement = this.elementRef.nativeElement as HTMLImageElement;
+
 		imageElement.src = this.defaultImage;
 	}
 }
