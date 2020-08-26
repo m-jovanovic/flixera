@@ -26,7 +26,7 @@
     "@angular/service-worker": "~9.1.12",
     "@datorama/akita": "^5.2.2",
     "firebase": "^7.19.0",
-    "ngx-infinite-scroll": "^8.0.1",
+    "ngx-infinite-scroll": "^9.0.0",
     "rxjs": "~6.6.2",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.3"
