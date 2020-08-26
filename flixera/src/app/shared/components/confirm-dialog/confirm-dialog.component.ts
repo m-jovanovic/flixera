@@ -3,7 +3,7 @@ import {
 	MatDialogRef,
 	MAT_DIALOG_DATA
 } from '@angular/material/dialog';
-import { ThemePalette } from '@angular/material/typings/core/common-behaviors/color';
+import { ThemePalette } from '@angular/material/core/common-behaviors/color';
 
 import { ConfirmDialogData } from './confirm-dialog.data';
 

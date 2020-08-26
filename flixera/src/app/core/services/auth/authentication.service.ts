@@ -36,7 +36,7 @@ export class AuthenticationService implements OnDestroy {
 		try {
 			const provider = new auth.GoogleAuthProvider();
 
-			const credential = await this.fireAuth.auth.signInWithPopup(provider);
+			const credential = await this.fireAuth.signInWithPopup(provider);
 
 			this.router.navigate(['/']);
 
@@ -48,7 +48,7 @@ export class AuthenticationService implements OnDestroy {
 
 	async signOut(): Promise<boolean> {
 		try {
-			await this.fireAuth.auth.signOut();
+			await this.fireAuth.signOut();
 
 			return this.router.navigate(['/login']);
 		} catch (error) {

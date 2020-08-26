@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { OnlineStateService, ConfirmDialogComponent, ConfirmDialogData } from '@app/shared';
 import { MovieListItemModel, MovieDetailsModel, MovieLibraryService, Movie } from '@app/core';
-import { ThemePalette } from '@angular/material/typings/core/common-behaviors/color';
+import { ThemePalette } from '@angular/material/core/common-behaviors/color';
 
 export type ButtonColor = 'primary' | 'accent';
 

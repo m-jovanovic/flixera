@@ -61,7 +61,7 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 	}
 
 	private subscribeToSearchTermSubjects(): void {
-		this.searchSubscription = combineLatest(this.searchTermStart, this.searchTermEnd).subscribe(([start, end]) => {
+		this.searchSubscription = combineLatest([this.searchTermStart, this.searchTermEnd]).subscribe(([start, end]) => {
 			this.friendSearchService.searchFriends(start, end);
 		});
 	}
