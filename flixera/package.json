@@ -24,7 +24,7 @@
     "@angular/pwa": "^0.803.21",
     "@angular/router": "~9.1.12",
     "@angular/service-worker": "~9.1.12",
-    "@datorama/akita": "^4.17.1",
+    "@datorama/akita": "^5.2.2",
     "firebase": "^7.19.0",
     "ngx-infinite-scroll": "^8.0.1",
     "rxjs": "~6.6.2",
