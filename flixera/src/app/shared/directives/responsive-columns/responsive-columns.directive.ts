@@ -1,6 +1,6 @@
 import { Directive, OnInit, OnDestroy, Input } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { MatGridList } from '@angular/material';
+import { MatGridList } from '@angular/material/grid-list';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 

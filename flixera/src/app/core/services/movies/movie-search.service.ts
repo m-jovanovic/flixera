@@ -11,7 +11,7 @@ import { Movie } from '../../contracts/db/movie';
 import { MovieSearchStore } from '../../store/movies/movie-search/movie-search.store';
 import { initialMovieSearchState } from '../../store/movies/movie-search/movie-search.store';
 import { AuthQuery } from '../../store/auth/auth.query';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
 	providedIn: 'root'
