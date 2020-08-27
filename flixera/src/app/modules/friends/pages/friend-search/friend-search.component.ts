@@ -16,6 +16,7 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 	private searchSubscription: Subscription;
 	searchTermExists$: Observable<boolean>;
 	users$: Observable<User[]>;
+	isLoading$: Observable<boolean>;
 
 	@ViewChild('friendSearchInput', {
 		static: true
@@ -29,6 +30,10 @@ export class FriendSearchComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
+		this.friendSearchService.clearFriends();
+
+		this.isLoading$ = this.friendSearchQuery.selectLoading();
+
 		this.users$ = this.friendSearchQuery.selectAll();
 
 		this.subscribeToSearchTermSubjects();

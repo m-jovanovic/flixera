@@ -7,13 +7,7 @@
 	(scrolled)="onScroll()"
 >
 	<mat-form-field class="search-input">
-		<input
-			type="search"
-			#movieSearchInput
-			matInput
-			placeholder="Enter the movie title"
-			(keyup.enter)="onEnterKeyUp()"
-		/>
+		<input type="search" #movieSearchInput matInput placeholder="Enter the movie title" (keyup.enter)="onEnterKeyUp()" />
 		<button
 			mat-button
 			*ngIf="searchTermExists$ | async"
@@ -27,15 +21,15 @@
 		</button>
 	</mat-form-field>
 
-	<mat-grid-list
-		[mlResponsiveColumns]="mediaQueryColCountPairs"
-		[cols]="0"
-		[rowHeight]="rowHeight"
-	>
+	<mat-progress-bar *ngIf="(movies$ | async).length === 0 && (isLoading$ | async)" mode="indeterminate"></mat-progress-bar>
+
+	<mat-grid-list [mlResponsiveColumns]="mediaQueryColCountPairs" [cols]="0" [rowHeight]="rowHeight">
 		<mat-grid-tile *ngFor="let movie of movies$ | async">
 			<ml-movie-search-item [movie]="movie"></ml-movie-search-item>
 		</mat-grid-tile>
 	</mat-grid-list>
+
+	<mat-progress-bar *ngIf="(movies$ | async).length > 0 && (isLoading$ | async)" mode="indeterminate"></mat-progress-bar>
 </div>
 
 <ml-scroll-top></ml-scroll-top>

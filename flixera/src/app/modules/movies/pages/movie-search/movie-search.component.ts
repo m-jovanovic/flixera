@@ -22,6 +22,7 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 		{ mediaQuery: '(min-width: 1600px)', colCount: 4 },
 		{ mediaQuery: '(min-width: 1920px)', colCount: 5 }
 	];
+	isLoading$: Observable<boolean>;
 	movies$: Observable<MovieListItemModel[]>;
 	searchTermExists$: Observable<boolean>;
 
@@ -33,6 +34,8 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 	constructor(private searchService: MovieSearchService, private movieSearchQuery: MovieSearchQuery, private snackBar: MatSnackBar) {}
 
 	ngOnInit(): void {
+		this.isLoading$ = this.movieSearchQuery.selectLoading();
+
 		this.movies$ = this.movieSearchQuery.movies$;
 
 		this.searchTermExists$ = this.movieSearchQuery.searchTermExists$;

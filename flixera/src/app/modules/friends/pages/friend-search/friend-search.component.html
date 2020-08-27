@@ -19,14 +19,19 @@
 	</button>
 </mat-form-field>
 
+<mat-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></mat-progress-bar>
+
 <mat-list>
 	<ng-container *ngFor="let user of users$ | async; trackBy: trackByFunction">
 		<mat-list-item>
 			<img matListAvatar [src]="user.photoURL" />
 			<h3 matLine>{{ user.displayName }} <{{user.email}}></h3>
-			<button class="send-friend-request-button" mat-stroked-button color="primary" (click)="sendFriendRequest(user)">
+			<button *ngIf="!user.isFriend" class="send-friend-request-button" mat-stroked-button (click)="sendFriendRequest(user)">
 				SEND FRIEND REQUEST
 			</button>
+			<p *ngIf="user.isFriend">
+				Already friends
+			</p>
 		</mat-list-item>
 		<mat-divider></mat-divider>
 	</ng-container>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EntityStore, StoreConfig } from '@datorama/akita';
 
-import { User } from '../../../contracts/db/user';
+import { SearchUser } from '../../../contracts/db/search-user';
 import { FriendSearchState } from './friend-search.state';
 
 @StoreConfig({
@@ -11,7 +11,7 @@ import { FriendSearchState } from './friend-search.state';
 @Injectable({
 	providedIn: 'root'
 })
-export class FriendSearchStore extends EntityStore<FriendSearchState, User> {
+export class FriendSearchStore extends EntityStore<FriendSearchState, SearchUser> {
 	constructor() {
 		super();
 	}

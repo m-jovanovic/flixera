@@ -62,7 +62,7 @@ export class MovieLibraryService implements OnDestroy {
 				})
 			)
 			.subscribe(async (friendMovies: FriendMovie[]) => {
-				const moviesPromise = await friendMovies.map(async movie => {
+				const moviesPromise = friendMovies.map(async (movie) => {
 					movie.liked = await this.likesService.isLiked(userId, friendId, movie.movieId);
 
 					return movie;

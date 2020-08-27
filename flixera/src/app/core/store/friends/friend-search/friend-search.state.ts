@@ -1,5 +1,5 @@
 import { EntityState } from '@datorama/akita';
 
-import { User } from '../../../contracts/db/user';
+import { SearchUser } from '../../../contracts/db/search-user';
 
-export interface FriendSearchState extends EntityState<User> {}
+export interface FriendSearchState extends EntityState<SearchUser> {}

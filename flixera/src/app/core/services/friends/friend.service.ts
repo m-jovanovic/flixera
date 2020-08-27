@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/internal/operators/first';
 
 import { User } from '../../contracts/db/user';
 import { Friend } from '../../contracts/db/friend';
@@ -37,7 +38,19 @@ export class FriendService implements OnDestroy {
 			timestamp
 		};
 
-		await this.firestore.collection(this.getFriendsCollectionPathForUserId(userId)).doc<Friend>(friend.friendId).set(friend);
+		await this.getFriendsCollection(userId).doc<Friend>(friend.friendId).set(friend);
+	}
+
+	async isFriend(userId: string, friendId: string): Promise<boolean> {
+		const friendsCollection = this.getFriendsCollection(userId);
+
+		const doc = await friendsCollection.doc(friendId).get().pipe(first()).toPromise();
+
+		return doc.exists;
+	}
+
+	private getFriendsCollection(userId: string) {
+		return this.firestore.collection(this.getFriendsCollectionPathForUserId(userId));
 	}
 
 	private getFriendsCollectionPathForUserId(userId: string): string {

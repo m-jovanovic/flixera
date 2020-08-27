@@ -21,6 +21,14 @@ mat-list-item {
 	background-color: mat-color($background, dialog);
 }
 
+mat-nav-list a:hover {
+	color: mat-color($light-theme-primary) !important;
+}
+
+.active-list-item {
+	color: mat-color($light-theme-primary) !important;
+}
+
 .dark-theme {
 	@include angular-material-theme($dark-theme);
 
@@ -29,5 +37,13 @@ mat-list-item {
 	
 	mat-list-item {
 		background-color: mat-color($background, dialog);
+	}
+
+	mat-nav-list a:hover {
+		color: mat-color($dark-theme-accent) !important;
+	}
+	
+	.active-list-item {
+		color: mat-color($dark-theme-accent) !important;
 	}
 }

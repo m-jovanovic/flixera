@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
-import { MovieLibraryService, FriendLibraryQuery, FriendMovie, MovieLikesService } from '@app/core';
+import { MovieLibraryService, FriendLibraryQuery, FriendMovie, MovieLikesService, SettingsQuery } from '@app/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,6 +14,7 @@ export class FriendLibraryComponent implements OnInit {
 	isLoading$: Observable<boolean>;
 	movies$: Observable<FriendMovie[]>;
 	isSmallScreen$: Observable<BreakpointState>;
+	isLightMode$: Observable<boolean>;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -21,7 +22,8 @@ export class FriendLibraryComponent implements OnInit {
 		private movieLibraryService: MovieLibraryService,
 		private friendLibraryQuery: FriendLibraryQuery,
 		private movieLikesService: MovieLikesService,
-		private breakpointObserver: BreakpointObserver
+		private breakpointObserver: BreakpointObserver,
+		private settingsQuery: SettingsQuery
 	) {}
 
 	ngOnInit() {
@@ -38,6 +40,8 @@ export class FriendLibraryComponent implements OnInit {
 		this.movieLibraryService.getFriendsLibrary(friendId);
 
 		this.isSmallScreen$ = this.breakpointObserver.observe('(min-width: 700px)');
+
+		this.isLightMode$ = this.settingsQuery.isLightMode$;
 	}
 
 	async likeMovie(movieId: string): Promise<void> {

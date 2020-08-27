@@ -26,7 +26,7 @@
 
 <ng-template #twoLine let-movie="movie">
 	<div matLine class="actions-container">
-		<button mat-icon-button color="{{movie.liked ? 'primary' : ''}}" matTooltip="Likes" (click)="likeMovie(movie.movieId)">
+		<button mat-icon-button color="{{movie.liked ? (isLightMode$ | async) ? 'primary' : 'accent' : ''}}" matTooltip="Likes" (click)="likeMovie(movie.movieId)">
 			<mat-icon>thumb_up</mat-icon>
 			<span class="likes-number"> {{ movie.likesCount }} </span>
 		</button>
@@ -34,7 +34,7 @@
 </ng-template>
 
 <ng-template #singleLine let-movie="movie">
-	<button mat-icon-button color="{{movie.liked ? 'primary' : ''}}" matTooltip="Likes" (click)="likeMovie(movie.movieId)">
+	<button mat-icon-button color="{{movie.liked ? (isLightMode$ | async) ? 'primary' : 'accent' : ''}}" matTooltip="Likes" (click)="likeMovie(movie.movieId)">
 		<mat-icon>thumb_up</mat-icon>
 		<span class="likes-number"> {{ movie.likesCount }} </span>
 	</button>
