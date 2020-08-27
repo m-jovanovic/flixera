@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {
-	MainLayoutComponent,
-	BlankLayoutComponent,
-	AuthGuard
-} from '@app/core';
+import { MainLayoutComponent, BlankLayoutComponent, AuthGuard, NoAuthGuard } from '@app/core';
 
 const routes: Routes = [
 	{
@@ -18,22 +14,19 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'movies',
-				loadChildren: () =>
-					import('./modules/movies/movies.module').then(m => m.MoviesModule),
+				loadChildren: () => import('./modules/movies/movies.module').then((m) => m.MoviesModule),
 				canLoad: [AuthGuard]
 			},
 			{
 				path: 'friends',
-				loadChildren: () =>
-					import('./modules/friends/friends.module').then(m => m.FriendsModule),
+				loadChildren: () => import('./modules/friends/friends.module').then((m) => m.FriendsModule),
 				canLoad: [AuthGuard]
 			},
 			{
 				path: 'settings',
-				loadChildren: () =>
-					import('./modules/settings/settings.module').then(m => m.SettingsModule),
+				loadChildren: () => import('./modules/settings/settings.module').then((m) => m.SettingsModule),
 				canLoad: [AuthGuard]
-			},
+			}
 		]
 	},
 	{
@@ -42,8 +35,8 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'login',
-				loadChildren: () =>
-					import('./modules/login/login.module').then(m => m.LoginModule)
+				loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule),
+				canLoad: [NoAuthGuard]
 			}
 		]
 	},
