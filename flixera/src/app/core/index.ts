@@ -23,6 +23,7 @@ export * from './contracts/models/move-list-item.model';
 export * from './contracts/models/movie-details.model';
 export * from './contracts/db/user';
 export * from './contracts/db/movie';
+export * from './contracts/db/friend-movie';
 export * from './contracts/db/like';
 export * from './contracts/db/friend-request';
 export * from './contracts/db/friend';

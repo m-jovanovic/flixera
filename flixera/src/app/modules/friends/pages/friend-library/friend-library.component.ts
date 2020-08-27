@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
-import { MovieLibraryService, FriendLibraryQuery, Movie, MovieLikesService } from '@app/core';
+import { MovieLibraryService, FriendLibraryQuery, FriendMovie, MovieLikesService } from '@app/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 	styleUrls: ['./friend-library.component.css']
 })
 export class FriendLibraryComponent implements OnInit {
-	movies$: Observable<Movie[]>;
+	isLoading$: Observable<boolean>;
+	movies$: Observable<FriendMovie[]>;
 	isSmallScreen$: Observable<BreakpointState>;
 
 	constructor(
@@ -30,6 +31,8 @@ export class FriendLibraryComponent implements OnInit {
 			this.router.navigate(['/friends/list']);
 		}
 
+		this.isLoading$ = this.friendLibraryQuery.selectLoading();
+
 		this.movies$ = this.friendLibraryQuery.selectAll();
 
 		this.movieLibraryService.getFriendsLibrary(friendId);
@@ -38,7 +41,11 @@ export class FriendLibraryComponent implements OnInit {
 	}
 
 	async likeMovie(movieId: string): Promise<void> {
-		await this.movieLikesService.like(this.friendId, movieId);
+		if (this.friendLibraryQuery.isLiked(movieId)) {
+			await this.movieLikesService.unlike(this.friendId, movieId);
+		} else {
+			await this.movieLikesService.like(this.friendId, movieId);
+		}
 	}
 
 	trackByFunction(_: any, item: any): any {

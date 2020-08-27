@@ -1,4 +1,4 @@
 import { EntityState } from '@datorama/akita';
-import { Movie } from '../../../contracts/db/movie';
+import { FriendMovie } from '../../../contracts/db/friend-movie';
 
-export interface FriendLibraryState extends EntityState<Movie> {}
+export interface FriendLibraryState extends EntityState<FriendMovie> {}
