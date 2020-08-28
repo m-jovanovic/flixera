@@ -11,9 +11,7 @@
 			<h3 matLine class="movie-title">{{ movie.title }}</h3>
 
 			<ng-container
-				[ngTemplateOutlet]="
-					!(isSmallScreen$ | async).matches ? twoLine : singleLine
-				"
+				[ngTemplateOutlet]="!(isSmallScreen$ | async).matches ? twoLine : singleLine"
 				[ngTemplateOutletContext]="{ movie: movie }"
 			>
 			</ng-container>
@@ -29,13 +27,9 @@
 			<span class="likes-number"> {{ movie.likesCount }} </span>
 		</button>
 
-		<ml-add-to-movie-library-button
-			[movie]="movie"
-		></ml-add-to-movie-library-button>
+		<ml-add-to-movie-library-button [movie]="movie"></ml-add-to-movie-library-button>
 
-		<ml-navigate-to-movie-details-button
-			[id]="movie?.movieId"
-		></ml-navigate-to-movie-details-button>
+		<ml-navigate-to-movie-details-button [id]="movie?.movieId"></ml-navigate-to-movie-details-button>
 	</div>
 </ng-template>
 
@@ -45,14 +39,9 @@
 		<span class="likes-number"> {{ movie.likesCount }} </span>
 	</button>
 
-	<ml-add-to-movie-library-button
-		[movie]="movie"
-	></ml-add-to-movie-library-button>
+	<ml-add-to-movie-library-button [movie]="movie"></ml-add-to-movie-library-button>
 
-	<ml-navigate-to-movie-details-button
-		[id]="movie?.movieId"
-		cssClass="details-button"
-	></ml-navigate-to-movie-details-button>
+	<ml-navigate-to-movie-details-button [id]="movie?.movieId"></ml-navigate-to-movie-details-button>
 </ng-template>
 
 <ml-scroll-top></ml-scroll-top>

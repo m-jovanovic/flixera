@@ -13,9 +13,7 @@
 			<h3 matLine class="movie-title">{{ movie.title }}</h3>
 
 			<ng-container
-				[ngTemplateOutlet]="
-					!(isSmallScreen$ | async).matches ? twoLine : singleLine
-				"
+				[ngTemplateOutlet]="!(isSmallScreen$ | async).matches ? twoLine : singleLine"
 				[ngTemplateOutletContext]="{ movie: movie }"
 			>
 			</ng-container>
@@ -26,18 +24,36 @@
 
 <ng-template #twoLine let-movie="movie">
 	<div matLine class="actions-container">
-		<button mat-icon-button color="{{movie.liked ? (isLightMode$ | async) ? 'primary' : 'accent' : ''}}" matTooltip="Likes" (click)="likeMovie(movie.movieId)">
+		<button
+			mat-icon-button
+			color="{{ movie.liked ? ((isLightMode$ | async) ? 'primary' : 'accent') : '' }}"
+			matTooltip="Likes"
+			(click)="likeMovie(movie.movieId)"
+		>
 			<mat-icon>thumb_up</mat-icon>
 			<span class="likes-number"> {{ movie.likesCount }} </span>
 		</button>
+
+		<div class="movie-details-button">
+			<ml-navigate-to-movie-details-button [id]="movie.movieId"></ml-navigate-to-movie-details-button>
+		</div>
 	</div>
 </ng-template>
 
 <ng-template #singleLine let-movie="movie">
-	<button mat-icon-button color="{{movie.liked ? (isLightMode$ | async) ? 'primary' : 'accent' : ''}}" matTooltip="Likes" (click)="likeMovie(movie.movieId)">
+	<button
+		mat-icon-button
+		color="{{ movie.liked ? ((isLightMode$ | async) ? 'primary' : 'accent') : '' }}"
+		matTooltip="Likes"
+		(click)="likeMovie(movie.movieId)"
+	>
 		<mat-icon>thumb_up</mat-icon>
 		<span class="likes-number"> {{ movie.likesCount }} </span>
 	</button>
+
+	<div class="movie-details-button">
+		<ml-navigate-to-movie-details-button [id]="movie.movieId"></ml-navigate-to-movie-details-button>
+	</div>
 </ng-template>
 
 <ml-scroll-top></ml-scroll-top>

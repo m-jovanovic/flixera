@@ -9,7 +9,6 @@ import { MovieSearchComponent } from './pages/movie-search/movie-search.componen
 import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
 import { AddToMovieLibraryButtonComponent } from './components/add-to-movie-library-button/add-to-movie-library-button.component';
 import { MovieLibraryComponent } from './pages/movie-library/movie-library.component';
-import { NavigateToDetailsButtonComponent } from './components/navigate-to-movie-details-button/navigate-to-movie-details-button.component';
 import { MovieSearchItemComponent } from './components/movie-search-item/movie-search-item.component';
 
 @NgModule({
@@ -18,8 +17,7 @@ import { MovieSearchItemComponent } from './components/movie-search-item/movie-s
 		MovieSearchItemComponent,
 		MovieDetailsComponent,
 		AddToMovieLibraryButtonComponent,
-		MovieLibraryComponent,
-		NavigateToDetailsButtonComponent
+		MovieLibraryComponent
 	],
 	imports: [
 		SharedModule,

@@ -1,17 +1,33 @@
 <mat-list>
-	<ng-container
-		*ngFor="let friend of friends$ | async; trackBy: trackByFunction"
-	>
+	<ng-container *ngFor="let friend of friends$ | async; trackBy: trackByFunction">
 		<mat-list-item>
 			<img matListAvatar [src]="friend.friendPhotoURL" />
-			<h3 matLine>{{ friend.friendDisplayName }} <{{friend.friendEmail}}></h3>
-			<button
-				mat-button
-				(click)="viewFriendLibrary(friend.friendId)">
-				VIEW LIBRARY
-			</button
+			<h3
+				[ngClass]="{ title: (isSmallScreen$ | async).matches, 'small-screen-title': !(isSmallScreen$ | async).matches }"
+				matLine
+				matTooltip="{{ friend.friendEmail }}"
 			>
+				{{ friend.friendDisplayName }} <{{ friend.friendEmail }}>
+			</h3>
+
+			<ng-container
+				[ngTemplateOutlet]="!(isSmallScreen$ | async).matches ? twoLine : singleLine"
+				[ngTemplateOutletContext]="{ friend: friend }"
+			>
+			</ng-container>
 		</mat-list-item>
 		<mat-divider></mat-divider>
 	</ng-container>
 </mat-list>
+
+<ng-template #twoLine let-friend="friend">
+	<div matLine class="actions-container">
+		<button mat-button (click)="viewFriendLibrary(friend.friendId)">VIEW LIBRARY</button>
+	</div>
+</ng-template>
+
+<ng-template #singleLine let-friend="friend">
+	<button mat-button (click)="viewFriendLibrary(friend.friendId)">VIEW LIBRARY</button>
+</ng-template>
+
+<ml-scroll-top></ml-scroll-top>

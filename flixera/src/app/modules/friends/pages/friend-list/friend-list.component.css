@@ -7,3 +7,43 @@ mat-list-item {
     min-height: 70px;
     padding-top: 15px !important;
 }
+
+.title {
+    position: absolute;
+    top: 15px;
+}
+
+.small-screen-title {
+    position: absolute;
+    top: 0;
+}
+
+.actions-container {
+	position: absolute;
+	top: 25px;
+	left: 82px;
+}
+
+@media screen and (max-width: 374px) {
+	.small-screen-title {
+        max-width: 200px;
+	}
+}
+
+@media screen and (min-width: 375px) {
+	.small-screen-title {
+        max-width: 250px;
+	}
+}
+
+@media screen and (min-width: 425px) {
+	.small-screen-title {
+        max-width: 300px;
+	}
+}
+
+@media screen and (min-width: 500px) {
+	.small-screen-title {
+        max-width: inherit;
+	}
+}

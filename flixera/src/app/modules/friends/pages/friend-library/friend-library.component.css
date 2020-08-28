@@ -27,6 +27,10 @@ mat-list-item {
 	left: 95px;
 }
 
+.movie-details-button {
+	margin-left: 15px !important;
+}
+
 @media screen and (max-width: 360px) {
 	.movie-image {
 		display: none;
