@@ -16,7 +16,6 @@ export * from './store/friends/friend/friend.query';
 export * from './store/friends/friend-library/friend-library.query';
 export * from './store/settings/settings.query';
 export * from './guards/auth.guard';
-export * from './guards/no-auth.guard';
 export * from './components/main-layout/main-layout.component';
 export * from './components/blank-layout/blank-layout.component';
 export * from './contracts/models/move-list-item.model';

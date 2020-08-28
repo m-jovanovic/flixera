@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainLayoutComponent, BlankLayoutComponent, AuthGuard, NoAuthGuard } from '@app/core';
+import { MainLayoutComponent, BlankLayoutComponent, AuthGuard } from '@app/core';
 
 const routes: Routes = [
 	{
@@ -35,8 +35,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'login',
-				loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule),
-				canLoad: [NoAuthGuard]
+				loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule)
 			}
 		]
 	},
