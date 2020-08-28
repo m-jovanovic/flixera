@@ -37,22 +37,10 @@ ml-add-to-library-button {
 	left: 95px;
 }
 
-@media screen and (max-width: 360px) {
-	.movie-image {
+@media screen and (max-width: 400px) {
+	.actions-container ml-add-to-movie-library-button {
 		display: none;
 	}
-
-	.actions-container {
-		position: absolute;
-		top: 70px;
-		left: 20px !important;
-	}
-}
-
-@media screen and (max-width: 400px) {
-	// .actions-container button {
-	// 	display: none;
-	// }
 }
 
 @media screen and (max-width: 450px) {
@@ -65,7 +53,7 @@ ml-add-to-library-button {
 	.actions-container {
 		position: absolute;
 		top: 70px;
-		left: 80px;
+		left: 82px;
 	}
 }
 
