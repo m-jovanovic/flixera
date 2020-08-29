@@ -1,0 +1,20 @@
+.container {
+    height: 100vh;
+    background: linear-gradient(to bottom, #00ff99 0%, #6699ff 100%);
+}
+
+mat-card {
+    width: 300px;
+    height: 150px;
+    padding-top: 50px;
+    text-align: center;
+}
+
+mat-card-title {
+    margin-bottom: 40px;
+    font-size: 35px;
+}
+
+button {
+    width: 85%;
+}

@@ -50,7 +50,7 @@ export class AuthenticationService implements OnDestroy {
 		try {
 			await this.fireAuth.signOut();
 
-			return this.router.navigate(['/login']);
+			return await this.router.navigate(['/login']);
 		} catch (error) {
 			console.error(error);
 		}

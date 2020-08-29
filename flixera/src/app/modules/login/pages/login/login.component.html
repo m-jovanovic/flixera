@@ -1,14 +1,10 @@
-<div *ngIf="loggedIn$ | async; else login">
-	<pre>
-          {{ user$ | async | json }}
-        </pre
-	>
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+	<mat-card>
+		<mat-card-title> Movie Library </mat-card-title>
 
-	<button (click)="signOut()">Sign Out</button>
+		<button mat-raised-button color="" (click)="googleSignIn()">
+			<img height="25px" src="~/../../../../../../assets/images/google_logo.png" />
+			&nbsp;&nbsp; Sign In with Google
+		</button>
+	</mat-card>
 </div>
-
-<ng-template #login>
-	<button (click)="googleSignIn()">
-		Sign In with Google
-	</button>
-</ng-template>
