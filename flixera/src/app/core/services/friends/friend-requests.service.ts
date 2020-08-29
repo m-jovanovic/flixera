@@ -1,8 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import {
-	AngularFirestore,
-	AngularFirestoreCollection
-} from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 
 import { FriendRequest } from '../../contracts/db/friend-request';
@@ -11,6 +8,8 @@ import { CollectionNames } from '../../contracts/enums/collection-names.enum';
 import { AuthQuery } from '../../store/auth/auth.query';
 import { FriendRequestsStore } from '../../store/friends/friend-requests/friend-requests.store';
 import { FriendService } from './friend.service';
+import { first } from 'rxjs/internal/operators/first';
+import { FriendSearchStore } from '@app/core/store/friends/friend-search/friend-search.store';
 
 @Injectable({
 	providedIn: 'root'
@@ -23,18 +22,16 @@ export class FriendRequestsService implements OnDestroy {
 		private firestore: AngularFirestore,
 		private authQuery: AuthQuery,
 		private friendRequestsStore: FriendRequestsStore,
+		private friendSearchStore: FriendSearchStore,
 		private friendService: FriendService
 	) {
-		this.friendRequestsCollection = this.firestore.collection(
-			this.getFriendRequestsCollectionPath(this.authQuery.getUserId()),
-			ref => ref.orderBy('timestamp', 'desc')
+		this.friendRequestsCollection = this.firestore.collection(this.getFriendRequestsCollectionPath(this.authQuery.getUserId()), (ref) =>
+			ref.orderBy('timestamp', 'desc')
 		);
 
-		this.subscription = this.friendRequestsCollection
-			.valueChanges()
-			.subscribe((friendRequests: FriendRequest[]) => {
-				this.friendRequestsStore.set(friendRequests);
-			});
+		this.subscription = this.friendRequestsCollection.valueChanges().subscribe((friendRequests: FriendRequest[]) => {
+			this.friendRequestsStore.set(friendRequests);
+		});
 	}
 
 	ngOnDestroy(): void {
@@ -53,10 +50,19 @@ export class FriendRequestsService implements OnDestroy {
 			timestamp: Date.now()
 		};
 
-		await this.firestore
-			.collection(this.getFriendRequestsCollectionPath(friendId))
-			.doc<FriendRequest>(user.uid)
-			.set(friendRequest);
+		await this.getFriendRequestsCollection(friendId).doc<FriendRequest>(user.uid).set(friendRequest);
+
+		this.friendSearchStore.update(friendId, {
+			friendRequestSent: true
+		});
+	}
+
+	async isFriendRequestSent(friendId: string): Promise<boolean> {
+		const friendRequestsCollection = this.getFriendRequestsCollection(friendId);
+
+		const doc = await friendRequestsCollection.doc(this.authQuery.getUserId()).get().pipe(first()).toPromise();
+
+		return doc.exists;
 	}
 
 	async acceptFriendRequest(friendRequest: FriendRequest): Promise<void> {
@@ -86,6 +92,10 @@ export class FriendRequestsService implements OnDestroy {
 		await this.friendRequestsCollection.doc(friendId).delete();
 
 		this.friendRequestsStore.remove(friendId);
+	}
+
+	private getFriendRequestsCollection(userId: string): AngularFirestoreCollection<FriendRequest> {
+		return this.firestore.collection<FriendRequest>(this.getFriendRequestsCollectionPath(userId));
 	}
 
 	private getFriendRequestsCollectionPath(userId: string): string {

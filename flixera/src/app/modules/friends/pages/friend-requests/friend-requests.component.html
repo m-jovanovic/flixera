@@ -1,23 +1,32 @@
 <mat-list>
 	<ng-container *ngFor="let friendRequest of friendRequests$ | async; trackBy: trackByFunction">
 		<mat-list-item>
-			<img matListAvatar [src]="friendRequest.friendPhotoURL" />
-			<h3 matLine>{{ friendRequest.friendDisplayName }}</h3>
-			<button
-				class="accept-friend-request-button"
-				mat-stroked-button
-				(click)="acceptFriendRequest(friendRequest)"
+			<img matListAvatar [src]="friendRequest.friendPhotoURL" matTooltip="{{ friendRequest.friendEmail }}" />
+
+
+			<h3 matLine [ngClass]="{ title: (isSmallScreen$ | async).matches, 'small-screen-title': !(isSmallScreen$ | async).matches }">
+				{{ friendRequest.friendDisplayName }} <{{ friendRequest.friendEmail }}>
+			</h3>
+			
+			<ng-container
+				[ngTemplateOutlet]="!(isSmallScreen$ | async).matches ? twoLine : singleLine"
+				[ngTemplateOutletContext]="{ friendRequest: friendRequest }"
 			>
-				ACCEPT
-			</button>
-			<button
-				class="reject-friend-request-button"
-				mat-stroked-button
-				(click)="rejectFriendRequest(friendRequest.friendId)"
-			>
-				REJECT
-			</button>
+			</ng-container>
+
 		</mat-list-item>
 		<mat-divider></mat-divider>
 	</ng-container>
 </mat-list>
+
+<ng-template #twoLine let-friendRequest="friendRequest">
+	<div matLine class="actions-container">
+		<button class="accept-friend-request-button" mat-stroked-button (click)="acceptFriendRequest(friendRequest)">ACCEPT</button>
+		<button class="reject-friend-request-button" mat-stroked-button (click)="rejectFriendRequest(friendRequest.friendId)">REJECT</button>
+	</div>
+</ng-template>
+
+<ng-template #singleLine let-friendRequest="friendRequest">
+	<button class="accept-friend-request-button" mat-stroked-button (click)="acceptFriendRequest(friendRequest)">ACCEPT</button>
+	<button class="reject-friend-request-button" mat-stroked-button (click)="rejectFriendRequest(friendRequest.friendId)">REJECT</button>
+</ng-template>

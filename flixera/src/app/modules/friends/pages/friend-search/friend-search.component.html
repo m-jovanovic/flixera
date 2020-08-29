@@ -1,11 +1,5 @@
 <mat-form-field class="search-input">
-	<input
-		class="search-input"
-		type="search"
-		#friendSearchInput
-		matInput
-		placeholder="Enter email address"
-	/>
+	<input class="search-input" type="search" #friendSearchInput matInput placeholder="Enter email address" />
 	<button
 		mat-button
 		*ngIf="searchTermExists$ | async"
@@ -24,14 +18,22 @@
 <mat-list>
 	<ng-container *ngFor="let user of users$ | async; trackBy: trackByFunction">
 		<mat-list-item>
-			<img matListAvatar [src]="user.photoURL" />
-			<h3 matLine>{{ user.displayName }} <{{user.email}}></h3>
-			<button *ngIf="!user.isFriend" class="send-friend-request-button" mat-stroked-button (click)="sendFriendRequest(user)">
+			<img matListAvatar [src]="user.photoURL" matTooltip="{{ user.email }}" />
+
+			<h3 matLine>{{ user.displayName }} <{{ user.email }}></h3>
+
+			<p *ngIf="user.isFriend">Already friends</p>
+
+			<p *ngIf="user.friendRequestSent">Awaiting confirmation</p>
+
+			<button
+				*ngIf="!user.isFriend && !user.friendRequestSent"
+				class="send-friend-request-button"
+				mat-stroked-button
+				(click)="sendFriendRequest(user)"
+			>
 				SEND FRIEND REQUEST
 			</button>
-			<p *ngIf="user.isFriend">
-				Already friends
-			</p>
 		</mat-list-item>
 		<mat-divider></mat-divider>
 	</ng-container>

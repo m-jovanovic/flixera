@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 
-import {
-	FriendRequest,
-	FriendRequestsService,
-	FriendRequestsQuery
-} from '@app/core';
+import { FriendRequest, FriendRequestsService, FriendRequestsQuery } from '@app/core';
 
 @Component({
 	selector: 'ml-friend-requests',
@@ -14,14 +11,18 @@ import {
 })
 export class FriendRequestsComponent implements OnInit {
 	friendRequests$: Observable<FriendRequest[]>;
+	isSmallScreen$: Observable<BreakpointState>;
 
 	constructor(
 		private friendRequestsService: FriendRequestsService,
-		private friendRequestsQuery: FriendRequestsQuery
+		private friendRequestsQuery: FriendRequestsQuery,
+		private breakpointObserver: BreakpointObserver
 	) {}
 
 	ngOnInit(): void {
 		this.friendRequests$ = this.friendRequestsQuery.selectAll();
+
+		this.isSmallScreen$ = this.breakpointObserver.observe('(min-width: 700px)');
 	}
 
 	async acceptFriendRequest(friendRequest: FriendRequest): Promise<void> {

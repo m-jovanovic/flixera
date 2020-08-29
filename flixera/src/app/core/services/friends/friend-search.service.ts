@@ -9,6 +9,7 @@ import { AuthQuery } from '../../store/auth/auth.query';
 import { FriendSearchStore } from '../../store/friends/friend-search/friend-search.store';
 import { SearchUser } from '../../contracts/db/search-user';
 import { FriendService } from './friend.service';
+import { FriendRequestsService } from './friend-requests.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -18,7 +19,8 @@ export class FriendSearchService {
 		private firestore: AngularFirestore,
 		private authQuery: AuthQuery,
 		private friendSearchStore: FriendSearchStore,
-		private friendService: FriendService
+		private friendService: FriendService,
+		private friendRequestsService: FriendRequestsService
 	) {}
 
 	searchFriends(start: string, end: string): void {
@@ -38,7 +40,8 @@ export class FriendSearchService {
 						displayName: user.displayName,
 						email: user.email,
 						photoURL: user.photoURL,
-						isFriend: await this.friendService.isFriend(userId, user.uid)
+						isFriend: await this.friendService.isFriend(userId, user.uid),
+						friendRequestSent: await this.friendRequestsService.isFriendRequestSent(user.uid)
 					} as SearchUser;
 				});
 

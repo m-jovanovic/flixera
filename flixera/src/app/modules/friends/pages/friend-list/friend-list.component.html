@@ -1,12 +1,8 @@
 <mat-list>
 	<ng-container *ngFor="let friend of friends$ | async; trackBy: trackByFunction">
 		<mat-list-item>
-			<img matListAvatar [src]="friend.friendPhotoURL" />
-			<h3
-				[ngClass]="{ title: (isSmallScreen$ | async).matches, 'small-screen-title': !(isSmallScreen$ | async).matches }"
-				matLine
-				matTooltip="{{ friend.friendEmail }}"
-			>
+			<img matListAvatar [src]="friend.friendPhotoURL" matTooltip="{{ friend.friendEmail }}" />
+			<h3 [ngClass]="{ title: (isSmallScreen$ | async).matches, 'small-screen-title': !(isSmallScreen$ | async).matches }" matLine>
 				{{ friend.friendDisplayName }} <{{ friend.friendEmail }}>
 			</h3>
 
