@@ -10,6 +10,7 @@ import { FriendRequestsStore } from '../../store/friends/friend-requests/friend-
 import { FriendService } from './friend.service';
 import { first } from 'rxjs/internal/operators/first';
 import { FriendSearchStore } from '@app/core/store/friends/friend-search/friend-search.store';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -60,9 +61,11 @@ export class FriendRequestsService implements OnDestroy {
 	async isFriendRequestSent(friendId: string): Promise<boolean> {
 		const friendRequestsCollection = this.getFriendRequestsCollection(friendId);
 
-		const doc = await friendRequestsCollection.doc(this.authQuery.getUserId()).get().pipe(first()).toPromise();
+		const currentUserRequest = await friendRequestsCollection.doc(this.authQuery.getUserId()).get().pipe(first()).toPromise();
 
-		return doc.exists;
+		const friendsRequest = await this.friendRequestsCollection.doc(friendId).get().pipe(first()).toPromise();
+
+		return currentUserRequest.exists || friendsRequest.exists;
 	}
 
 	async acceptFriendRequest(friendRequest: FriendRequest): Promise<void> {
